@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog — Blue & Nat</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0B1F3A;--gold:#C9A96E;--green:#2D6A4F;--bg:#F8F6F2;--border:#E8E4DC;--muted:#7A7A7A}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:#1A1A1A;-webkit-font-smoothing:antialiased}
+.topbar{background:var(--navy);text-align:center;padding:9px;font-size:11.5px;color:rgba(255,255,255,.75);letter-spacing:.6px;text-transform:uppercase}
+.topbar span{color:var(--gold);font-weight:600}
+header{padding:0 52px;height:64px;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);position:sticky;top:0;z-index:200;border-bottom:1px solid var(--border)}
+.logo{font-family:'DM Serif Display',serif;font-size:22px;color:var(--navy);text-decoration:none}
+.logo em{font-style:normal;color:var(--green)}
+.back{font-size:13px;color:var(--muted);text-decoration:none;font-weight:500}
+.back:hover{color:var(--navy)}
+
+.hero-img{width:100%;height:420px;object-fit:cover;display:block}
+.article-wrap{max-width:740px;margin:0 auto;padding:60px 24px 100px}
+.article-meta{display:flex;align-items:center;gap:16px;margin-bottom:24px}
+.article-cat{font-size:11px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:1px;background:rgba(45,106,79,.1);padding:4px 12px;border-radius:20px}
+.article-date{font-size:12px;color:var(--muted)}
+.article-read{font-size:12px;color:var(--muted)}
+h1{font-family:'DM Serif Display',serif;font-size:42px;color:var(--navy);line-height:1.15;margin-bottom:20px}
+.article-lead{font-size:17px;color:#444;line-height:1.8;font-weight:300;margin-bottom:40px;border-left:3px solid var(--gold);padding-left:20px}
+.article-body h2{font-family:'DM Serif Display',serif;font-size:26px;color:var(--navy);margin:40px 0 16px}
+.article-body p{font-size:15px;color:#333;line-height:1.85;margin-bottom:20px;font-weight:300}
+.article-body ul{margin:0 0 20px 20px}
+.article-body li{font-size:15px;color:#333;line-height:1.85;margin-bottom:8px;font-weight:300}
+.article-body strong{font-weight:600;color:var(--navy)}
+.tip-box{background:#fff;border:1px solid var(--border);border-left:4px solid var(--gold);border-radius:8px;padding:20px 24px;margin:32px 0}
+.tip-box p{margin:0;font-size:14px;color:#444;line-height:1.7}
+.tip-box strong{color:var(--gold)}
+
+.related-posts{background:#fff;border-top:1px solid var(--border);padding:60px 52px}
+.related-posts h3{font-family:'DM Serif Display',serif;font-size:24px;color:var(--navy);margin-bottom:28px}
+.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:900px}
+.related-card{border:1px solid var(--border);border-radius:10px;overflow:hidden;text-decoration:none;color:inherit;transition:.2s;background:var(--bg)}
+.related-card:hover{box-shadow:0 8px 24px rgba(0,0,0,.08);transform:translateY(-3px)}
+.related-card img{width:100%;height:140px;object-fit:cover;display:block}
+.related-card-body{padding:16px}
+.related-card-cat{font-size:10px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:.6px;margin-bottom:6px}
+.related-card-title{font-size:14px;font-weight:600;color:var(--navy);line-height:1.4}
+
+.product-cta{background:linear-gradient(135deg,#0B1F3A,#1a3a60);padding:48px 52px;text-align:center}
+.product-cta p{font-size:14px;color:rgba(255,255,255,.6);margin-bottom:20px;font-weight:300}
+.product-cta a{background:var(--gold);color:var(--navy);padding:13px 32px;border-radius:8px;text-decoration:none;font-size:14px;font-weight:700}
+
+@media(max-width:768px){
+  header{padding:0 16px;height:56px}
+  header img{height:36px}
+  .hero-img{height:240px}
+  .article-wrap{padding:36px 20px 60px}
+  h1{font-size:28px}
+  .article-lead{font-size:15px}
+  .article-body h2{font-size:21px}
+  .related-posts{padding:40px 20px}
+  .related-grid{grid-template-columns:1fr}
+  .product-cta{padding:40px 20px}
+  footer{grid-template-columns:1fr;gap:28px;padding:48px 20px 32px}
+}
+footer{background:#0B1F3A;color:rgba(255,255,255,.55);padding:60px 52px 40px;display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:40px}
+.footer-brand p{font-size:13px;line-height:1.7;color:rgba(255,255,255,.45);font-weight:300;max-width:220px;margin-top:14px}
+footer h5{font-size:11px;font-weight:700;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:16px}
+footer a{display:block;font-size:13px;color:rgba(255,255,255,.55);text-decoration:none;margin-bottom:10px;transition:.15s;font-weight:300}
+footer a:hover{color:#fff}
+.footer-bottom{background:#071326;text-align:center;padding:16px;font-size:11.5px;color:rgba(255,255,255,.25);letter-spacing:.3px}
+</style>
+</head>
+<body>
+<div class="topbar">Envío gratuito desde <span>39 €</span> · Entrega 24–48 h</div>
+<header>
+  <a href="bnspain-concept.html"><img src="assets/logo-raw.jpg" alt="Blue&Nat" style="height:44px;mix-blend-mode:multiply;object-fit:contain"></a>
+  <a href="bnspain-concept.html" class="back">← Volver a la tienda</a>
+</header>
+
+<div id="article-root"></div>
+
+<script>
+const ARTICLES = {
+  1: {
+    cat: 'Suplementos',
+    date: '18 abril 2026',
+    read: '5 min lectura',
+    img: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=1200&h=630&fit=crop&q=85',
+    title: 'Los 5 errores más comunes al tomar suplementos naturales',
+    lead: 'Muchas personas invierten en suplementos de calidad pero no obtienen los resultados esperados. El problema casi nunca es el producto — es el momento, la dosis o la combinación.',
+    body: `
+      <h2>1. Tomarlos sin respetar el horario</h2>
+      <p>La mayoría de suplementos tienen un momento óptimo de ingesta. Los que contienen adaptógenos como la <strong>maca</strong> funcionan mejor por la mañana, cuando el cuerpo necesita activarse. Tomarlos por la noche puede interferir con el descanso en personas sensibles.</p>
+
+      <h2>2. No mantener la constancia durante al menos 4 semanas</h2>
+      <p>Los suplementos naturales no actúan en 48 horas. Los extractos de plantas como el tomillo, la gayuba o los aceites omega necesitan acumularse en el organismo. La mayoría de estudios miden resultados tras <strong>4 a 8 semanas</strong> de uso continuado.</p>
+      <div class="tip-box"><p><strong>Consejo:</strong> Asocia la toma a un hábito diario ya establecido — el desayuno, el café de la mañana o preparar la bolsa del gimnasio. La adherencia es el 80% del resultado.</p></div>
+
+      <h2>3. Combinar demasiados productos a la vez</h2>
+      <p>Empezar con 4 o 5 suplementos simultáneamente tiene dos problemas: si algo no funciona, no sabes cuál es; y si algo funciona muy bien, tampoco. Introduce un producto nuevo cada 2-3 semanas para poder evaluar su efecto real.</p>
+
+      <h2>4. Ignorar la calidad del extracto</h2>
+      <p>No todos los suplementos del mercado son iguales. La concentración del principio activo, el método de extracción y si está estandarizado marcan diferencias enormes. Un aceite de argán obtenido por <strong>prensado en frío</strong> conserva sus ácidos grasos y vitamina E intactos — algo que no ocurre con las versiones procesadas a calor.</p>
+
+      <h2>5. Esperar resultados sin cambiar ningún otro hábito</h2>
+      <p>Un suplemento es exactamente eso: un complemento. El Omega 3 ayuda a mantener niveles saludables de colesterol, pero si la dieta está cargada de ultraprocesados, su efecto quedará minimizado. Los mejores resultados siempre se dan cuando el suplemento trabaja en un contexto de hábitos alineados.</p>
+    `,
+    productId: 2,
+    productName: 'Maca: El Secreto de los Incas',
+    productCtaText: '¿Buscas energía natural y rendimiento? Prueba la Maca de Blue & Nat.'
+  },
+  2: {
+    cat: 'Nutrición',
+    date: '10 abril 2026',
+    read: '4 min lectura',
+    img: 'https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=1200&h=630&fit=crop&q=85',
+    title: 'Aceites vegetales en tu rutina: guía completa para empezar',
+    lead: 'El aceite correcto aplicado de la forma correcta puede transformar tu piel en semanas. Pero hay diferencias clave entre tipos que vale la pena conocer antes de comprar.',
+    body: `
+      <h2>¿Seco o denso? La primera distinción importante</h2>
+      <p>Los aceites se clasifican según su capacidad de absorción. Los aceites <strong>secos</strong> — como el de pepita de uva, girasol o almendra — penetran rápidamente sin dejar residuo graso, ideales para uso diario y pieles mixtas. Los aceites <strong>densos</strong> — como el de argán o jojoba — forman una capa protectora mayor, perfectos para pieles secas o tratamientos nocturnos.</p>
+
+      <h2>Presión en frío: por qué importa</h2>
+      <p>El método de extracción determina cuántos nutrientes sobreviven hasta el producto final. La presión en frío extrae el aceite sin calor, preservando los ácidos grasos insaturados, la vitamina E y los polifenoles. El refino con calor es más barato pero destruye buena parte de esos compuestos activos.</p>
+      <div class="tip-box"><p><strong>Cómo identificarlo:</strong> Busca en la etiqueta "obtenido por presión en frío" o "cold pressed". Si no lo especifica, probablemente se usó calor.</p></div>
+
+      <h2>Cómo aplicar aceite en cara sin obstruir poros</h2>
+      <p>Contrariamente a lo que muchos creen, los aceites no obstruyen poros si se usan correctamente. La clave está en aplicarlos sobre piel <strong>ligeramente húmeda</strong> — tras el sérum o tónico — y en cantidades pequeñas (2-3 gotas para el rostro). El calor de las manos ayuda a que penetren mejor.</p>
+
+      <h2>El aceite de argán: el más versátil</h2>
+      <p>Si tuvieras que elegir un solo aceite, el de argán sería la apuesta más segura. Su perfil de ácidos grasos (oleico y linoleico) lo hace compatible con casi todos los tipos de piel. Funciona en cara, cabello y cuerpo, y su textura semiseca lo hace tolerable incluso en climas cálidos.</p>
+    `,
+    productId: 4,
+    productName: 'Aceite de Argán Ecológico',
+    productCtaText: 'El aceite de argán ecológico de Blue & Nat, obtenido por presión en frío.'
+  },
+  3: {
+    cat: 'Cosmética',
+    date: '3 abril 2026',
+    read: '3 min lectura',
+    img: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=1200&h=630&fit=crop&q=85',
+    title: 'Por qué el aceite de argán es el mejor hidratante natural para tu piel',
+    lead: 'Llamado "oro líquido" de Marruecos durante siglos, el aceite de argán ha llegado a la cosmética moderna con un perfil nutricional que pocos ingredientes pueden igualar.',
+    body: `
+      <h2>Un ingrediente con historia</h2>
+      <p>Las mujeres bereberes del suroeste de Marruecos llevan siglos usando el aceite de argán para proteger su piel del sol y el viento del desierto. No fue hasta los años 90 que la cosmética occidental empezó a estudiarlo seriamente. Los resultados validaron lo que la tradición ya sabía: es uno de los aceites más ricos en vitamina E y ácidos grasos insaturados que existen.</p>
+
+      <h2>Qué tiene que otros aceites no tienen</h2>
+      <p>El argán contiene <strong>tocoferoles</strong> (vitamina E) en concentraciones notablemente superiores a otros aceites vegetales — hasta tres veces más que el aceite de oliva. También destaca por su contenido en <strong>escualeno</strong>, un compuesto que imita el sebo natural de la piel y ayuda a mantener su barrera hidrolipídica intacta.</p>
+      <div class="tip-box"><p><strong>Dato clave:</strong> Para que el aceite de argán conserve todos sus activos, debe ser ecológico y obtenido por presión en frío. El procesado con disolventes o calor destruye hasta el 60% de sus compuestos bioactivos.</p></div>
+
+      <h2>Para el cabello: el tratamiento más sencillo</h2>
+      <p>Unas pocas gotas aplicadas sobre las puntas húmedas antes de secar reducen el frizz, aportan brillo y sellan la cutícula. Para un tratamiento más intensivo, aplícalo la noche anterior al lavado como mascarilla capilar. Distribuye uniformemente desde medios a puntas y aclara con el champú habitual por la mañana.</p>
+
+      <h2>Cómo usarlo en cara sin brillos</h2>
+      <p>La clave es la cantidad: dos o tres gotas son suficientes para todo el rostro. Aplícalo después del sérum y antes de la crema de día (o en su lugar, por la noche). En pieles mixtas, limita la aplicación a las zonas más secas — mejillas, contorno de ojos y sienes.</p>
+    `,
+    productId: 4,
+    productName: 'Aceite de Argán Ecológico',
+    productCtaText: 'Descubre el aceite de argán ecológico certificado de Blue & Nat.'
+  },
+
+  /* ── NUTRICIÓN ── */
+  10: {
+    cat: 'Nutrición',
+    date: '25 abril 2026',
+    read: '8 min lectura',
+    img: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=1200&h=630&fit=crop&q=85',
+    title: 'Los 10 superalimentos que deberías incluir en tu dieta ya',
+    lead: 'Maca, espirulina, chía, cúrcuma… Analizamos qué dice la ciencia sobre cada uno, cómo tomarlos y qué beneficios son reales. Sin modas, sin mitos.',
+    body: `
+      <h2>¿Qué convierte a un alimento en "superalimento"?</h2>
+      <p>El término no tiene una definición científica oficial, pero en la práctica se usa para alimentos con una densidad nutricional excepcionalmente alta: mucho nutriente por caloría, con compuestos activos que van más allá de los macros básicos. No hacen milagros solos, pero sí marcan diferencia integrados en una dieta equilibrada.</p>
+
+      <h2>1. Maca andina — energía y equilibrio hormonal</h2>
+      <p>La raíz de maca contiene aminoácidos esenciales, hierro, calcio y una familia de compuestos únicos llamados macamidas y macaenos. Los estudios apuntan a mejoras en energía, libido y adaptación al estrés. <strong>Cómo tomarla:</strong> 1-3 g de polvo al día en batidos o yogur, preferiblemente por la mañana.</p>
+
+      <h2>2. Espirulina — proteína completa en polvo azul-verdosa</h2>
+      <p>Con un 60-70% de proteína de alta biodisponibilidad, la espirulina supera en este aspecto a casi cualquier alimento de origen animal. También aporta hierro, vitaminas del grupo B y ficocianina, un antioxidante con efecto antiinflamatorio documentado.</p>
+      <div class="tip-box"><p><strong>Consejo:</strong> Si el sabor te frena, mezcla media teaspoon en zumo de naranja o piña. Los azúcares naturales enmascaran el sabor a mar por completo.</p></div>
+
+      <h2>3. Chía — la fibra que sacia y cuida tu microbiota</h2>
+      <p>Las semillas de chía absorben hasta 12 veces su peso en agua, formando un gel que ralentiza la digestión y mantiene la saciedad durante horas. Son además una fuente vegetal excelente de ácidos grasos omega 3 (ALA) y fibra soluble prebiótica.</p>
+
+      <h2>4. Cúrcuma — el antiinflamatorio de la despensa</h2>
+      <p>La curcumina, el compuesto activo de la cúrcuma, tiene evidencia sólida como antiinflamatorio y antioxidante. El problema: su biodisponibilidad es muy baja. Para activarla al máximo, combínala siempre con <strong>pimienta negra</strong> (que aumenta su absorción un 2000%) y una grasa saludable.</p>
+
+      <h2>5. Kéfir — probiótico natural con historia</h2>
+      <p>El kéfir aporta hasta 61 cepas distintas de bacterias y levaduras beneficiosas, frente a las 1-5 que suelen tener los yogures comerciales. Su consumo regular se asocia a mejoras en la función digestiva, el sistema inmune y la tolerancia a la lactosa.</p>
+
+      <h2>6–10. El resto del top</h2>
+      <p><strong>Arándanos:</strong> antocianinas y vitamina C en máxima concentración. <strong>Aguacate:</strong> grasas monoinsaturadas y potasio que superan al plátano. <strong>Nueces:</strong> la nuez es el fruto seco con mayor ratio omega 3 / omega 6. <strong>Algas nori:</strong> yodo biodisponible y vitamina B12 para dietas plant-based. <strong>Jengibre:</strong> gingeroles con efecto antiemético y antiinflamatorio comprobado.</p>
+    `,
+    productId: 2,
+    productName: 'Maca: El Secreto de los Incas',
+    productCtaText: 'Maca andina de calidad premium, sin aditivos ni rellenos. Pruébala en Blue & Nat.'
+  },
+  11: {
+    cat: 'Nutrición',
+    date: '18 abril 2026',
+    read: '5 min lectura',
+    img: 'https://images.unsplash.com/photo-1610348725531-843dff563e2c?w=1200&h=630&fit=crop&q=85',
+    title: 'Espirulina: el alimento del futuro que ya puedes tomar hoy',
+    lead: 'Más proteína que la carne, más hierro que las espinacas, más antioxidantes que los arándanos. La espirulina lleva décadas siendo estudiada — y los resultados siguen sorprendiendo.',
+    body: `
+      <h2>Qué es exactamente la espirulina</h2>
+      <p>La espirulina es una cianobacteria (bacteria fotosintética) que crece en aguas alcalinas cálidas. No es una planta ni un alga en sentido estricto, aunque coloquialmente se llame "alga azul-verde". Lo que la hace única es que es uno de los pocos organismos capaces de fijar nitrógeno atmosférico y sintetizar proteína completa directamente de la luz solar.</p>
+
+      <h2>El perfil nutricional que la hace excepcional</h2>
+      <p>Por cada 10 gramos de espirulina seca obtienes aproximadamente: <strong>6-7 g de proteína</strong> con todos los aminoácidos esenciales, 2-3 mg de hierro (más biodisponible que el de las espinacas), vitamina B12 en forma parcialmente activa, y entre 80-100 mg de calcio. Todo con apenas 35-40 calorías.</p>
+      <div class="tip-box"><p><strong>Comparativa:</strong> La carne de ternera tiene aproximadamente un 26% de proteína. La espirulina seca tiene entre un 60 y un 70%. Es la fuente proteica más concentrada que existe en la naturaleza.</p></div>
+
+      <h2>La ficocianina: el compuesto que nadie menciona</h2>
+      <p>La ficocianina es el pigmento que da a la espirulina su característico color azul-verdoso. Es también un antioxidante y antiinflamatorio potente, con estudios que muestran inhibición de mediadores inflamatorios como el NF-kB. No existe en ningún otro alimento en cantidades comparables.</p>
+
+      <h2>Cómo tomarla si el sabor te da pereza</h2>
+      <p>El mayor obstáculo de la espirulina no es nutricional sino sensorial. Su sabor marino intenso puede resultar desagradable al principio. Las tres formas más efectivas de enmascararlo: batido con frutas tropicales (piña, mango), mezcla en agua con limón y miel, o en forma de comprimidos si prefieres evitar el sabor por completo.</p>
+
+      <h2>Quién se beneficia más de tomarla</h2>
+      <p>Las personas que más tienen que ganar con la espirulina son: vegetarianos y veganos que buscan proteína completa y hierro, deportistas que quieren recuperación sin recurrir a proteínas de suero, y cualquier persona con dieta variada pero pobre en micronutrientes. No es un sustituto de una dieta equilibrada, pero sí un refuerzo muy eficiente.</p>
+    `,
+    productId: 1,
+    productName: 'B-15 Cisty Stop',
+    productCtaText: 'Complementa tu nutrición con los suplementos naturales certificados de Blue & Nat.'
+  },
+  12: {
+    cat: 'Nutrición',
+    date: '11 abril 2026',
+    read: '4 min lectura',
+    img: 'https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=1200&h=630&fit=crop&q=85',
+    title: 'Antiinflamación: la dieta que tu cuerpo está pidiendo',
+    lead: 'Cúrcuma, omega 3, frutos rojos y semillas: los alimentos que combaten la inflamación crónica. Y los que la alimentan sin que lo sepas.',
+    body: `
+      <h2>Inflamación crónica: el problema silencioso</h2>
+      <p>La inflamación aguda es necesaria y protectora: el cuerpo la activa cuando hay una herida o infección. El problema es la <strong>inflamación crónica de bajo grado</strong> — ese estado permanente de activación inmune que no se percibe directamente pero que, sostenido en el tiempo, se asocia con diabetes tipo 2, enfermedades cardiovasculares, trastornos autoinmunes y deterioro cognitivo.</p>
+
+      <h2>Los 5 alimentos antiinflamatorios más potentes</h2>
+      <p><strong>Pescado azul:</strong> el EPA y DHA del salmón, sardina o caballa inhiben directamente las rutas inflamatorias. <strong>Cúrcuma + pimienta:</strong> la combinación activa la curcumina como antiinflamatorio sistémico. <strong>Frutos rojos:</strong> sus antocianinas reducen marcadores de inflamación como la PCR. <strong>Aceite de oliva virgen extra:</strong> el oleocantal actúa de forma similar al ibuprofeno a nivel molecular. <strong>Nueces y semillas:</strong> aportan omega 3 vegetal y vitamina E.</p>
+      <div class="tip-box"><p><strong>Dato clave:</strong> El ratio omega 6 / omega 3 en la dieta occidental típica es de 15:1 o superior. El ratio proinflamatorio. El objetivo saludable está entre 4:1 y 2:1. Reducir los ultraprocesados y aumentar el pescado azul lo corrije en pocas semanas.</p></div>
+
+      <h2>Lo que más inflama y casi nadie relaciona</h2>
+      <p>Los aceites vegetales refinados (girasol, maíz, soja) son la principal fuente de omega 6 en la dieta occidental. No son malos por sí mismos, pero en exceso y sin compensar con omega 3, desplazan el balance hacia la inflamación. El azúcar añadido eleva la insulina y activa el NF-kB, uno de los principales interruptores proinflamatorios. El alcohol, incluso en cantidades moderadas, eleva los marcadores inflamatorios en personas con predisposición genética.</p>
+
+      <h2>Un día de dieta antiinflamatoria (sin complicaciones)</h2>
+      <p><strong>Desayuno:</strong> porridge de avena con arándanos, semillas de lino y cúrcuma. <strong>Comida:</strong> ensalada de espinacas con aguacate, sardinas al natural y AOVE. <strong>Cena:</strong> salmón al horno con brócoli y boniato. <strong>Snacks:</strong> nueces, fruta fresca, kéfir. No requiere ningún alimento exótico ni caro — solo reorganizar lo que ya tienes.</p>
+    `,
+    productId: 3,
+    productName: 'Omega 3 6 9',
+    productCtaText: 'Equilibra tu ratio omega con el Omega 3 6 9 de Blue & Nat. Formulación certificada.'
+  },
+
+  /* ── DEPORTE & ENERGÍA ── */
+  20: {
+    cat: 'Deporte',
+    date: '22 abril 2026',
+    read: '6 min lectura',
+    img: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1200&h=630&fit=crop&q=85',
+    title: 'Creatina vs BCAA: ¿Cuál necesitas según tu objetivo?',
+    lead: 'Son los dos suplementos más populares del gimnasio, pero funcionan de forma muy diferente. Te explicamos cuándo tomar cada uno para maximizar resultados y no tirar dinero.',
+    body: `
+      <h2>¿Qué hace realmente la creatina?</h2>
+      <p>La creatina es un compuesto natural producido por el hígado a partir de aminoácidos. Su función principal es <strong>regenerar el ATP</strong> — la moneda energética del músculo — durante esfuerzos cortos e intensos. Al suplementar, aumentas las reservas de fosfocreatina muscular, lo que se traduce en más potencia en las últimas repeticiones, mejor rendimiento en sprints y mayor volumen de entrenamiento posible.</p>
+
+      <h2>¿Qué hacen los BCAA?</h2>
+      <p>Los BCAA (leucina, isoleucina y valina) son aminoácidos de cadena ramificada que el músculo puede oxidar directamente como fuente de energía. Se utilizan principalmente para <strong>reducir el catabolismo muscular</strong> durante entrenamientos en ayunas o de larga duración, y para estimular la síntesis proteica post-esfuerzo (especialmente la leucina).</p>
+      <div class="tip-box"><p><strong>Resumen rápido:</strong> Creatina = más fuerza y potencia. BCAA = proteger músculo y estimular recuperación. Objetivos diferentes, mecanismos diferentes. No son intercambiables.</p></div>
+
+      <h2>¿Cuándo tiene sentido cada uno?</h2>
+      <p><strong>Creatina:</strong> si entrenas con pesas, sprints, crossfit o cualquier deporte de potencia corta. Si tu dieta ya es alta en proteína de calidad, los BCAA añaden poco. La creatina monohidrato es la forma más estudiada y eficaz — no hay necesidad de pagar más por formas "avanzadas". <strong>BCAA:</strong> si entrenas en ayunas, si tu dieta es vegetariana o baja en proteína animal, o si realizas sesiones de más de 90 minutos con alta intensidad.</p>
+
+      <h2>¿Hay que hacer carga de creatina?</h2>
+      <p>El protocolo clásico de carga (20 g/día durante 5-7 días) satura más rápido las reservas musculares, pero produce más retención de agua y molestias gastrointestinales. El protocolo de mantenimiento directo (3-5 g/día) llega al mismo resultado en 3-4 semanas, sin efectos secundarios. Si no tienes prisa, empieza directamente con la dosis de mantenimiento.</p>
+
+      <h2>¿Se pueden tomar juntos?</h2>
+      <p>Sí, sin ningún problema. No existe interferencia entre ellos. Si tomas ambos, la recomendación habitual es: <strong>creatina post-entreno</strong> con la comida (junto con carbohidratos mejora la captación muscular) y <strong>BCAA durante el entrenamiento</strong> o justo antes, especialmente en sesiones largas o en ayunas.</p>
+    `,
+    productId: 2,
+    productName: 'Maca: El Secreto de los Incas',
+    productCtaText: 'Energía natural para el deporte. Descubre la Maca y los suplementos deportivos de Blue & Nat.'
+  },
+  21: {
+    cat: 'Deporte',
+    date: '15 abril 2026',
+    read: '4 min lectura',
+    img: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=1200&h=630&fit=crop&q=85',
+    title: '¿Cuánta proteína necesitas realmente al día?',
+    lead: 'El mito de los 2 g/kg desmentido con evidencia científica actualizada. La respuesta depende de mucho más que tu peso corporal.',
+    body: `
+      <h2>De dónde viene el número mágico de 2 g/kg</h2>
+      <p>La cifra de 2 gramos de proteína por kilogramo de peso corporal se popularizó en culturismo durante los años 80, cuando los estudios de referencia usaban sujetos sedentarios o atletas con objetivos muy específicos. Décadas después, la ciencia del ejercicio tiene una visión más matizada.</p>
+
+      <h2>Lo que dicen los estudios actuales</h2>
+      <p>La <strong>dosis efectiva para la mayoría de personas activas</strong> se sitúa entre 1,6 y 2,2 g/kg de peso corporal al día, según el meta-análisis de Morton et al. (2018) publicado en British Journal of Sports Medicine. Por encima de 2,2 g/kg, los beneficios adicionales en síntesis proteica muscular son mínimos para personas sin uso de anabolizantes.</p>
+      <div class="tip-box"><p><strong>Ejemplo práctico:</strong> Una persona de 75 kg que entrena 4 días a la semana necesita entre 120 y 165 g de proteína al día. No 200 g. El exceso simplemente se oxida como energía — no construye más músculo.</p></div>
+
+      <h2>Factores que sí modifican la necesidad real</h2>
+      <p><strong>Déficit calórico:</strong> si estás en fase de pérdida de grasa, sube hasta 2,2-2,5 g/kg para proteger la masa muscular. <strong>Edad:</strong> a partir de los 50-55 años la síntesis proteica es menos eficiente — conviene acercarse al límite alto del rango. <strong>Tipo de entrenamiento:</strong> el entrenamiento de fuerza aumenta más la necesidad que el cardio. <strong>Calidad de la proteína:</strong> si tus fuentes son vegetales, el valor biológico es menor — considera subir ligeramente la cantidad.</p>
+
+      <h2>Distribuir la proteína importa tanto como la cantidad total</h2>
+      <p>Ingerir 40 g de proteína en una sola comida no es igual de eficaz que distribuir 160 g en 4 tomas de 40 g. El músculo tiene una capacidad de síntesis limitada por estímulo: la mayoría de estudios sugiere que <strong>20-40 g por toma</strong> es el rango óptimo, dependiendo del peso corporal. Lo que supere ese umbral en una sola ingesta se utiliza como energía, no como músculo.</p>
+    `,
+    productId: 3,
+    productName: 'Omega 3 6 9',
+    productCtaText: 'Combina la proteína adecuada con Omega 3 6 9 para una recuperación completa. Blue & Nat.'
+  },
+  22: {
+    cat: 'Deporte',
+    date: '8 abril 2026',
+    read: '3 min lectura',
+    img: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=1200&h=630&fit=crop&q=85',
+    title: 'Los 5 errores de recuperación que frenan tu progreso',
+    lead: 'Dormir poco, no hidratarse, saltarse el post-entreno… El cuerpo mejora en el descanso, no en el gimnasio. ¿Cuántos de estos errores cometes?',
+    body: `
+      <h2>Por qué la recuperación es donde ocurre el progreso real</h2>
+      <p>El entrenamiento es el estímulo, pero la adaptación ocurre durante la recuperación. Sin recuperación adecuada, los microdaños musculares se acumulan, el cortisol permanece elevado y el sistema nervioso central se sobre-exige. El resultado: estancamiento, mayor riesgo de lesión y peor rendimiento en las sesiones siguientes.</p>
+
+      <h2>Error 1: dormir menos de 7 horas</h2>
+      <p>Durante el sueño profundo (fases 3 y 4 del NREM) se libera el <strong>90% de la hormona de crecimiento</strong> diaria. Un estudio de la Universidad de Chicago mostró que reducir el sueño de 8 a 5,5 horas durante dos semanas redujo la síntesis proteica muscular en un 18% y aumentó la pérdida de masa muscular en dieta hipocalórica. No hay ningún suplemento que compense esto.</p>
+      <div class="tip-box"><p><strong>Prioridad clara:</strong> Si tienes que elegir entre añadir una sesión extra de gym o dormir una hora más, duerme. El músculo crece mientras duermes, no mientras entrenas.</p></div>
+
+      <h2>Error 2: ignorar la ventana post-entreno</h2>
+      <p>Las primeras 2 horas tras el ejercicio intenso son el momento de máxima sensibilidad a la insulina y mayor tasa de síntesis proteica. Saltarse la comida post-entreno — o dejarlo para 4-5 horas después — significa perder una ventana de adaptación que no se recupera.</p>
+
+      <h2>Error 3: no hidratarse suficientemente</h2>
+      <p>Una deshidratación del 2% del peso corporal reduce el rendimiento cognitivo y físico de forma medible. Para la recuperación, el agua es esencial en el transporte de nutrientes, la eliminación de metabolitos y la síntesis de glucógeno. Si tu orina no es de color amarillo pálido al despertar, estás empezando el día en déficit hídrico.</p>
+
+      <h2>Error 4: entrenar el mismo grupo muscular dos días seguidos</h2>
+      <p>La síntesis proteica muscular tras un entrenamiento intenso de fuerza permanece elevada entre 24 y 48 horas. Volver a estimular el mismo músculo antes de que complete el ciclo de reparación interrumpe el proceso. La frecuencia óptima para cada grupo muscular en la mayoría de personas es 2-3 veces por semana, con al menos 48 horas de separación.</p>
+
+      <h2>Error 5: no diferenciar entre cansancio y sobreentrenamiento</h2>
+      <p>El sobreentrenamiento real es menos común de lo que se cree, pero el cansancio acumulado sí arruina sesiones. Sus señales: rendimiento decreciente durante 2 o más semanas seguidas, peor calidad de sueño, irritabilidad, mayor frecuencia cardíaca en reposo y pérdida de motivación. La solución no es empujar más fuerte — es una semana de deload o descanso activo.</p>
+    `,
+    productId: 3,
+    productName: 'Omega 3 6 9',
+    productCtaText: 'Apoya tu recuperación con Omega 3 6 9. Antiinflamatorio natural para deportistas. Blue & Nat.'
+  },
+
+  /* ── SUPLEMENTOS ── */
+  30: {
+    cat: 'Suplementos',
+    date: '20 abril 2026',
+    read: '7 min lectura',
+    img: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=1200&h=630&fit=crop&q=85',
+    title: 'Omega 3: todo lo que debes saber antes de comprarlo',
+    lead: 'No todos los Omega 3 son iguales. Diferencias entre EPA, DHA y ALA, cómo leer etiquetas y por qué la concentración importa más que el precio.',
+    body: `
+      <h2>Las tres formas de Omega 3 y para qué sirve cada una</h2>
+      <p>El término "Omega 3" engloba una familia de ácidos grasos, pero los tres principales son muy diferentes. El <strong>ALA</strong> (ácido alfa-linolénico) proviene de fuentes vegetales como el lino o las nueces, pero el cuerpo solo convierte un 5-15% en las formas activas. El <strong>EPA</strong> (ácido eicosapentaenoico) es antiinflamatorio directo, clave para la salud cardiovascular y el estado de ánimo. El <strong>DHA</strong> (ácido docosahexaenoico) es el principal graso estructural del cerebro y la retina — esencial para la función cognitiva y el desarrollo neurológico.</p>
+
+      <h2>Cómo leer una etiqueta de Omega 3</h2>
+      <p>El error más común: fijarse solo en los "mg de aceite de pescado" e ignorar el contenido real de EPA y DHA. Un cápsula de 1000 mg de aceite de pescado puede contener tan solo 150-200 mg de EPA+DHA si la concentración es baja. Lo que importa es: <strong>¿cuántos mg de EPA y DHA por cápsula?</strong> Para beneficio cardiovascular documentado, los estudios usan al menos 1000-2000 mg/día de EPA+DHA combinados.</p>
+      <div class="tip-box"><p><strong>Regla práctica:</strong> Busca suplementos con al menos 500 mg de EPA+DHA por cápsula. Si tienes que tomar 6 cápsulas para llegar a la dosis efectiva, el producto no merece la pena — busca uno de mayor concentración.</p></div>
+
+      <h2>Omega 3 6 9: ¿tiene sentido el formato combinado?</h2>
+      <p>Los formatos Omega 3 6 9 tienen una lógica: el omega 6 y el omega 9 también tienen funciones importantes en el organismo. Sin embargo, la mayoría de personas ya consumen omega 6 en exceso a través de aceites vegetales refinados, así que el suplemento combinado aporta sobre todo el omega 3 deficitario. Su ventaja real está en la proporción equilibrada que corrige el ratio proinflamatorio de la dieta moderna.</p>
+
+      <h2>¿Aceite de krill o aceite de pescado?</h2>
+      <p>El aceite de krill tiene el EPA y DHA en forma de fosfolípidos, que algunos estudios sugieren que se absorben mejor. Sin embargo, a dosis equivalentes de EPA+DHA, la diferencia clínica es pequeña. El aceite de pescado de calidad sigue siendo la opción más estudiada, más económica y con mayor concentración por cápsula. El krill tiene más marketing que ventaja real para la mayoría de personas.</p>
+
+      <h2>Cuándo y cómo tomar Omega 3</h2>
+      <p>Los ácidos grasos omega 3 son liposolubles: se absorben mejor con comida, especialmente con grasas. Tomarlos en ayunas reduce significativamente su absorción. El momento del día no importa tanto — lo que sí importa es <strong>tomarlo con la comida principal</strong>. Si experimentas el conocido "regurgito a pescado", refrigera las cápsulas y tómalas congeladas.</p>
+    `,
+    productId: 3,
+    productName: 'Omega 3 6 9',
+    productCtaText: 'Omega 3 6 9 de Blue & Nat — alta concentración, formulación certificada. Sin regusto.'
+  },
+  31: {
+    cat: 'Suplementos',
+    date: '13 abril 2026',
+    read: '5 min lectura',
+    img: 'https://images.unsplash.com/photo-1476611338391-6f395a0ebc7b?w=1200&h=630&fit=crop&q=85',
+    title: 'Vitamina D: por qué casi todos tenemos deficiencia',
+    lead: 'El 80% de la población española no llega al nivel mínimo recomendado. Y vivimos en uno de los países con más horas de sol de Europa. ¿Cómo es posible?',
+    body: `
+      <h2>El paradox solar español</h2>
+      <p>España tiene más de 2500 horas de sol al año en gran parte de su territorio. Sin embargo, estudios del ISCIII muestran que entre el 70-80% de la población tiene niveles de vitamina D por debajo de los 30 ng/mL considerados suficientes. La razón: para sintetizar vitamina D, la piel debe estar expuesta al sol sin protección entre las 10:00 y las 15:00, en las estaciones correctas, y en cantidad suficiente. Y casi nadie cumple todos esos requisitos a la vez.</p>
+
+      <h2>Para qué sirve realmente la vitamina D</h2>
+      <p>La vitamina D no es solo "la vitamina de los huesos". Es en realidad una <strong>hormona esteroidea</strong> que regula más de 200 genes. Sus funciones incluyen: absorción del calcio y mineralización ósea, modulación del sistema inmune (deficiencia se asocia a mayor susceptibilidad a infecciones respiratorias), regulación del estado de ánimo (receptores en el cerebro), y función muscular — la deficiencia severa causa mialgia y debilidad muscular.</p>
+      <div class="tip-box"><p><strong>Señales de deficiencia:</strong> fatiga sin causa clara, dolores óseos y musculares, infecciones frecuentes, bajo estado de ánimo en otoño-invierno, y heridas que cicatrizan lento. Ninguna es específica, pero la combinación debería motivar un análisis de sangre.</p></div>
+
+      <h2>Cuánta necesitas y en qué forma</h2>
+      <p>Las dosis de suplementación varían según el nivel de partida. Para mantener niveles suficientes, la mayoría de adultos sanos sin deficiencia severa necesita entre <strong>1000 y 2000 UI/día</strong> en los meses de menor exposición solar (octubre a marzo en la mayor parte de España). La vitamina D3 (colecalciferol) es significativamente más eficaz que la D2 para elevar los niveles séricos. Para mejor absorción, tómala con la comida más grasa del día.</p>
+
+      <h2>¿Se puede tomar en exceso?</h2>
+      <p>La toxicidad por vitamina D existe pero es rara con suplementación normal — requiere dosis superiores a 10.000 UI/día durante meses. Lo que sí es frecuente es la <strong>suplementación insuficiente</strong>: muchos toman 400 UI/día (la RDA europea antigua) cuando la mayoría de expertos actuales consideran que esa dosis es insuficiente para corregir deficiencias previas.</p>
+    `,
+    productId: 1,
+    productName: 'B-15 Cisty Stop',
+    productCtaText: 'Refuerza tu salud con los suplementos naturales certificados de Blue & Nat.'
+  },
+  32: {
+    cat: 'Suplementos',
+    date: '6 abril 2026',
+    read: '4 min lectura',
+    img: 'https://images.unsplash.com/photo-1614935151651-0bea6508db6b?w=1200&h=630&fit=crop&q=85',
+    title: 'Probióticos: guía definitiva para cuidar tu flora intestinal',
+    lead: 'Qué cepas buscar, cuándo tomarlos y si de verdad funcionan según la ciencia. Sin marketing, con evidencia.',
+    body: `
+      <h2>Microbiota: el órgano que no sabías que tenías</h2>
+      <p>El intestino humano alberga más de 100 billones de microorganismos de 500-1000 especies distintas — más células bacterianas que humanas en todo el cuerpo. Este ecosistema, llamado microbiota intestinal, regula la digestión, sintetiza vitaminas como la K y algunas del grupo B, entrena el sistema inmune y se comunica con el cerebro a través del eje intestino-cerebro. Cuando su equilibrio se rompe (disbiosis), las consecuencias van mucho más allá de los síntomas digestivos.</p>
+
+      <h2>Probióticos vs prebióticos vs postbióticos</h2>
+      <p><strong>Probióticos:</strong> microorganismos vivos que se añaden desde fuera (suplementos, kéfir, yogur, kimchi). <strong>Prebióticos:</strong> fibras no digeribles que alimentan las bacterias beneficiosas ya existentes (inulina, FOS, pectina — en ajo, cebolla, avena, manzana). <strong>Postbióticos:</strong> metabolitos producidos por las bacterias beneficiosas durante su actividad (ácido butírico, propiónico). Para un enfoque completo, los tres son importantes — no solo los probióticos.</p>
+      <div class="tip-box"><p><strong>Orden de prioridad:</strong> Antes de gastar en probióticos, mejora la dieta aumentando fibra vegetal variada. Sin suficiente sustrato (prebióticos), las bacterias del suplemento no tienen qué comer y no colonizan.</p></div>
+
+      <h2>Qué cepas buscar según el objetivo</h2>
+      <p>No todas las cepas hacen lo mismo. Para <strong>diarrea asociada a antibióticos:</strong> Lactobacillus rhamnosus GG y Saccharomyces boulardii tienen la evidencia más sólida. Para <strong>síndrome de intestino irritable:</strong> Bifidobacterium longum y Lactobacillus plantarum 299v. Para <strong>refuerzo inmune general:</strong> cualquier multiespecie con al menos 10 mil millones de UFC (unidades formadoras de colonias) por dosis.</p>
+
+      <h2>Cuándo y cómo tomarlos</h2>
+      <p>Los probióticos sobreviven mejor cuando el estómago no está en su punto de máxima acidez. La recomendación más práctica: <strong>tómalos justo antes de una comida</strong>, cuando el pH gástrico aún no ha bajado del todo. El refrigerado es importante para la mayoría de cepas — la cadena de frío afecta directamente la viabilidad. Verifica siempre que el fabricante indique el número de UFC <em>en la fecha de caducidad</em>, no en el momento de fabricación.</p>
+    `,
+    productId: 1,
+    productName: 'B-15 Cisty Stop',
+    productCtaText: 'Cuida tu bienestar interior con los suplementos naturales de Blue & Nat.'
+  },
+
+  /* ── COSMÉTICA ── */
+  40: {
+    cat: 'Cosmética',
+    date: '24 abril 2026',
+    read: '6 min lectura',
+    img: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=1200&h=630&fit=crop&q=85',
+    title: '5 usos del aceite de argán que probablemente no conocías',
+    lead: 'Más allá del hidratante facial: cómo usarlo en cutículas, puntas del cabello, cicatrices y como base de maquillaje. El versátil que no puede faltar en tu neceser.',
+    body: `
+      <h2>Por qué el aceite de argán es tan versátil</h2>
+      <p>La composición del aceite de argán lo hace extraordinariamente adaptable: un 80% de ácidos grasos insaturados (oleico y linoleico), alta concentración de vitamina E (tocoferoles) y escualeno, y la presencia de polifenoles con efecto antioxidante. Estos compuestos interactúan bien con prácticamente todos los tejidos que contienen lípidos — piel, cabello, uñas — sin obstruir poros ni dejar residuo pesado cuando se usa en la cantidad correcta.</p>
+
+      <h2>1. Base de maquillaje natural</h2>
+      <p>Aplicar 1-2 gotas de aceite de argán sobre la piel limpia antes del fondo de maquillaje tiene un efecto "primer" natural. Suaviza la textura, rellena micro-líneas y crea una base que hace que el maquillaje se adhiera mejor y dure más horas. Compatible con fórmulas de base al agua y al aceite.</p>
+
+      <h2>2. Tratamiento de cutículas y uñas</h2>
+      <p>Las cutículas secas y agrietadas responden muy bien al argán aplicado directamente: unas gotas masajeadas en la base de la uña antes de dormir, repetido durante 2-3 semanas, mejoran visiblemente la flexibilidad y reducen las pieles levantadas. La vitamina E estimula la circulación local y favorece el crecimiento sano de la uña.</p>
+      <div class="tip-box"><p><strong>Truco nocturno:</strong> Aplica aceite de argán en cutículas + codos + talones antes de dormir y ponte guantes de algodón fino. Basta con 10-15 minutos para que la absorción sea máxima — o puedes dejarlo toda la noche para un tratamiento intensivo.</p></div>
+
+      <h2>3. Sérum anti-encrespamiento para el cabello</h2>
+      <p>2-3 gotas distribuidas por el cabello húmedo (de medios a puntas) antes de secar sellan la cutícula, reducen el frizz y aportan brillo sin efecto graso. Para el cabello rizado, aumenta a 4-5 gotas y distribúyelas con el método plopping. Para el liso fino, una sola gota en las puntas es suficiente para evitar sobrecargarlo.</p>
+
+      <h2>4. Tratamiento de cicatrices y estrías</h2>
+      <p>El contenido en ácido linoleico y vitamina E del argán favorece la regeneración del tejido cutáneo. Los estudios en cosmética natural lo sitúan como uno de los aceites más eficaces para mejorar la textura y el color de cicatrices recientes (no queloides). Aplica en masaje circular sobre la zona 2 veces al día durante al menos 8 semanas — la constancia es más importante que la cantidad.</p>
+
+      <h2>5. Aceite corporal post-ducha en pieles secas</h2>
+      <p>Aplicado sobre la piel todavía húmeda tras la ducha (pat seco con la toalla, sin frotar), el argán se mezcla con el agua residual y penetra de forma muy uniforme. Esto es especialmente efectivo en zonas secas como rodillas, codos, espinillas y pies. El resultado es una hidratación más profunda y duradera que la de muchas cremas corporales convencionales.</p>
+    `,
+    productId: 4,
+    productName: 'Aceite de Argán Ecológico',
+    productCtaText: 'Aceite de Argán Ecológico Blue & Nat — prensado en frío, sin aditivos. Un solo producto, mil usos.'
+  },
+  41: {
+    cat: 'Cosmética',
+    date: '17 abril 2026',
+    read: '5 min lectura',
+    img: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=1200&h=630&fit=crop&q=85',
+    title: 'Rutina de noche minimalista con aceites naturales',
+    lead: '3 pasos, 2 productos y una piel transformada en 30 días. Sin química agresiva, sin 12 pasos, sin complicaciones.',
+    body: `
+      <h2>Por qué la noche es el mejor momento para los aceites</h2>
+      <p>Durante el sueño, la piel entra en fase de reparación activa: la renovación celular se acelera, la permeabilidad cutánea aumenta (lo que facilita la absorción de activos) y el flujo sanguíneo hacia la piel se intensifica. Es el momento en que los aceites naturales trabajan mejor — sin interferencia del sol, sin exposición a contaminación, con tiempo de sobra para penetrar.</p>
+
+      <h2>Paso 1: limpieza con el método oil cleansing</h2>
+      <p>El oil cleansing (limpieza con aceite) aprovende el principio químico "lo similar disuelve lo similar": un aceite disuelve mejor el sebo oxidado, el maquillaje a prueba de agua y los residuos de protector solar que cualquier gel de limpieza con tensioactivos agresivos. Aplica el aceite limpiador sobre cara seca, masajea durante 60 segundos y retira con agua tibia o una toallita húmeda. La piel queda limpia sin sensación de tirantez.</p>
+      <div class="tip-box"><p><strong>Qué aceite usar para limpiar:</strong> El aceite de girasol (linoleico alto) es ideal para pieles grasas o con tendencia acneica. El aceite de almendras dulces va bien para pieles normales-secas. El argán funciona para pieles maduras o muy secas.</p></div>
+
+      <h2>Paso 2: hidratación con sérum natural</h2>
+      <p>Tras la limpieza, sobre piel ligeramente húmeda, aplica 2-3 gotas de tu aceite de tratamiento y da pequeños toquecitos con las yemas de los dedos sin frotar. El calor de las manos activa los aceites y mejora la penetración. En pieles secas o maduras, el aceite de argán aplicado así es suficiente hidratante nocturno por sí solo — sin crema adicional.</p>
+
+      <h2>Paso 3: contorno de ojos (opcional pero muy eficaz)</h2>
+      <p>La piel del contorno de ojos es la más fina y la primera en mostrar deshidratación y líneas. Una gota de aceite de argán o de rosa mosqueta aplicada con el dedo anular (el que ejerce menos presión) desde el hueso orbital hacia dentro es suficiente. No acerques a la línea de las pestañas para evitar irritación ocular.</p>
+
+      <h2>Los 30 días de cambio: qué esperar</h2>
+      <p><strong>Semana 1-2:</strong> La piel puede producir más sebo al principio si estaba acostumbrada a cremas que resecaban en exceso — es un ajuste temporal. <strong>Semana 2-3:</strong> Mejora de la textura, reducción de la tirantez y primeros cambios en luminosidad. <strong>Semana 4:</strong> Hidratación estabilizada, tono más uniforme y reducción visible de líneas finas de deshidratación. Los cambios en arrugas establecidas requieren 60-90 días de constancia.</p>
+    `,
+    productId: 4,
+    productName: 'Aceite de Argán Ecológico',
+    productCtaText: 'Empieza tu rutina minimalista con el Aceite de Argán Ecológico de Blue & Nat.'
+  },
+  42: {
+    cat: 'Cosmética',
+    date: '10 abril 2026',
+    read: '4 min lectura',
+    img: 'https://images.unsplash.com/photo-1559181567-c3190bfa4d7e?w=1200&h=630&fit=crop&q=85',
+    title: 'Parabenos, sulfatos y siliconas: qué evitar y por qué',
+    lead: 'Guía práctica para leer etiquetas de cosmética y saber qué le estás poniendo realmente en la piel. Sin alarmismo, con criterio.',
+    body: `
+      <h2>El problema de no entender las etiquetas</h2>
+      <p>La lista INCI (International Nomenclature of Cosmetic Ingredients) de un cosmético puede tener 30, 40 o más ingredientes con nombres en latín o código químico. Sin formación específica, es imposible evaluar un producto solo por el frente del envase. Aprender a leer las 5-10 primeras posiciones de la lista y reconocer algunos ingredientes clave cambia completamente la capacidad de elegir.</p>
+
+      <h2>Parabenos: el susto más exagerado</h2>
+      <p>Los parabenos (methylparaben, propylparaben, butylparaben…) son conservantes muy eficaces con un largo historial de seguridad. La alarma surgió de un estudio de 2004 que los detectó en tejido mamario — pero el estudio no tenía grupo control, no estableció causalidad y fue ampliamente criticado. La EFSA y la FDA los consideran seguros en las concentraciones de uso cosmético. Dicho esto, existen alternativas igualmente eficaces (ácido benzoico, vitamina E, extracto de romero) y si prefieres evitarlos, es una elección válida.</p>
+      <div class="tip-box"><p><strong>Para identificarlos:</strong> cualquier ingrediente que termine en "-paraben" en la lista INCI es un parabeno. Los más comunes son methylparaben y propylparaben, que aparecen casi al final de la lista (concentraciones muy bajas).</p></div>
+
+      <h2>Sulfatos: el caso más justificado para evitar</h2>
+      <p>El sodium lauryl sulfate (SLS) y el sodium laureth sulfate (SLES) son tensioactivos que crean espuma y limpian. El problema: son demasiado eficaces — eliminan no solo la suciedad sino también los lípidos naturales de la piel. En piel sensible, atópica o con tendencia a la rosácea, los sulfatos provocan irritación, disrumpción de la barrera cutánea y empeoramiento de la condición. En piel normal y robusta, su impacto es menor. La alternativa son tensioactivos más suaves como el coco glucoside o el decyl glucoside.</p>
+
+      <h2>Siliconas: ni buenas ni malas, depende del uso</h2>
+      <p>Las siliconas (dimethicone, cyclopentasiloxane, amodimethicone…) crean una película sobre la piel o el cabello que suaviza, aporta brillo y facilita el peinado. No son tóxicas ni peligrosas, pero su uso continuado puede crear un efecto acumulativo en el cabello que requiere limpiezas más frecuentes. En piel, las siliconas de bajo peso molecular pueden penetrar y causar comedones en pieles propensas al acné. En piel madura o muy seca, ese mismo efecto oclusivo puede ser beneficioso.</p>
+
+      <h2>El criterio más útil: fíjate en la posición, no solo en el ingrediente</h2>
+      <p>En la lista INCI, los ingredientes aparecen en orden decreciente de concentración. Un sulfato en posición 15 de 25 ingredientes está en concentración mucho menor que si aparece en posición 2. Un parabeno siempre aparecerá en las últimas posiciones (conservante en dosis mínima). Aprender a estimar la concentración por la posición te da mucho más criterio que memorizar listas de ingredientes prohibidos.</p>
+    `,
+    productId: 5,
+    productName: 'Aceite Seco Nutritivo Reparador',
+    productCtaText: 'Cosmética limpia y certificada. Aceite Seco Nutritivo Reparador de Blue & Nat — sin parabenos, sin sulfatos.'
+  }
+};
+
+const RELATED_IMGS = {
+  1: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=400&h=280&fit=crop&q=80',
+  2: 'https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=400&h=280&fit=crop&q=80',
+  3: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=400&h=280&fit=crop&q=80',
+  10: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&h=280&fit=crop&q=80',
+  11: 'https://images.unsplash.com/photo-1610348725531-843dff563e2c?w=400&h=280&fit=crop&q=80',
+  12: 'https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=400&h=280&fit=crop&q=80',
+  20: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=400&h=280&fit=crop&q=80',
+  21: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=400&h=280&fit=crop&q=80',
+  22: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=400&h=280&fit=crop&q=80',
+  30: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=400&h=280&fit=crop&q=80',
+  31: 'https://images.unsplash.com/photo-1476611338391-6f395a0ebc7b?w=400&h=280&fit=crop&q=80',
+  32: 'https://images.unsplash.com/photo-1614935151651-0bea6508db6b?w=400&h=280&fit=crop&q=80',
+  40: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=400&h=280&fit=crop&q=80',
+  41: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=400&h=280&fit=crop&q=80',
+  42: 'https://images.unsplash.com/photo-1559181567-c3190bfa4d7e?w=400&h=280&fit=crop&q=80'
+};
+
+const id = parseInt(new URLSearchParams(location.search).get('id')) || 1;
+const a = ARTICLES[id] || ARTICLES[1];
+
+document.title = a.title + ' — Blog Blue & Nat';
+
+document.getElementById('article-root').innerHTML = `
+  <img class="hero-img" src="${a.img}" alt="${a.title}">
+  <div class="article-wrap">
+    <div class="article-meta">
+      <span class="article-cat">${a.cat}</span>
+      <span class="article-date">${a.date}</span>
+      <span class="article-read">${a.read}</span>
+    </div>
+    <h1>${a.title}</h1>
+    <p class="article-lead">${a.lead}</p>
+    <div class="article-body">${a.body}</div>
+  </div>
+
+  <div class="product-cta">
+    <div style="font-family:'DM Serif Display',serif;font-size:26px;color:#fff;margin-bottom:12px">${a.productCtaText}</div>
+    <p>Ingredientes naturales. Formulación certificada. Envío gratis desde 39 €.</p>
+    <a href="product.html?id=${a.productId}">Ver producto →</a>
+  </div>
+
+  <div class="related-posts">
+    <h3>Más artículos del blog</h3>
+    <div class="related-grid">
+      ${(()=>{
+        const sameCat = Object.entries(ARTICLES).filter(([k,r])=>parseInt(k)!==id && r.cat===a.cat).slice(0,3);
+        const others = Object.entries(ARTICLES).filter(([k,r])=>parseInt(k)!==id && r.cat!==a.cat);
+        const related = [...sameCat, ...others].slice(0,3);
+        return related.map(([k,r])=>`
+          <a class="related-card" href="blog-article.html?id=${k}">
+            <img src="${RELATED_IMGS[k]}" alt="${r.title}">
+            <div class="related-card-body">
+              <div class="related-card-cat">${r.cat} · ${r.read}</div>
+              <div class="related-card-title">${r.title}</div>
+            </div>
+          </a>`).join('');
+      })()}
+    </div>
+  </div>
+`;
+</script>
+<footer>
+  <div class="footer-brand">
+    <a href="bnspain-concept.html"><img src="assets/logo-raw.jpg" alt="Blue&Nat" style="height:44px;filter:invert(1);mix-blend-mode:screen;object-fit:contain"></a>
+    <p>Tienda especializada en nutrición natural, suplementos deportivos y cosmética ecológica certificada.</p>
+  </div>
+  <div><h5>Productos</h5><a href="deporte.html">Deporte & Energía</a><a href="suplementos.html">Suplementos</a><a href="cosmetica.html">Cosmética</a><a href="nutricion.html">Nutrición</a><a href="ofertas.html">Ofertas</a></div>
+  <div><h5>Empresa</h5><a href="sobre-nosotros.html">Sobre nosotros</a><a href="blog.html">Blog & Noticias</a><a href="contacto.html">Contacto</a><a href="contacto.html">Trabaja con nosotros</a></div>
+  <div><h5>Ayuda</h5><a href="envios.html">Envíos y entregas</a><a href="devoluciones.html">Devoluciones</a><a href="privacidad.html">Política de privacidad</a><a href="faq.html">Preguntas frecuentes</a></div>
+</footer>
+<div class="footer-bottom">© 2026 Blue & Nat Spain, S.L. — Todos los derechos reservados</div>
+</body>
+</html>

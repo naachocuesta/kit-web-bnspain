@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sobre nosotros — Blue & Nat</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0B1F3A;--gold:#C9A96E;--green:#2D6A4F;--bg:#F8F6F2;--surface:#FFFFFF;--text:#1A1A1A;--muted:#7A7A7A;--border:#E8E4DC;--radius:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;color:var(--text);background:var(--bg);-webkit-font-smoothing:antialiased}
+.topbar{background:var(--navy);text-align:center;padding:9px;font-size:11.5px;color:rgba(255,255,255,.75);letter-spacing:.6px;text-transform:uppercase}
+.topbar span{color:var(--gold);font-weight:600}
+header{padding:0 52px;height:64px;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);position:sticky;top:0;z-index:200;border-bottom:1px solid var(--border)}
+nav{display:flex;gap:32px}
+nav a{font-size:13px;font-weight:500;color:var(--muted);text-decoration:none;letter-spacing:.2px;transition:color .2s}
+nav a:hover{color:var(--navy)}
+.nav-dd{position:relative;display:inline-flex;align-items:center}
+.nav-dd>a::after{content:'▾';font-size:10px;opacity:.5;margin-left:3px;transition:transform .2s}
+.nav-dd:hover>a::after{transform:rotate(180deg)}
+.nav-dd-menu{position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%) translateY(-4px);background:#fff;border:1px solid var(--border);border-radius:10px;box-shadow:0 8px 28px rgba(0,0,0,.1);min-width:210px;padding:6px 0;z-index:300;opacity:0;visibility:hidden;transition:opacity .2s,transform .2s,visibility .2s;pointer-events:none}
+.nav-dd:hover .nav-dd-menu{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0);pointer-events:auto}
+.nav-dd-menu a{display:block;padding:8px 18px;font-size:13px;color:var(--muted);font-weight:400;white-space:nowrap;transition:.15s;border-bottom:none}
+.nav-dd-menu a:hover{color:var(--navy);background:var(--bg)}
+.nav-dd-menu--wide{min-width:480px;columns:2}
+.nav-dd-menu--wide a{break-inside:avoid;display:block}
+.nav-dd::after,.nav-item::after{content:'';position:absolute;top:100%;left:0;right:0;height:14px}
+.header-actions{display:flex;align-items:center;gap:20px}
+.cart-pill{display:flex;align-items:center;gap:8px;background:var(--navy);color:#fff;border:none;padding:9px 20px;border-radius:24px;cursor:pointer;font-size:13px;font-weight:600;letter-spacing:.2px;transition:.2s;font-family:'Inter',sans-serif;text-decoration:none}
+.cart-pill:hover{background:#1a3a60}
+.cart-dot{background:var(--gold);color:var(--navy);font-size:10px;font-weight:700;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;line-height:1}
+/* PAGE HERO */
+.page-hero{background:linear-gradient(135deg,#060e1c 0%,#0B1F3A 60%,#0f2d50 100%);padding:80px 52px 70px;text-align:center;position:relative;overflow:hidden}
+.page-hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%23ffffff' fill-opacity='0.025'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")}
+.page-hero-inner{max-width:680px;margin:0 auto;position:relative;z-index:2}
+.page-tag{display:inline-flex;align-items:center;gap:6px;background:rgba(201,169,110,.15);border:1px solid rgba(201,169,110,.3);color:var(--gold);font-size:10.5px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:5px 16px;border-radius:20px;margin-bottom:20px}
+.page-hero h1{font-family:'DM Serif Display',serif;font-size:52px;color:#fff;line-height:1.05;margin-bottom:16px;letter-spacing:-.5px}
+.page-hero h1 em{font-style:normal;color:var(--gold)}
+.page-hero p{font-size:16px;color:rgba(255,255,255,.6);line-height:1.7;font-weight:300}
+/* CONTENT */
+.content-wrap{max-width:860px;margin:0 auto;padding:72px 24px 100px}
+.section-label{font-size:10.5px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px}
+.section-title{font-family:'DM Serif Display',serif;font-size:34px;color:var(--navy);margin-bottom:20px;line-height:1.15}
+.lead-text{font-size:16px;color:#444;line-height:1.85;font-weight:300;margin-bottom:36px;border-left:3px solid var(--gold);padding-left:20px}
+.body-text{font-size:15px;color:#333;line-height:1.85;font-weight:300;margin-bottom:20px}
+.divider{border:none;border-top:1px solid var(--border);margin:52px 0}
+/* VALORES GRID */
+.values-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin:40px 0}
+.value-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:28px 24px}
+.value-icon{font-size:30px;margin-bottom:14px;display:block}
+.value-card h3{font-family:'DM Serif Display',serif;font-size:18px;color:var(--navy);margin-bottom:8px}
+.value-card p{font-size:13.5px;color:var(--muted);line-height:1.7;font-weight:300}
+/* EQUIPO */
+.team-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin:40px 0}
+.team-card{background:#fff;border:1px solid var(--border);border-radius:12px;overflow:hidden;display:flex;gap:20px;padding:24px;align-items:flex-start}
+.team-avatar{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--navy),#1a3a60);flex-shrink:0;display:flex;align-items:center;justify-content:center;color:#fff;font-family:'DM Serif Display',serif;font-size:22px}
+.team-name{font-size:15px;font-weight:600;color:var(--navy);margin-bottom:4px}
+.team-role{font-size:11.5px;font-weight:600;color:var(--gold);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px}
+.team-bio{font-size:13px;color:var(--muted);line-height:1.65;font-weight:300}
+/* STATS */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin:40px 0}
+.stat{background:#fff;padding:28px 20px;text-align:center}
+.stat-num{font-family:'DM Serif Display',serif;font-size:clamp(22px,3vw,38px);color:var(--navy);margin-bottom:4px;white-space:nowrap}
+.stat-label{font-size:12px;color:var(--muted);font-weight:400}
+/* CTA */
+.cta-band{background:var(--navy);border-radius:14px;padding:48px 40px;display:flex;align-items:center;justify-content:space-between;gap:24px;margin-top:52px}
+.cta-band h3{font-family:'DM Serif Display',serif;font-size:28px;color:#fff;margin-bottom:8px}
+.cta-band p{font-size:14px;color:rgba(255,255,255,.55);font-weight:300}
+.cta-btn{background:var(--gold);color:var(--navy);border:none;padding:14px 32px;border-radius:6px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;white-space:nowrap;text-decoration:none;display:inline-block;transition:.2s}
+.cta-btn:hover{background:#b8944f}
+/* FOOTER */
+footer{background:var(--navy);color:rgba(255,255,255,.55);padding:60px 52px 40px;display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:40px}
+.footer-brand p{font-size:13px;line-height:1.7;color:rgba(255,255,255,.45);font-weight:300;max-width:220px}
+footer h5{font-size:11px;font-weight:700;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:16px}
+footer a{display:block;font-size:13px;color:rgba(255,255,255,.55);text-decoration:none;margin-bottom:10px;transition:.15s;font-weight:300}
+footer a:hover{color:#fff}
+.footer-bottom{background:#071326;text-align:center;padding:16px;font-size:11.5px;color:rgba(255,255,255,.25);letter-spacing:.3px}
+@media(max-width:768px){
+  header{padding:0 20px}
+  .page-hero{padding:60px 20px 50px}
+  .page-hero h1{font-size:36px}
+  .values-grid{grid-template-columns:1fr}
+  .team-grid{grid-template-columns:1fr}
+  .stats-row{grid-template-columns:1fr 1fr}
+  .cta-band{flex-direction:column;text-align:center;padding:32px 24px}
+  footer{grid-template-columns:1fr;gap:28px;padding:48px 20px 32px}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">Envío gratuito en pedidos superiores a <span>39 €</span> · Entrega en 24–48 h · Devolución sin coste</div>
+
+<header>
+  <a href="bnspain-concept.html"><img src="assets/logo-raw.jpg" alt="Blue&Nat" style="height:44px;mix-blend-mode:multiply;object-fit:contain"></a>
+  <nav>
+    <div class="nav-dd">
+      <a href="deporte.html">Energía & Deporte</a>
+      <div class="nav-dd-menu">
+        <a href="deporte.html?cat=aminoacidos">Aminoácidos</a>
+        <a href="deporte.html?cat=proteina">Proteína</a>
+        <a href="deporte.html?cat=energia">Energía</a>
+        <a href="deporte.html?cat=recuperacion">Recuperación</a>
+        <a href="deporte.html?cat=definicion">Definición</a>
+        <a href="deporte.html?cat=hidratacion">Hidratación</a>
+      </div>
+    </div>
+    <div class="nav-dd">
+      <a href="suplementos.html">Suplementos</a>
+      <div class="nav-dd-menu">
+        <a href="suplementos.html?cat=omega">Omega & Ácidos</a>
+        <a href="suplementos.html?cat=vitaminas">Vitaminas</a>
+        <a href="suplementos.html?cat=colageno">Colágeno</a>
+        <a href="suplementos.html?cat=probioticos">Probióticos</a>
+        <a href="suplementos.html?cat=minerales">Minerales</a>
+      </div>
+    </div>
+    <div class="nav-dd">
+      <a href="cosmetica.html">Cosmética</a>
+      <div class="nav-dd-menu">
+        <a href="cosmetica.html?cat=aceite">Aceites</a>
+        <a href="cosmetica.html?cat=cara">Cara & Antienvejecimiento</a>
+        <a href="cosmetica.html?cat=cabello">Cabello</a>
+        <a href="cosmetica.html?cat=cuerpo">Cuerpo</a>
+      </div>
+    </div>
+    <div class="nav-dd">
+      <a href="nutricion.html">Nutrición</a>
+      <div class="nav-dd-menu">
+        <a href="nutricion.html?cat=adaptogenos">Adaptógenos</a>
+        <a href="nutricion.html?cat=semillas">Semillas & Cereales</a>
+        <a href="nutricion.html?cat=antioxidantes">Antioxidantes</a>
+        <a href="nutricion.html?cat=aceites">Aceites Nutricionales</a>
+      </div>
+    </div>
+    <a href="ofertas.html" style="color:var(--gold)">Ofertas</a>
+    <div class="nav-dd">
+      <a href="blog.html">Noticias</a>
+      <div class="nav-dd-menu">
+        <a href="blog.html">Artículos</a>
+        <a href="bnspain-concept.html#colaboraciones">Colaboraciones</a>
+      </div>
+    </div>
+  </nav>
+  <div class="header-actions">
+    <a href="cuenta.html" style="font-size:13px;color:var(--muted);text-decoration:none;font-weight:500">Mi cuenta</a>
+    <a href="cart.html" class="cart-pill" id="cart-btn">Carrito<div class="cart-dot" id="cart-count">0</div></a>
+  </div>
+</header>
+
+<section class="page-hero">
+  <div class="page-hero-inner">
+    <div class="page-tag">Nuestra historia</div>
+    <h1>Más que una tienda.<br><em>Un estilo de vida.</em></h1>
+    <p>Desde Guadalajara, llevamos más de 15 años ayudando a personas a cuidarse mejor con productos naturales de verdad.</p>
+  </div>
+</section>
+
+<div class="content-wrap">
+
+  <div class="section-label">Quiénes somos</div>
+  <h2 class="section-title">Blue & Nat nació de una necesidad real</h2>
+  <p class="lead-text">Hace más de 15 años, encontrar suplementos naturales de calidad certificada en Guadalajara era casi imposible. Las grandes superficies ofrecían opciones llenas de aditivos, y el asesoramiento era nulo. Blue & Nat cambió eso.</p>
+
+  <p class="body-text">Somos una tienda física especializada en nutrición natural, suplementos deportivos y cosmética ecológica. No vendemos todo lo que existe — seleccionamos lo que funciona, lo que está certificado y lo que nosotros mismos usaríamos. Cada producto que entra en la tienda pasa por una revisión de composición, origen y eficacia.</p>
+
+  <p class="body-text">Nos encontrarás en el centro de Guadalajara, en la calle Nuño Beltrán de Guzmán. Nuestra política es sencilla: si tienes dudas, pregunta. Sin presión, sin ventas agresivas — solo el consejo honesto que necesitas para elegir bien.</p>
+
+  <hr class="divider">
+
+  <div class="section-label">Lo que nos guía</div>
+  <h2 class="section-title">Nuestros valores</h2>
+
+  <div class="values-grid">
+    <div class="value-card">
+      <span class="value-icon">🌿</span>
+      <h3>Natural de verdad</h3>
+      <p>Solo trabajamos con marcas que usan ingredientes de origen natural, con certificaciones verificables y sin rellenos innecesarios.</p>
+    </div>
+    <div class="value-card">
+      <span class="value-icon">🔬</span>
+      <h3>Respaldo científico</h3>
+      <p>Cada producto que vendemos tiene eficacia demostrada. No vendemos tendencias — vendemos lo que la evidencia avala.</p>
+    </div>
+    <div class="value-card">
+      <span class="value-icon">🤝</span>
+      <h3>Asesoramiento honesto</h3>
+      <p>Si algo no encaja con lo que buscas, te lo decimos. Preferimos un cliente bien informado a una venta innecesaria.</p>
+    </div>
+    <div class="value-card">
+      <span class="value-icon">🌍</span>
+      <h3>Compromiso ecológico</h3>
+      <p>Priorizamos proveedores con prácticas sostenibles, envases reciclables y producción responsable con el entorno.</p>
+    </div>
+    <div class="value-card">
+      <span class="value-icon">📍</span>
+      <h3>Negocio local</h3>
+      <p>Somos una tienda de barrio, en el sentido más positivo. Conocemos a nuestros clientes y ellos nos conocen a nosotros.</p>
+    </div>
+    <div class="value-card">
+      <span class="value-icon">⭐</span>
+      <h3>Excelencia constante</h3>
+      <p>4,9 estrellas en Google no es un accidente — es el resultado de más de 15 años cuidando cada detalle de la experiencia de compra.</p>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section-label">El equipo</div>
+  <h2 class="section-title">Las personas detrás de Blue & Nat</h2>
+
+  <div class="team-grid">
+    <div class="team-card">
+      <div class="team-avatar">P</div>
+      <div>
+        <div class="team-name">Pedro</div>
+        <div class="team-role">Fundador &amp; Suplementación Deportiva</div>
+        <p class="team-bio">Experto en deporte y suplementación con más de 15 años de experiencia asesorando a deportistas y personas activas. Selecciona y prueba personalmente cada producto del catálogo deportivo antes de que entre en la tienda.</p>
+      </div>
+    </div>
+    <div class="team-card">
+      <div class="team-avatar">M</div>
+      <div>
+        <div class="team-name">Maite</div>
+        <div class="team-role">Cofundadora &amp; Cosmética Natural</div>
+        <p class="team-bio">Especialista en cosmética ecológica y cuidado de la piel. Analiza cada fórmula, cada ingrediente y cada proveedor antes de incorporar un producto al catálogo. Su criterio es el filtro de calidad de toda la línea cosmética.</p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section-label">En números</div>
+  <h2 class="section-title">Lo que hemos construido juntos</h2>
+
+  <div class="stats-row">
+    <div class="stat">
+      <div class="stat-num">250+</div>
+      <div class="stat-label">Productos en catálogo</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">+15 años</div>
+      <div class="stat-label">De experiencia</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">4.9★</div>
+      <div class="stat-label">Valoración media Google</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">60</div>
+      <div class="stat-label">Reseñas verificadas</div>
+    </div>
+  </div>
+
+  <div class="cta-band">
+    <div>
+      <h3>¿Tienes alguna pregunta?</h3>
+      <p>Estamos en la tienda de lunes a sábado. También puedes escribirnos o llamar.</p>
+    </div>
+    <a href="contacto.html" class="cta-btn">Contactar</a>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-brand">
+    <a href="bnspain-concept.html"><img src="assets/logo-raw.jpg" alt="Blue&Nat" style="height:44px;filter:invert(1);mix-blend-mode:screen;object-fit:contain"></a>
+    <p>Tienda especializada en nutrición natural, suplementos deportivos y cosmética ecológica certificada.</p>
+  </div>
+  <div><h5>Productos</h5><a href="deporte.html">Deporte &amp; Energía</a><a href="suplementos.html">Suplementos</a><a href="cosmetica.html">Cosmética</a><a href="nutricion.html">Nutrición</a><a href="ofertas.html">Ofertas</a></div>
+  <div><h5>Empresa</h5><a href="sobre-nosotros.html">Sobre nosotros</a><a href="blog.html">Blog &amp; Noticias</a><a href="contacto.html">Contacto</a><a href="contacto.html">Trabaja con nosotros</a></div>
+  <div><h5>Ayuda</h5><a href="envios.html">Envíos y entregas</a><a href="devoluciones.html">Devoluciones</a><a href="privacidad.html">Política de privacidad</a><a href="faq.html">Preguntas frecuentes</a></div>
+</footer>
+<div class="footer-bottom">© 2026 Blue &amp; Nat Spain, S.L. — Todos los derechos reservados</div>
+
+<script>
+function updateCartCount(){try{const r=JSON.parse(localStorage.getItem('bn_cart')||'[]');const c=Array.isArray(r)?r.filter(i=>i&&i.id!=null&&parseFloat(i.price)>0&&parseInt(i.qty)>0):[];document.getElementById('cart-count').textContent=c.reduce((a,i)=>a+parseInt(i.qty),0);}catch(e){document.getElementById('cart-count').textContent=0;}}
+updateCartCount();
+</script>
+</body>
+</html>

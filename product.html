@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Producto — Blue & Nat</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0B1F3A;--gold:#C9A96E;--green:#2D6A4F;--bg:#F8F6F2;--border:#E8E4DC;--muted:#7A7A7A}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:#1A1A1A;-webkit-font-smoothing:antialiased}
+
+/* ── TOPBAR & HEADER ── */
+.topbar{background:var(--navy);text-align:center;padding:9px;font-size:11.5px;color:rgba(255,255,255,.75);letter-spacing:.6px;text-transform:uppercase}
+.topbar span{color:var(--gold);font-weight:600}
+header{padding:0 52px;height:64px;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);position:sticky;top:0;z-index:200;border-bottom:1px solid var(--border)}
+.header-actions{display:flex;align-items:center;gap:20px}
+.cart-pill{display:flex;align-items:center;gap:8px;background:var(--navy);color:#fff;border:none;padding:9px 20px;border-radius:24px;cursor:pointer;font-size:13px;font-weight:600;font-family:'Inter',sans-serif;text-decoration:none}
+.cart-dot{background:var(--gold);color:var(--navy);font-size:10px;font-weight:700;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+
+/* ── BREADCRUMB ── */
+.breadcrumb{padding:14px 52px;font-size:12px;color:var(--muted);max-width:1304px;margin:0 auto}
+.breadcrumb a{color:var(--muted);text-decoration:none}
+.breadcrumb a:hover{color:var(--navy)}
+.breadcrumb span.sep{margin:0 6px;opacity:.4}
+
+/* ── PRODUCT GRID ── */
+.product-wrap{display:grid;grid-template-columns:1fr 1fr;gap:64px;padding:24px 52px 80px;max-width:1200px;margin:0 auto;align-items:start}
+
+/* ── IMAGE COLUMN ── */
+.product-image-col{position:sticky;top:80px}
+.product-image{background:#fff;border-radius:16px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;min-height:480px;overflow:hidden;position:relative}
+.product-image img{width:100%;max-height:480px;object-fit:contain;padding:36px;transition:.3s ease}
+.product-image:hover img{transform:scale(1.04)}
+.discount-badge{position:absolute;top:16px;left:16px;background:var(--green);color:#fff;font-size:11px;font-weight:700;padding:5px 12px;border-radius:20px;letter-spacing:.3px}
+.image-thumbs{display:flex;gap:8px;margin-top:10px}
+.thumb{width:60px;height:60px;background:#fff;border-radius:8px;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;overflow:hidden;transition:.15s}
+.thumb.active{border-color:var(--navy)}
+.thumb img{width:100%;height:100%;object-fit:contain;padding:6px}
+
+/* ── INFO COLUMN ── */
+.product-info{padding-top:4px}
+.prod-cat{font-size:11px;font-weight:600;color:var(--green);text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px}
+.prod-name{font-family:'DM Serif Display',serif;font-size:34px;color:var(--navy);line-height:1.18;margin-bottom:12px}
+.prod-stars{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.stars{font-size:14px;color:#F59E0B}
+.review-count{font-size:13px;color:var(--muted);text-decoration:underline;cursor:pointer}
+.review-count:hover{color:var(--navy)}
+.stock-pill{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:500;color:#166534;background:#dcfce7;padding:4px 12px;border-radius:20px;margin-bottom:16px}
+.stock-dot{width:6px;height:6px;background:#16a34a;border-radius:50%;flex-shrink:0}
+.price-row{display:flex;align-items:baseline;gap:12px;margin-bottom:4px}
+.prod-price{font-size:32px;font-weight:700;color:var(--navy)}
+.prod-price-old{font-size:18px;color:var(--muted);text-decoration:line-through;font-weight:400}
+.prod-saving{font-size:13px;font-weight:600;color:var(--green);background:#e8f2ec;padding:3px 10px;border-radius:12px}
+.prod-tax{font-size:12px;color:var(--muted);margin-bottom:24px}
+
+/* ── BENEFITS ── */
+.benefits-box{border:1px solid var(--border);border-radius:12px;padding:18px 20px;margin-bottom:24px;background:#fff}
+.benefits-label{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.9px;margin-bottom:12px}
+.benefit-row{display:flex;align-items:flex-start;gap:10px;padding:7px 0;border-bottom:1px solid var(--border)}
+.benefit-row:last-child{border-bottom:none;padding-bottom:0}
+.benefit-row:first-of-type{padding-top:0}
+.benefit-icon{font-size:15px;flex-shrink:0;margin-top:2px}
+.benefit-text{font-size:13px;color:#444;line-height:1.55}
+.benefit-text strong{color:var(--navy);font-weight:600;display:block;margin-bottom:1px}
+
+/* ── CTA SECTION ── */
+.divider{border:none;border-top:1px solid var(--border);margin:20px 0}
+.qty-label{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+.qty-row{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.qty-ctrl{display:flex;align-items:center;border:1px solid var(--border);border-radius:8px;overflow:hidden;background:#fff}
+.qty-ctrl button{width:40px;height:44px;background:transparent;border:none;font-size:18px;cursor:pointer;color:var(--navy);transition:.15s}
+.qty-ctrl button:hover{background:var(--bg)}
+.qty-ctrl span{width:40px;text-align:center;font-size:15px;font-weight:600}
+.add-cart-btn{flex:1;background:var(--navy);color:#fff;border:none;padding:0 28px;height:52px;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:.2s;letter-spacing:.2px}
+.add-cart-btn:hover{background:#1a3a60}
+.add-cart-btn.added{background:var(--green)}
+.buy-now-btn{width:100%;background:var(--gold);color:var(--navy);border:none;height:52px;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;transition:.2s;letter-spacing:.2px}
+.buy-now-btn:hover{background:#b8944f}
+
+/* ── TRUST BADGES ── */
+.trust-row{display:flex;gap:0;margin-top:18px;border:1px solid var(--border);border-radius:10px;overflow:hidden;background:#fff}
+.trust-item{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:12px 8px;font-size:11px;color:#555;font-weight:500;text-align:center;border-right:1px solid var(--border);line-height:1.3}
+.trust-item:last-child{border-right:none}
+.trust-item .ti-icon{font-size:18px}
+
+/* ── TAGS ── */
+.prod-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:18px}
+.tag{font-size:11px;font-weight:500;color:var(--muted);background:#fff;border:1px solid var(--border);padding:4px 12px;border-radius:20px}
+
+/* ── PAGE WRAPPER para secciones full-width ── */
+.section-wrapper{max-width:1200px;margin:0 auto;padding:0 52px}
+
+/* ── REVIEWS ── */
+.reviews-outer{padding:56px 0 0;background:var(--bg)}
+.reviews-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:28px}
+.reviews-header h3{font-family:'DM Serif Display',serif;font-size:26px;color:var(--navy)}
+.reviews-summary{display:flex;align-items:center;gap:16px}
+.reviews-big-score{font-size:48px;font-weight:700;color:var(--navy);line-height:1}
+.reviews-meta{display:flex;flex-direction:column;gap:2px}
+.reviews-meta .stars-lg{font-size:18px;color:#F59E0B}
+.reviews-meta span{font-size:13px;color:var(--muted)}
+.reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:52px}
+.review-card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:20px}
+.review-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.reviewer-name{font-size:13px;font-weight:600;color:var(--navy)}
+.review-stars{font-size:13px;color:#F59E0B}
+.review-badge{font-size:10px;font-weight:600;color:var(--green);background:#e8f2ec;padding:3px 9px;border-radius:10px;margin-bottom:10px;display:inline-block}
+.review-text{font-size:13.5px;color:#444;line-height:1.65}
+.review-date{font-size:11px;color:var(--muted);margin-top:10px}
+.review-helpful{font-size:11px;color:var(--muted);margin-top:8px;cursor:pointer}
+.review-helpful:hover{color:var(--navy)}
+
+/* ── PACK UPSELL ── */
+.pack-section{background:linear-gradient(135deg,#0B1F3A,#152d52);padding:56px 0}
+
+/* ── RELATED ── */
+.related{padding:56px 0;background:#fff;border-top:1px solid var(--border)}
+.related h2{font-family:'DM Serif Display',serif;font-size:26px;color:var(--navy);margin-bottom:28px}
+.related-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.card{background:var(--bg);border:1px solid var(--border);border-radius:12px;overflow:hidden;cursor:pointer;transition:.2s;text-decoration:none;color:inherit;display:block}
+.card:hover{box-shadow:0 8px 28px rgba(0,0,0,.09);transform:translateY(-3px)}
+.card-thumb{height:140px;display:flex;align-items:center;justify-content:center;background:#fff}
+.card-thumb img{width:100%;height:100%;object-fit:contain;padding:14px}
+.card-body{padding:12px 14px 14px}
+.card-cat{font-size:10px;font-weight:600;color:var(--green);text-transform:uppercase;letter-spacing:.6px}
+.card-name{font-size:13px;font-weight:600;color:var(--navy);margin:3px 0 6px;line-height:1.3}
+.card-price{font-size:15px;font-weight:700;color:var(--navy)}
+.card-stars{font-size:11px;color:#F59E0B;margin-bottom:4px}
+
+/* ── MOBILE STICKY CTA ── */
+.sticky-cta{display:none;position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--border);padding:12px 16px;z-index:300;box-shadow:0 -4px 20px rgba(0,0,0,.1)}
+.sticky-cta-inner{display:flex;align-items:center;gap:12px}
+.sticky-cta-info{flex:1;min-width:0}
+.sticky-cta-name{font-size:13px;font-weight:600;color:var(--navy);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sticky-cta-price{font-size:15px;font-weight:700;color:var(--navy)}
+.sticky-cta-btn{background:var(--navy);color:#fff;border:none;padding:0 20px;height:46px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;white-space:nowrap}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:28px;right:28px;background:var(--navy);color:#fff;padding:14px 22px;border-radius:10px;font-size:13px;font-weight:500;z-index:999;transform:translateY(80px);opacity:0;transition:all .3s cubic-bezier(.34,1.56,.64,1);pointer-events:none;display:flex;align-items:center;gap:10px;border-left:3px solid var(--gold);box-shadow:0 8px 28px rgba(0,0,0,.2)}
+.toast.show{transform:translateY(0);opacity:1}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .related-grid{grid-template-columns:repeat(2,1fr)}
+  .reviews-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:768px){
+  header{padding:0 16px;height:56px}
+  .breadcrumb{padding:10px 16px}
+  .product-wrap{grid-template-columns:1fr;gap:0;padding:0 0 80px}
+  .product-image-col{position:static}
+  .product-image{border-radius:0;border-left:none;border-right:none;min-height:300px}
+  .product-image img{max-height:300px}
+  .image-thumbs{padding:0 16px}
+  .product-info{padding:24px 16px 0}
+  .prod-name{font-size:26px}
+  .prod-price{font-size:26px}
+  .qty-row{flex-wrap:nowrap}
+  .add-cart-btn{flex:1;min-width:0;padding:0 16px;font-size:14px}
+  .trust-row{flex-wrap:wrap}
+  .trust-item{min-width:calc(50% - 1px);border-bottom:1px solid var(--border)}
+  .trust-item:nth-child(3){border-bottom:none}
+  .trust-item:nth-child(4){border-bottom:none}
+  .section-wrapper{padding:0 16px}
+  .reviews-header{flex-direction:column;align-items:flex-start;gap:16px}
+  .reviews-grid{grid-template-columns:1fr}
+  .pack-section{padding:36px 0}
+  .related{padding:36px 0}
+  .related-grid{grid-template-columns:repeat(2,1fr);gap:10px}
+  .sticky-cta{display:block}
+  .toast{left:16px;right:16px;bottom:72px}
+  footer{grid-template-columns:1fr;gap:28px;padding:48px 20px 32px}
+}
+footer{background:#0B1F3A;color:rgba(255,255,255,.55);padding:60px 52px 40px;display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:40px}
+.footer-brand p{font-size:13px;line-height:1.7;color:rgba(255,255,255,.45);font-weight:300;max-width:220px;margin-top:14px}
+footer h5{font-size:11px;font-weight:700;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:16px}
+footer a{display:block;font-size:13px;color:rgba(255,255,255,.55);text-decoration:none;margin-bottom:10px;transition:.15s;font-weight:300}
+footer a:hover{color:#fff}
+.footer-bottom{background:#071326;text-align:center;padding:16px;font-size:11.5px;color:rgba(255,255,255,.25);letter-spacing:.3px}
+</style>
+</head>
+<body>
+
+<div class="topbar">Envío gratuito desde <span>39 €</span> · Entrega 24–48 h · Devolución gratuita</div>
+
+<header>
+  <a href="bnspain-concept.html"><img src="assets/logo-raw.jpg" alt="Blue&Nat" style="height:44px;mix-blend-mode:multiply;object-fit:contain"></a>
+  <div class="header-actions">
+    <a href="bnspain-concept.html" style="font-size:13px;color:var(--muted);text-decoration:none;font-weight:500">← Volver</a>
+    <a href="cart.html" class="cart-pill">Carrito <div class="cart-dot" id="cart-count">0</div></a>
+  </div>
+</header>
+
+<div class="breadcrumb">
+  <a href="bnspain-concept.html">Inicio</a>
+  <span class="sep">/</span>
+  <span id="bc-cat"></span>
+  <span class="sep">/</span>
+  <span id="bc-name" style="color:var(--navy);font-weight:500"></span>
+</div>
+
+<!-- ── PRODUCTO PRINCIPAL ── -->
+<div class="product-wrap">
+
+  <!-- IMAGEN -->
+  <div class="product-image-col">
+    <div class="product-image" id="prod-image-wrap">
+      <div class="discount-badge" id="prod-discount-badge" style="display:none"></div>
+      <img id="prod-img" src="" alt="">
+    </div>
+    <div class="image-thumbs" id="image-thumbs"></div>
+  </div>
+
+  <!-- INFO -->
+  <div class="product-info">
+    <div class="prod-cat" id="prod-cat"></div>
+    <div class="prod-name" id="prod-name"></div>
+
+    <div class="prod-stars">
+      <span class="stars" id="prod-stars"></span>
+      <span class="review-count" id="prod-reviews" onclick="document.getElementById('reviews-anchor').scrollIntoView({behavior:'smooth'})"></span>
+    </div>
+
+    <div class="stock-pill" id="prod-stock">
+      <span class="stock-dot"></span>
+      <span id="stock-text"></span>
+    </div>
+
+    <div class="price-row">
+      <div class="prod-price" id="prod-price"></div>
+      <div class="prod-price-old" id="prod-price-old" style="display:none"></div>
+      <div class="prod-saving" id="prod-saving" style="display:none"></div>
+    </div>
+    <div class="prod-tax">IVA incluido · <span style="color:var(--green);font-weight:500">Envío gratis</span> en pedidos +39 €</div>
+
+    <!-- BENEFICIOS -->
+    <div class="benefits-box" id="prod-benefits"></div>
+
+    <!-- CTA -->
+    <hr class="divider">
+    <div class="qty-label">Cantidad</div>
+    <div class="qty-row">
+      <div class="qty-ctrl">
+        <button onclick="changeQty(-1)" aria-label="Reducir">−</button>
+        <span id="qty">1</span>
+        <button onclick="changeQty(1)" aria-label="Aumentar">+</button>
+      </div>
+      <button class="add-cart-btn" id="add-btn" onclick="addToCart()">Añadir al carrito</button>
+    </div>
+    <button class="buy-now-btn" onclick="buyNow()">Comprar ahora</button>
+
+    <!-- TRUST BADGES -->
+    <div class="trust-row">
+      <div class="trust-item"><span class="ti-icon">🔒</span>Pago seguro</div>
+      <div class="trust-item"><span class="ti-icon">🚚</span>Envío 24–48h</div>
+      <div class="trust-item"><span class="ti-icon">↩️</span>Devolución gratis</div>
+      <div class="trust-item"><span class="ti-icon">🌿</span>100% natural</div>
+    </div>
+
+    <!-- TAGS -->
+    <div class="prod-tags" id="prod-tags"></div>
+  </div>
+</div>
+
+<!-- ── RESEÑAS ── -->
+<div class="reviews-outer" id="reviews-anchor">
+  <div class="section-wrapper">
+    <div class="reviews-header">
+      <h3>Lo que dicen nuestros clientes</h3>
+      <div class="reviews-summary">
+        <div class="reviews-big-score" id="reviews-score"></div>
+        <div class="reviews-meta">
+          <span class="stars-lg" id="reviews-stars"></span>
+          <span id="reviews-count-label"></span>
+          <span style="font-size:11px;color:var(--green);font-weight:600">Compras verificadas</span>
+        </div>
+      </div>
+    </div>
+    <div class="reviews-grid" id="reviews-grid"></div>
+  </div>
+</div>
+
+<!-- ── PACK UPSELL ── -->
+<div class="pack-section">
+  <div class="section-wrapper">
+    <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(201,169,110,.18);border:1px solid rgba(201,169,110,.4);color:var(--gold);font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:4px 14px;border-radius:20px;margin-bottom:18px">Oferta especial · Ahorra un 15%</div>
+    <div style="font-family:'DM Serif Display',serif;font-size:28px;color:#fff;margin-bottom:8px">Combínalos y ahorra</div>
+    <p style="font-size:14px;color:rgba(255,255,255,.55);margin-bottom:32px;font-weight:300;max-width:520px">Los clientes que compraron este producto también llevan estos. Ahorra un 15% cuando los compras juntos.</p>
+    <div id="pack-items" style="display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin-bottom:28px"></div>
+    <div style="display:flex;align-items:center;gap:28px;flex-wrap:wrap">
+      <div>
+        <div style="font-size:13px;color:rgba(255,255,255,.45);text-decoration:line-through;margin-bottom:2px" id="pack-old"></div>
+        <div style="font-size:30px;font-weight:700;color:#fff;line-height:1" id="pack-price"></div>
+        <div style="font-size:12px;color:var(--gold);font-weight:600;margin-top:4px">15% de descuento aplicado automáticamente</div>
+      </div>
+      <button onclick="addPack()" style="background:var(--gold);color:var(--navy);border:none;padding:15px 36px;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;transition:.2s">Añadir pack al carrito</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── PRODUCTOS RELACIONADOS ── -->
+<div class="related">
+  <div class="section-wrapper">
+    <h2>También te puede interesar</h2>
+    <div class="related-grid" id="related-grid"></div>
+  </div>
+</div>
+
+<!-- ── MOBILE STICKY CTA ── -->
+<div class="sticky-cta" id="sticky-cta">
+  <div class="sticky-cta-inner">
+    <div class="sticky-cta-info">
+      <div class="sticky-cta-name" id="sticky-name"></div>
+      <div class="sticky-cta-price" id="sticky-price"></div>
+    </div>
+    <button class="sticky-cta-btn" onclick="addToCart()">Añadir al carrito</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"><span style="color:var(--gold)">✓</span><span id="toast-text">Añadido</span></div>
+
+<script>
+const PRODUCTS = {
+  1:{
+    id:1, name:'B-15 Cisty Stop', cat:'Suplementos', icon:'💧',
+    image:'https://www.bnspain.com/wp-content/uploads/2025/09/15-Cisty-Stop-small-600x600.png',
+    price:13.00, oldPrice:null, stars:'★★★★★', reviews:91, score:'4.9',
+    stock:'En stock · Envío hoy si pides antes de las 14:00',
+    tags:['Apto veganos','Sin ingredientes animales','1 cápsula/día','Natural'],
+    benefits:[
+      {icon:'💧', title:'Bienestar urinario', text:'Extractos de Borraja, Gayuba y Tomillo formulados para apoyar el tracto urinario de forma natural.'},
+      {icon:'🌿', title:'100% natural y vegano', text:'Sin ingredientes animales, sin colorantes ni conservantes. Solo lo que necesitas.'},
+      {icon:'⚡', title:'Fácil de tomar', text:'Una sola cápsula al día con agua. Sin sabores fuertes, sin molestias digestivas.'}
+    ],
+    testimonials:[
+      {name:'María G.', stars:'★★★★★', badge:'Compra verificada', text:'Llevaba meses con molestias y en dos semanas noté una diferencia enorme. Ya lo he recomendado a varias amigas.', date:'Marzo 2025'},
+      {name:'Laura M.', stars:'★★★★★', badge:'Compra verificada', text:'Producto totalmente natural y muy efectivo. El envío llegó en menos de 24 horas, perfectamente embalado.', date:'Febrero 2025'},
+      {name:'Ana R.', stars:'★★★★☆', badge:'Compra verificada', text:'Muy satisfecha con el resultado. Lo tomo cada mañana con el desayuno y ya forma parte de mi rutina.', date:'Enero 2025'}
+    ]
+  },
+  2:{
+    id:2, name:'Maca: El Secreto de los Incas', cat:'Suplementos', icon:'🌿',
+    image:'https://www.bnspain.com/wp-content/uploads/2025/09/maca.jpg',
+    price:19.95, oldPrice:null, stars:'★★★★★', reviews:67, score:'4.8',
+    stock:'En stock · Más de 50 unidades disponibles',
+    tags:['4000 mg maca','Cápsulas vegetales','Energía & vitalidad','Apto veganos'],
+    benefits:[
+      {icon:'⚡', title:'Energía sostenida', text:'4000 mg de maca pura por dosis para un rendimiento físico y mental óptimo durante todo el día.'},
+      {icon:'💪', title:'Vitalidad & resistencia', text:'Valorada en los Andes durante siglos para combatir la fatiga y mejorar el aguante físico.'},
+      {icon:'🌱', title:'Cápsulas 100% vegetales', text:'Apta para veganos. Sin gluten, sin aditivos artificiales. Solo raíz de maca pura.'}
+    ],
+    testimonials:[
+      {name:'Carlos P.', stars:'★★★★★', badge:'Compra verificada', text:'Llevo tomándola 3 meses y el cambio en mi energía es notable. Antes necesitaba café a media mañana, ahora no.', date:'Marzo 2025'},
+      {name:'Sofía T.', stars:'★★★★★', badge:'Compra verificada', text:'La tomo antes del gym y noto mucha más fuerza y aguante. Producto de calidad a un precio muy razonable.', date:'Febrero 2025'},
+      {name:'David L.', stars:'★★★★☆', badge:'Compra verificada', text:'Llevo siguiendo los resultados semana a semana y la mejoría es clara. Muy buena calidad.', date:'Enero 2025'}
+    ]
+  },
+  3:{
+    id:3, name:'Omega 3 6 9', cat:'Suplementos', icon:'🐟',
+    image:'https://www.bnspain.com/wp-content/uploads/2025/09/omega-369-small-600x600.png',
+    price:20.50, oldPrice:null, stars:'★★★★★', reviews:118, score:'4.9',
+    stock:'En stock · Más vendido de la categoría',
+    tags:['EPA + DHA','Vitamina E','Corazón & cerebro','Sin gluten'],
+    benefits:[
+      {icon:'❤️', title:'Salud cardiovascular', text:'EPA y DHA contribuyen al funcionamiento normal del corazón y al mantenimiento de la presión sanguínea.'},
+      {icon:'🧠', title:'Cerebro & concentración', text:'El DHA apoya el mantenimiento de la función cerebral normal en adultos y en el desarrollo infantil.'},
+      {icon:'✨', title:'Piel & articulaciones', text:'Vitamina E antioxidante y Omega 6 para una piel hidratada y unas articulaciones ágiles.'}
+    ],
+    testimonials:[
+      {name:'Roberto S.', stars:'★★★★★', badge:'Compra verificada', text:'Mi médico me lo recomendó y la diferencia en mis analíticas es notable. Calidad y precio inmejorables.', date:'Marzo 2025'},
+      {name:'Elena V.', stars:'★★★★★', badge:'Compra verificada', text:'Tomo Omega todos los días desde hace un año. Mi piel ha mejorado muchísimo y me noto con más energía.', date:'Febrero 2025'},
+      {name:'Jorge M.', stars:'★★★★★', badge:'Compra verificada', text:'Excelente relación calidad-precio. Las cápsulas no tienen sabor a pescado, algo que agradezco mucho.', date:'Enero 2025'}
+    ]
+  },
+  4:{
+    id:4, name:'Aceite de Argán Ecológico', cat:'Cosmética', icon:'✨',
+    image:'https://www.bnspain.com/wp-content/uploads/2025/09/aceite-argan-ecologico-blue-nat-premium-600x600.jpg',
+    price:17.90, oldPrice:26.90, stars:'★★★★★', reviews:73, score:'4.9',
+    stock:'¡Oferta limitada! Últimas unidades al precio especial',
+    tags:['Certificado BIO','100% puro','Sin parabenos','Cruelty-free'],
+    benefits:[
+      {icon:'✨', title:'Extracción en frío', text:'Prensado en frío que preserva todos los ácidos grasos y vitamina E activos del aceite de argán.'},
+      {icon:'🌸', title:'Certificado BIO & cruelty-free', text:'Certificado ecológico, sin parabenos, sin sulfatos y sin test en animales. Ético y efectivo.'},
+      {icon:'💆', title:'Uso múltiple', text:'Cara, cuerpo y cabello. Un solo producto para toda tu rutina de cuidado diaria.'}
+    ],
+    testimonials:[
+      {name:'Patricia N.', stars:'★★★★★', badge:'Compra verificada', text:'Mi pelo estaba muy dañado y tras tres semanas usándolo lo noto completamente diferente. Una pasada.', date:'Marzo 2025'},
+      {name:'Isabel C.', stars:'★★★★★', badge:'Compra verificada', text:'Lo uso como sérum facial por las noches y mi piel está radiante. Sin duda el mejor aceite que he probado.', date:'Febrero 2025'},
+      {name:'Marta F.', stars:'★★★★☆', badge:'Compra verificada', text:'Calidad excelente. El certificado ecológico me da mucha confianza. Ya lo he pedido por tercera vez.', date:'Enero 2025'}
+    ]
+  },
+  5:{
+    id:5, name:'Aceite Seco Nutritivo Reparador', cat:'Cosmética', icon:'🧴',
+    image:'https://www.bnspain.com/wp-content/uploads/2025/09/aceite-seco-small-600x600.png',
+    price:24.50, oldPrice:null, stars:'★★★★☆', reviews:54, score:'4.7',
+    stock:'En stock · Envío hoy si pides antes de las 14:00',
+    tags:['Absorción rápida','Aceites naturales','Cara & cuerpo','Sin sulfatos'],
+    benefits:[
+      {icon:'⚡', title:'Absorción ultrarrápida', text:'Textura seca que se absorbe en segundos. Sin sensación grasa ni pegajosa en ningún momento.'},
+      {icon:'🌰', title:'Aceites naturales premium', text:'Almendra, pepita de uva y girasol. Ingredientes que la piel reconoce y aprovecha al máximo.'},
+      {icon:'🌞', title:'Ritual diario sencillo', text:'Mañana y noche. Cara, cuerpo o cabello seco. Un solo producto para simplificar tu rutina.'}
+    ],
+    testimonials:[
+      {name:'Claudia R.', stars:'★★★★★', badge:'Compra verificada', text:'Llevo un mes usándolo y mi piel está súper hidratada. Lo mejor es que no deja nada de grasa.', date:'Marzo 2025'},
+      {name:'Nuria B.', stars:'★★★★☆', badge:'Compra verificada', text:'Me lo recomendó una amiga y fue un acierto total. La textura es perfecta para el verano.', date:'Febrero 2025'},
+      {name:'Alicia D.', stars:'★★★★★', badge:'Compra verificada', text:'Calidad increíble para el precio. Ya he pedido 3 botes y siempre llega en tiempo récord.', date:'Enero 2025'}
+    ]
+  }
+};
+
+const params = new URLSearchParams(location.search);
+const id = parseInt(params.get('id')) || 1;
+const p = PRODUCTS[id];
+let qty = 1;
+
+function render(){
+  document.title = p.name + ' — Blue & Nat';
+
+  // breadcrumb
+  document.getElementById('bc-cat').textContent = p.cat;
+  document.getElementById('bc-name').textContent = p.name;
+
+  // imagen principal
+  const img = document.getElementById('prod-img');
+  img.src = p.image;
+  img.alt = p.name;
+
+  // badge de descuento
+  if(p.oldPrice){
+    const pct = Math.round((1 - p.price / p.oldPrice) * 100);
+    const badge = document.getElementById('prod-discount-badge');
+    badge.textContent = '−' + pct + '%';
+    badge.style.display = '';
+  }
+
+  // thumbs (la misma imagen como única miniatura por ahora)
+  document.getElementById('image-thumbs').innerHTML = `
+    <div class="thumb active"><img src="${p.image}" alt="${p.name}"></div>`;
+
+  // info
+  document.getElementById('prod-cat').textContent = p.cat;
+  document.getElementById('prod-name').textContent = p.name;
+  document.getElementById('prod-stars').textContent = p.stars;
+  document.getElementById('prod-reviews').textContent = p.reviews + ' reseñas verificadas';
+  document.getElementById('stock-text').textContent = p.stock;
+
+  // precio
+  document.getElementById('prod-price').textContent = '€' + p.price.toFixed(2);
+  if(p.oldPrice){
+    document.getElementById('prod-price-old').textContent = '€' + p.oldPrice.toFixed(2);
+    document.getElementById('prod-price-old').style.display = '';
+    const saving = (p.oldPrice - p.price).toFixed(2);
+    document.getElementById('prod-saving').textContent = 'Ahorras €' + saving;
+    document.getElementById('prod-saving').style.display = '';
+  }
+
+  // beneficios
+  document.getElementById('prod-benefits').innerHTML = `
+    <div class="benefits-label">Por qué funciona</div>
+    ${p.benefits.map(b => `
+    <div class="benefit-row">
+      <div class="benefit-icon">${b.icon}</div>
+      <div class="benefit-text"><strong>${b.title}</strong>${b.text}</div>
+    </div>`).join('')}`;
+
+  // tags
+  document.getElementById('prod-tags').innerHTML = p.tags.map(t => `<span class="tag">${t}</span>`).join('');
+
+  // sticky mobile
+  document.getElementById('sticky-name').textContent = p.name;
+  document.getElementById('sticky-price').textContent = '€' + p.price.toFixed(2);
+
+  // reseñas
+  document.getElementById('reviews-score').textContent = p.score;
+  document.getElementById('reviews-stars').textContent = p.stars;
+  document.getElementById('reviews-count-label').textContent = p.reviews + ' reseñas';
+  document.getElementById('reviews-grid').innerHTML = p.testimonials.map(r => `
+    <div class="review-card">
+      <div class="review-top">
+        <span class="reviewer-name">${r.name}</span>
+        <span class="review-stars">${r.stars}</span>
+      </div>
+      <span class="review-badge">${r.badge}</span>
+      <div class="review-text">"${r.text}"</div>
+      <div class="review-date">${r.date}</div>
+      <div class="review-helpful">¿Te ha resultado útil? Sí · No</div>
+    </div>`).join('');
+
+  // relacionados
+  const others = Object.values(PRODUCTS).filter(x => x.id !== id).slice(0, 4);
+  document.getElementById('related-grid').innerHTML = others.map(x => `
+    <a class="card" href="product.html?id=${x.id}">
+      <div class="card-thumb"><img src="${x.image}" alt="${x.name}"></div>
+      <div class="card-body">
+        <div class="card-cat">${x.cat}</div>
+        <div class="card-stars">${x.stars}</div>
+        <div class="card-name">${x.name}</div>
+        <div class="card-price">€${x.price.toFixed(2)}</div>
+      </div>
+    </a>`).join('');
+
+  // pack upsell
+  const packItems = [p, ...Object.values(PRODUCTS).filter(x => x.id !== id).slice(0, 2)];
+  const packTotal = packItems.reduce((a, x) => a + x.price, 0);
+  const packDiscount = packTotal * 0.85;
+  document.getElementById('pack-items').innerHTML = packItems.map((x, i) => `
+    ${i > 0 ? '<div style="color:rgba(255,255,255,.35);font-size:22px;font-weight:300">+</div>' : ''}
+    <div style="background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:16px 18px;text-align:center;min-width:130px">
+      <div style="width:68px;height:68px;margin:0 auto 8px;background:#fff;border-radius:8px;overflow:hidden">
+        <img src="${x.image}" style="width:100%;height:100%;object-fit:contain;padding:6px">
+      </div>
+      <div style="font-size:12px;font-weight:600;color:#fff;line-height:1.35;margin-bottom:4px">${x.name}</div>
+      <div style="font-size:13px;color:var(--gold);font-weight:700">€${x.price.toFixed(2)}</div>
+    </div>`).join('');
+  document.getElementById('pack-old').textContent = 'Precio normal: €' + packTotal.toFixed(2);
+  document.getElementById('pack-price').textContent = '€' + packDiscount.toFixed(2);
+}
+
+function changeQty(d){ qty = Math.max(1, qty + d); document.getElementById('qty').textContent = qty; }
+
+function addToCart(){
+  const cart = JSON.parse(localStorage.getItem('bn_cart') || '[]');
+  const idx = cart.findIndex(i => i.id === p.id);
+  if(idx > -1) cart[idx].qty += qty;
+  else cart.push({id:p.id, name:p.name, cat:p.cat, price:p.price, icon:p.icon, image:p.image, qty});
+  localStorage.setItem('bn_cart', JSON.stringify(cart));
+  updateCount();
+  const btn = document.getElementById('add-btn');
+  btn.textContent = '✓ Añadido'; btn.classList.add('added');
+  setTimeout(() => { btn.textContent = 'Añadir al carrito'; btn.classList.remove('added'); }, 1600);
+  const t = document.getElementById('toast');
+  document.getElementById('toast-text').textContent = p.name + ' añadido al carrito';
+  t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 2600);
+}
+
+function buyNow(){ addToCart(); location.href = 'cart.html'; }
+
+function addPack(){
+  const packItems = [p, ...Object.values(PRODUCTS).filter(x => x.id !== id).slice(0, 2)];
+  const cart = JSON.parse(localStorage.getItem('bn_cart') || '[]');
+  packItems.forEach(item => {
+    const idx = cart.findIndex(i => i.id === item.id);
+    const dp = parseFloat((item.price * 0.85).toFixed(2));
+    if(idx > -1) cart[idx].qty++;
+    else cart.push({id:item.id, name:item.name, price:dp, icon:item.icon, image:item.image, qty:1});
+  });
+  localStorage.setItem('bn_cart', JSON.stringify(cart));
+  updateCount();
+  location.href = 'cart.html';
+}
+
+(function(){var CART_VERSION='4';if(localStorage.getItem('bn_cart_v')!==CART_VERSION){localStorage.removeItem('bn_cart');localStorage.setItem('bn_cart_v',CART_VERSION);}})();
+
+function updateCount(){
+  try {
+    const raw = JSON.parse(localStorage.getItem('bn_cart') || '[]');
+    const valid = Array.isArray(raw) ? raw.filter(i => i && i.id && parseFloat(i.price) > 0 && parseInt(i.qty) > 0) : [];
+    document.getElementById('cart-count').textContent = valid.reduce((a, i) => a + parseInt(i.qty), 0);
+  } catch(e) { document.getElementById('cart-count').textContent = 0; }
+}
+
+// Ocultar sticky CTA cuando el botón original es visible
+function checkStickyVisibility(){
+  const btn = document.getElementById('add-btn');
+  if(!btn) return;
+  const rect = btn.getBoundingClientRect();
+  const visible = rect.top >= 0 && rect.bottom <= window.innerHeight;
+  document.getElementById('sticky-cta').style.opacity = visible ? '0' : '1';
+  document.getElementById('sticky-cta').style.pointerEvents = visible ? 'none' : 'auto';
+}
+
+window.addEventListener('scroll', checkStickyVisibility, {passive:true});
+
+render();
+updateCount();
+checkStickyVisibility();
+</script>
+<footer>
+  <div class="footer-brand">
+    <a href="bnspain-concept.html"><img src="assets/logo-raw.jpg" alt="Blue&Nat" style="height:44px;filter:invert(1);mix-blend-mode:screen;object-fit:contain"></a>
+    <p>Tienda especializada en nutrición natural, suplementos deportivos y cosmética ecológica certificada.</p>
+  </div>
+  <div><h5>Productos</h5><a href="deporte.html">Deporte & Energía</a><a href="suplementos.html">Suplementos</a><a href="cosmetica.html">Cosmética</a><a href="nutricion.html">Nutrición</a><a href="ofertas.html">Ofertas</a></div>
+  <div><h5>Empresa</h5><a href="sobre-nosotros.html">Sobre nosotros</a><a href="blog.html">Blog & Noticias</a><a href="contacto.html">Contacto</a><a href="contacto.html">Trabaja con nosotros</a></div>
+  <div><h5>Ayuda</h5><a href="envios.html">Envíos y entregas</a><a href="devoluciones.html">Devoluciones</a><a href="privacidad.html">Política de privacidad</a><a href="faq.html">Preguntas frecuentes</a></div>
+</footer>
+<div class="footer-bottom">© 2026 Blue & Nat Spain, S.L. — Todos los derechos reservados</div>
+</body>
+</html>

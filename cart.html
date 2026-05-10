@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carrito — Blue & Nat</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0B1F3A;--gold:#C9A96E;--green:#2D6A4F;
+  --bg:#F8F6F2;--white:#fff;--border:#E8E4DC;
+  --muted:#7A7A7A;--red:#C0392B;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:#1a1a1a;-webkit-font-smoothing:antialiased}
+
+/* TOPBAR */
+.topbar{background:var(--navy);text-align:center;padding:9px;font-size:11px;color:rgba(255,255,255,.65);letter-spacing:.6px;text-transform:uppercase}
+.topbar b{color:var(--gold)}
+
+/* HEADER */
+header{padding:0 48px;height:62px;display:flex;align-items:center;justify-content:space-between;
+  background:rgba(255,255,255,.97);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}
+.logo{font-family:'DM Serif Display',serif;font-size:22px;color:var(--navy);text-decoration:none}
+.logo em{font-style:normal;color:var(--green)}
+.hdr-right{display:flex;align-items:center;gap:16px}
+.back-link{font-size:13px;color:var(--muted);text-decoration:none;font-weight:500}
+.back-link:hover{color:var(--navy)}
+.cart-pill{background:var(--navy);color:#fff;padding:8px 18px;border-radius:20px;
+  font-size:13px;font-weight:600;display:flex;align-items:center;gap:7px;text-decoration:none}
+.pill-dot{background:var(--gold);color:var(--navy);font-size:10px;font-weight:800;
+  width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+
+/* ── CATALOG STRIP ── */
+.catalog-strip{background:var(--white);border-bottom:1px solid var(--border);padding:20px 48px}
+.catalog-title{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;
+  letter-spacing:.8px;margin-bottom:14px}
+.catalog-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.c-card{border:1.5px solid var(--border);border-radius:10px;padding:12px;background:var(--bg);
+  display:flex;flex-direction:column;align-items:center;gap:6px;cursor:default}
+.c-img{width:56px;height:56px;object-fit:contain;border-radius:6px;background:#fff;
+  border:1px solid var(--border);padding:4px}
+.c-name{font-size:11px;font-weight:600;color:var(--navy);text-align:center;line-height:1.3}
+.c-price{font-size:12px;font-weight:700;color:var(--navy)}
+.c-add{width:100%;background:var(--navy);color:#fff;border:none;border-radius:6px;
+  padding:7px 0;font-size:12px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;
+  transition:.2s;margin-top:2px}
+.c-add:hover{background:var(--green)}
+.c-add.added{background:var(--green)}
+
+/* ── SHIP BAR ── */
+.ship-bar{padding:16px 48px 0}
+.ship-inner{background:var(--white);border:1px solid var(--border);border-radius:10px;
+  padding:12px 18px;display:flex;align-items:center;gap:12px;transition:.3s}
+.ship-inner.free{background:#f0fdf4;border-color:#6ee7b7}
+.ship-msg{font-size:12.5px;font-weight:600;color:var(--navy);margin-bottom:6px}
+.ship-msg.ok{color:var(--green)}
+.prog-bg{height:5px;background:var(--border);border-radius:99px;overflow:hidden}
+.prog-fill{height:100%;background:var(--green);border-radius:99px;transition:width .5s ease}
+
+/* ── MAIN GRID ── */
+.main{max-width:1100px;margin:0 auto;padding:20px 48px 80px;
+  display:grid;grid-template-columns:1fr 380px;gap:24px;align-items:start}
+
+/* ── CART BOX ── */
+.box{background:var(--white);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:16px}
+.box-head{padding:16px 22px;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between}
+.box-head h2{font-family:'DM Serif Display',serif;font-size:18px;color:var(--navy)}
+.box-head span{font-size:12px;color:var(--muted)}
+.clear-btn{font-size:12px;color:var(--muted);background:none;border:none;
+  cursor:pointer;text-decoration:underline;font-family:'Inter',sans-serif}
+.clear-btn:hover{color:var(--red)}
+
+/* Empty */
+.empty-box{padding:48px 22px;text-align:center}
+.empty-box p{font-size:14px;color:var(--muted);margin-top:8px}
+
+/* Item row */
+.item-row{display:flex;align-items:center;gap:14px;padding:16px 22px;
+  border-bottom:1px solid var(--border);transition:opacity .25s,transform .25s}
+.item-row:last-of-type{border-bottom:none}
+.item-row.out{opacity:0;transform:translateX(20px)}
+.prod-img{width:74px;height:74px;border-radius:8px;border:1px solid var(--border);
+  background:var(--bg);flex-shrink:0;overflow:hidden;
+  display:flex;align-items:center;justify-content:center}
+.prod-img img{width:100%;height:100%;object-fit:contain;padding:6px}
+.prod-img .fi{font-size:30px}
+.prod-info{flex:1;min-width:0}
+.prod-cat{font-size:10px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:.6px}
+.prod-name{font-size:14px;font-weight:600;color:var(--navy);margin:2px 0 1px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.prod-unit{font-size:12px;color:var(--muted);margin-bottom:8px}
+.qty-ctrl{display:inline-flex;align-items:center;border:1.5px solid var(--border);border-radius:7px;overflow:hidden}
+.qty-ctrl button{width:30px;height:28px;background:var(--white);border:none;
+  font-size:16px;font-weight:600;color:var(--navy);cursor:pointer;transition:.15s}
+.qty-ctrl button:hover{background:var(--bg)}
+.qty-ctrl span{min-width:30px;text-align:center;font-size:13px;font-weight:700;
+  border-left:1px solid var(--border);border-right:1px solid var(--border)}
+.prod-right{flex-shrink:0;display:flex;flex-direction:column;align-items:flex-end;gap:8px}
+.prod-total{font-size:16px;font-weight:700;color:var(--navy)}
+.del-btn{background:none;border:none;color:#ccc;font-size:14px;cursor:pointer;
+  padding:4px;border-radius:5px;transition:.15s}
+.del-btn:hover{background:#fef2f2;color:var(--red)}
+
+/* Coupon */
+.coupon-row{padding:14px 22px;border-top:1px solid var(--border);
+  display:flex;gap:8px;align-items:center;background:#fafaf8}
+.coup-inp{flex:1;height:38px;padding:0 12px;border:1.5px solid var(--border);
+  border-radius:7px;font-size:13px;font-family:'Inter',sans-serif;outline:none;transition:.2s}
+.coup-inp:focus{border-color:var(--navy)}
+.coup-btn{height:38px;padding:0 16px;background:var(--navy);color:#fff;border:none;
+  border-radius:7px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif}
+.coup-btn:hover{background:#1a3a60}
+.coup-msg{width:100%;font-size:11.5px;padding-top:4px}
+.coup-msg.ok{color:var(--green)}
+.coup-msg.err{color:var(--red)}
+
+/* ── ADDRESS FORM ── */
+.form-body{padding:20px 22px;display:flex;flex-direction:column;gap:13px}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.frow-3{grid-template-columns:1fr 1fr 1fr}
+.field{display:flex;flex-direction:column;gap:5px}
+.field label{font-size:10.5px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;display:flex;align-items:center;gap:5px}
+.opt-tag{font-size:9.5px;font-weight:500;color:#aaa;text-transform:none;letter-spacing:0;font-style:italic}
+.field input,.field select{
+  height:42px;padding:0 12px;
+  border:1.5px solid var(--border);border-radius:7px;
+  font-size:13.5px;font-family:'Inter',sans-serif;color:var(--navy);
+  background:#fff;outline:none;transition:.2s;-webkit-appearance:none;appearance:none}
+.field input:focus,.field select:focus{border-color:var(--navy);box-shadow:0 0 0 3px rgba(11,31,58,.06)}
+.field input.err,.field select.err{border-color:var(--red)}
+.ferr{font-size:11px;color:var(--red);display:none}
+.field input.err~.ferr,.field select.err~.ferr{display:block}
+.sel-wrap{position:relative}
+.sel-wrap::after{content:'▾';position:absolute;right:12px;top:50%;
+  transform:translateY(-50%);color:var(--muted);font-size:11px;pointer-events:none}
+.sel-wrap select{padding-right:32px}
+
+/* ── RIGHT: SUMMARY ── */
+.summary{background:var(--white);border:1px solid var(--border);border-radius:12px;
+  padding:22px;position:sticky;top:74px}
+.summary h2{font-family:'DM Serif Display',serif;font-size:18px;color:var(--navy);margin-bottom:18px}
+
+/* Mini item list in summary */
+.sum-list{display:flex;flex-direction:column;gap:10px;margin-bottom:16px;
+  max-height:240px;overflow-y:auto}
+.sum-item{display:flex;align-items:center;gap:9px}
+.sum-thumb{width:44px;height:44px;border-radius:6px;border:1px solid var(--border);
+  background:#fff;flex-shrink:0;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;position:relative}
+.sum-thumb img{width:100%;height:100%;object-fit:contain;padding:4px}
+.sum-thumb .fi{font-size:18px}
+.sum-qty{position:absolute;top:-5px;right:-5px;background:var(--navy);color:#fff;
+  font-size:9px;font-weight:800;width:16px;height:16px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center}
+.sum-name{flex:1;font-size:12px;font-weight:600;color:var(--navy);line-height:1.3;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sum-price{font-size:13px;font-weight:700;color:var(--navy);flex-shrink:0}
+
+.s-divider{border:none;border-top:1px solid var(--border);margin:12px 0}
+.s-row{display:flex;justify-content:space-between;font-size:13.5px;color:var(--muted);margin-bottom:9px}
+.s-row.green{color:var(--green);font-weight:600}
+.s-row.total{font-size:17px;font-weight:800;color:var(--navy);margin-top:4px;padding-top:12px;
+  border-top:1px solid var(--border)}
+
+/* Payment methods */
+.pay-section{margin-top:16px;padding-top:16px;border-top:1px solid var(--border)}
+.pay-section h3{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;
+  letter-spacing:.6px;margin-bottom:10px}
+.pay-opts{display:flex;flex-direction:column;gap:7px}
+.pay-opt{border:1.5px solid var(--border);border-radius:8px;padding:11px 14px;cursor:pointer;
+  transition:.15s;display:flex;align-items:center;gap:10px}
+.pay-opt:hover{border-color:var(--muted)}
+.pay-opt.sel{border-color:var(--navy);background:#f0f4f8}
+.pay-opt input[type=radio]{accent-color:var(--navy);width:14px;height:14px;flex-shrink:0}
+.pay-lbl{font-size:13px;font-weight:600;color:var(--navy);flex:1}
+.pay-icons{display:flex;gap:4px}
+.pi{background:var(--border);border-radius:3px;padding:2px 6px;
+  font-size:9px;font-weight:800;color:var(--navy);letter-spacing:.3px}
+
+/* Card fields */
+.card-fields{display:none;padding-top:12px;flex-direction:column;gap:10px}
+.card-fields.show{display:flex}
+.card-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.card-row>.field{min-width:0}
+.card-num-wrap{position:relative;min-width:0}
+.card-num-wrap input{letter-spacing:1px;min-width:0;width:100%}
+.card-type-lbl{position:absolute;right:10px;top:50%;transform:translateY(-50%);
+  font-size:9px;font-weight:800;color:var(--muted);pointer-events:none}
+
+/* Alt pay messages */
+.alt-msg{padding:12px 14px;border-radius:7px;font-size:12.5px;margin-top:8px;display:none}
+.alt-msg.paypal{background:#e8f0ff;color:#003087;border:1px solid #b3c9f5}
+.alt-msg.bizum{background:#e8fff9;color:#007a63;border:1px solid #9fecda}
+
+/* CTA button */
+.pay-btn{width:100%;height:52px;background:var(--gold);color:var(--navy);border:none;
+  border-radius:10px;font-size:15px;font-weight:800;cursor:pointer;font-family:'Inter',sans-serif;
+  margin-top:18px;transition:.2s;display:flex;align-items:center;justify-content:center;gap:8px;
+  letter-spacing:.1px}
+.pay-btn:hover:not(:disabled){background:#b8944f;transform:translateY(-1px);box-shadow:0 6px 18px rgba(0,0,0,.12)}
+.pay-btn:disabled{opacity:.45;cursor:not-allowed}
+.pay-btn .spin{width:16px;height:16px;border:2px solid rgba(11,31,58,.3);
+  border-top-color:var(--navy);border-radius:50%;animation:spin .6s linear infinite;display:none}
+.pay-btn.loading .spin{display:block}
+.pay-btn.loading .btn-txt{display:none}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.trust{display:flex;flex-direction:column;gap:6px;margin-top:16px;padding-top:16px;
+  border-top:1px solid var(--border)}
+.trust li{list-style:none;font-size:11.5px;color:var(--muted);display:flex;align-items:center;gap:6px}
+
+/* ── CONFIRMATION ── */
+#confirm{display:none;max-width:540px;margin:80px auto;text-align:center;padding:0 24px 80px}
+.ok-icon{width:74px;height:74px;background:var(--green);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;margin:0 auto 24px;font-size:34px}
+#confirm h2{font-family:'DM Serif Display',serif;font-size:36px;color:var(--navy);margin-bottom:12px}
+#confirm p{font-size:14.5px;color:var(--muted);line-height:1.7;margin-bottom:8px;font-weight:300}
+.confirm-box{background:var(--white);border:1px solid var(--border);border-radius:10px;
+  padding:20px;text-align:left;margin:24px 0}
+.conf-row{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin-bottom:8px}
+.conf-row:last-child{padding-top:10px;border-top:1px solid var(--border);
+  font-weight:700;color:var(--navy);margin:0}
+.back-shop{background:var(--navy);color:#fff;padding:12px 30px;border-radius:8px;
+  text-decoration:none;font-size:14px;font-weight:600;display:inline-block;margin-top:8px;transition:.2s}
+.back-shop:hover{background:#1a3a60}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .catalog-grid{grid-template-columns:repeat(2,1fr)}
+  header,.catalog-strip,.ship-bar{padding-left:16px;padding-right:16px}
+  .main{grid-template-columns:1fr;padding:16px 16px 60px}
+  .summary{position:static}
+  .frow,.frow-3{grid-template-columns:1fr}
+  .card-row{grid-template-columns:1fr}
+  footer{grid-template-columns:1fr;gap:28px;padding:48px 20px 32px}
+}
+footer{background:#0B1F3A;color:rgba(255,255,255,.55);padding:60px 52px 40px;display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:40px}
+.footer-brand p{font-size:13px;line-height:1.7;color:rgba(255,255,255,.45);font-weight:300;max-width:220px;margin-top:14px}
+footer h5{font-size:11px;font-weight:700;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:16px}
+footer a{display:block;font-size:13px;color:rgba(255,255,255,.55);text-decoration:none;margin-bottom:10px;transition:.15s;font-weight:300}
+footer a:hover{color:#fff}
+.footer-bottom{background:#071326;text-align:center;padding:16px;font-size:11.5px;color:rgba(255,255,255,.25);letter-spacing:.3px}
+</style>
+</head>
+<body>
+
+<div class="topbar">Envío gratuito desde <b>39 €</b> · Entrega 24–48 h</div>
+
+<header>
+  <a href="bnspain-concept.html"><img src="assets/logo-raw.jpg" alt="Blue&Nat" style="height:44px;mix-blend-mode:multiply;object-fit:contain"></a>
+  <div class="hdr-right">
+    <a href="bnspain-concept.html" class="back-link">← Tienda</a>
+    <a href="cart.html" class="cart-pill">🛒 Carrito <div class="pill-dot" id="hdr-count">0</div></a>
+  </div>
+</header>
+
+<!-- ═══════════════════════════════════════════
+     PRODUCT CATALOG — añade desde aquí
+════════════════════════════════════════════ -->
+<div class="catalog-strip">
+  <div class="catalog-title">Añadir productos al carrito</div>
+  <div class="catalog-grid" id="catalog-grid">
+    <!-- rendered by JS -->
+  </div>
+</div>
+
+<!-- FREE SHIPPING BAR -->
+<div class="ship-bar" id="ship-bar" style="display:none">
+  <div class="ship-inner" id="ship-inner">
+    <span style="font-size:18px">🚚</span>
+    <div style="flex:1">
+      <div class="ship-msg" id="ship-msg"></div>
+      <div class="prog-bg"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     MAIN GRID
+════════════════════════════════════════════ -->
+<div class="main">
+
+  <!-- LEFT -->
+  <div>
+
+    <!-- CART ITEMS -->
+    <div class="box">
+      <div class="box-head">
+        <h2>Tu carrito</h2>
+        <div style="display:flex;align-items:center;gap:12px">
+          <span id="cart-count-label">0 artículos</span>
+          <button class="clear-btn" id="clear-btn" onclick="clearAll()" style="display:none">Vaciar</button>
+        </div>
+      </div>
+
+      <!-- Empty state (solo visible cuando carrito vacío) -->
+      <div class="empty-box" id="empty-state">
+        <span style="font-size:48px">🛒</span>
+        <p>Tu carrito está vacío.<br>Añade productos desde el catálogo de arriba.</p>
+      </div>
+
+      <!-- Items (se llena por JS) -->
+      <div id="items-list">
+        <!-- items aquí -->
+      </div>
+
+      <!-- Coupon (oculto cuando vacío) -->
+      <div class="coupon-row" id="coupon-row" style="display:none">
+        <input class="coup-inp" id="coup-inp" type="text" placeholder="Código descuento (ej: BN15)"
+          oninput="this.value=this.value.toUpperCase()">
+        <button class="coup-btn" onclick="applyCoupon()">Aplicar</button>
+        <div class="coup-msg" id="coup-msg" style="width:100%;font-size:11.5px;padding-top:4px"></div>
+      </div>
+    </div>
+
+    <!-- ADDRESS FORM -->
+    <div class="box" id="addr-card" style="display:none">
+      <div class="box-head">
+        <h2>Dirección de envío</h2>
+      </div>
+      <div class="form-body">
+
+        <div class="frow">
+          <div class="field">
+            <label>Nombre *</label>
+            <input type="text" id="f-nombre" placeholder="María" autocomplete="given-name">
+            <div class="ferr">Campo obligatorio</div>
+          </div>
+          <div class="field">
+            <label>Apellidos *</label>
+            <input type="text" id="f-apell" placeholder="García López" autocomplete="family-name">
+            <div class="ferr">Campo obligatorio</div>
+          </div>
+        </div>
+
+        <div class="frow">
+          <div class="field">
+            <label>Email *</label>
+            <input type="email" id="f-email" placeholder="tu@email.com" autocomplete="email">
+            <div class="ferr">Email no válido</div>
+          </div>
+          <div class="field">
+            <label>Teléfono *</label>
+            <input type="tel" id="f-tel" placeholder="600 000 000" autocomplete="tel">
+            <div class="ferr">Campo obligatorio</div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Calle y número *</label>
+          <input type="text" id="f-dir" placeholder="Calle Mayor, 12" autocomplete="address-line1">
+          <div class="ferr">Campo obligatorio</div>
+        </div>
+
+        <div class="frow frow-3">
+          <div class="field">
+            <label>Nº edificio <span class="opt-tag">opcional</span></label>
+            <input type="text" id="f-edificio" placeholder="Ej: 12" autocomplete="off">
+          </div>
+          <div class="field">
+            <label>Piso <span class="opt-tag">opcional</span></label>
+            <input type="text" id="f-piso" placeholder="Ej: 2.º" autocomplete="off">
+          </div>
+          <div class="field">
+            <label>Puerta <span class="opt-tag">opcional</span></label>
+            <input type="text" id="f-puerta" placeholder="Ej: A" autocomplete="off">
+          </div>
+        </div>
+
+        <div class="frow">
+          <div class="field">
+            <label>Ciudad *</label>
+            <input type="text" id="f-ciudad" placeholder="Madrid" autocomplete="address-level2">
+            <div class="ferr">Campo obligatorio</div>
+          </div>
+          <div class="field">
+            <label>Código Postal *</label>
+            <input type="text" id="f-cp" placeholder="28001" maxlength="5"
+              autocomplete="postal-code" oninput="this.value=this.value.replace(/\D/g,'')">
+            <div class="ferr">5 dígitos requeridos</div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Provincia *</label>
+          <div class="sel-wrap">
+            <select id="f-prov" autocomplete="address-level1">
+              <option value="">— Selecciona —</option>
+              <option>Álava</option><option>Albacete</option><option>Alicante</option>
+              <option>Almería</option><option>Asturias</option><option>Ávila</option>
+              <option>Badajoz</option><option>Baleares</option><option>Barcelona</option>
+              <option>Burgos</option><option>Cáceres</option><option>Cádiz</option>
+              <option>Cantabria</option><option>Castellón</option><option>Ciudad Real</option>
+              <option>Córdoba</option><option>Cuenca</option><option>Girona</option>
+              <option>Granada</option><option>Guadalajara</option><option>Guipúzcoa</option>
+              <option>Huelva</option><option>Huesca</option><option>Jaén</option>
+              <option>La Coruña</option><option>La Rioja</option><option>Las Palmas</option>
+              <option>León</option><option>Lleida</option><option>Lugo</option>
+              <option>Madrid</option><option>Málaga</option><option>Murcia</option>
+              <option>Navarra</option><option>Ourense</option><option>Palencia</option>
+              <option>Pontevedra</option><option>Salamanca</option><option>S.C. Tenerife</option>
+              <option>Segovia</option><option>Sevilla</option><option>Soria</option>
+              <option>Tarragona</option><option>Teruel</option><option>Toledo</option>
+              <option>Valencia</option><option>Valladolid</option><option>Vizcaya</option>
+              <option>Zamora</option><option>Zaragoza</option>
+              <option>Ceuta</option><option>Melilla</option>
+            </select>
+          </div>
+          <div class="ferr">Selecciona una provincia</div>
+        </div>
+
+        <div class="field">
+          <label>Notas (opcional)</label>
+          <input type="text" id="f-notas" placeholder="Instrucciones especiales para la entrega…">
+        </div>
+
+      </div>
+    </div>
+
+  </div><!-- /left -->
+
+  <!-- RIGHT: SUMMARY -->
+  <div>
+    <div class="summary">
+      <h2>Resumen del pedido</h2>
+
+      <div class="sum-list" id="sum-list">
+        <p style="font-size:13px;color:var(--muted);text-align:center;padding:8px 0">
+          Añade productos para ver el resumen
+        </p>
+      </div>
+
+      <hr class="s-divider">
+      <div class="s-row"><span>Subtotal</span><span id="s-sub">€0.00</span></div>
+      <div class="s-row green" id="s-disc-row" style="display:none">
+        <span id="s-disc-lbl">Descuento</span><span id="s-disc-val">−€0.00</span>
+      </div>
+      <div class="s-row"><span>Envío</span><span id="s-ship">—</span></div>
+      <div class="s-row total"><span>Total</span><span id="s-total">€0.00</span></div>
+
+      <!-- PAYMENT -->
+      <div class="pay-section" id="pay-section" style="display:none">
+        <h3>Método de pago</h3>
+        <div class="pay-opts">
+
+          <label class="pay-opt sel" onclick="selPay(this,'card')">
+            <input type="radio" name="pay" value="card" checked>
+            <span class="pay-lbl">Tarjeta</span>
+            <div class="pay-icons">
+              <span class="pi">VISA</span><span class="pi">MC</span><span class="pi">AMEX</span>
+            </div>
+          </label>
+
+          <label class="pay-opt" onclick="selPay(this,'paypal')">
+            <input type="radio" name="pay" value="paypal">
+            <span class="pay-lbl">PayPal</span>
+            <div class="pay-icons">
+              <span class="pi" style="background:#003087;color:#fff">Pay</span>
+              <span class="pi" style="background:#009cde;color:#fff">Pal</span>
+            </div>
+          </label>
+
+          <label class="pay-opt" onclick="selPay(this,'bizum')">
+            <input type="radio" name="pay" value="bizum">
+            <span class="pay-lbl">Bizum</span>
+            <div class="pay-icons">
+              <span class="pi" style="background:#00c5a0;color:#fff">BIZUM</span>
+            </div>
+          </label>
+
+        </div>
+
+        <!-- Card fields -->
+        <div class="card-fields show" id="card-fields">
+          <div class="field" style="margin-top:4px">
+            <label>Número de tarjeta *</label>
+            <div class="card-num-wrap">
+              <input type="text" id="f-card" placeholder="1234 5678 9012 3456"
+                maxlength="19" oninput="fmtCard(this)">
+              <span class="card-type-lbl" id="card-type-lbl"></span>
+            </div>
+            <div class="ferr">Número no válido</div>
+          </div>
+          <div class="field">
+            <label>Titular *</label>
+            <input type="text" id="f-cname" placeholder="NOMBRE APELLIDOS"
+              style="text-transform:uppercase">
+            <div class="ferr">Campo obligatorio</div>
+          </div>
+          <div class="card-row">
+            <div class="field">
+              <label>Caducidad *</label>
+              <input type="text" id="f-exp" placeholder="MM/AA" maxlength="5"
+                oninput="fmtExp(this)">
+              <div class="ferr">Fecha no válida</div>
+            </div>
+            <div class="field">
+              <label>CVV *</label>
+              <input type="text" id="f-cvv" placeholder="123" maxlength="4"
+                oninput="this.value=this.value.replace(/\D/g,'')">
+              <div class="ferr">CVV no válido</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="alt-msg paypal" id="paypal-msg">
+          Serás redirigido a PayPal para completar el pago de forma segura.
+        </div>
+        <div class="alt-msg bizum" id="bizum-msg">
+          Recibirás una notificación en tu app bancaria para autorizar el pago.
+          <div class="field" style="margin-top:10px">
+            <label>Teléfono Bizum *</label>
+            <input type="tel" id="f-bizum" placeholder="600 000 000">
+            <div class="ferr">Campo obligatorio</div>
+          </div>
+        </div>
+      </div><!-- /pay-section -->
+
+      <button class="pay-btn" id="pay-btn" onclick="submitOrder()" disabled>
+        <div class="spin"></div>
+        <span class="btn-txt">Añade productos para continuar</span>
+      </button>
+
+      <div style="text-align:center;font-size:11.5px;color:var(--muted);margin-top:10px">
+        🔒 Pago 100% seguro · SSL cifrado
+      </div>
+
+      <ul class="trust">
+        <li>✅ Devolución gratuita 30 días</li>
+        <li>📦 Envío 24–48 h laborables</li>
+        <li>🌿 Productos naturales certificados</li>
+      </ul>
+
+    </div>
+  </div><!-- /right -->
+
+</div><!-- /main -->
+
+<!-- CONFIRMATION -->
+<div id="confirm">
+  <div class="ok-icon">✓</div>
+  <h2>¡Pedido confirmado!</h2>
+  <p>Gracias por tu compra. Confirmación enviada a<br><strong id="conf-email"></strong></p>
+  <p style="margin-top:8px">Tu paquete llegará en <strong>24–48 horas laborables</strong>.</p>
+  <div class="confirm-box" id="conf-box"></div>
+  <a href="bnspain-concept.html" class="back-shop">Seguir comprando</a>
+</div>
+
+<script>
+/* ── RESET de datos corruptos de sesiones anteriores ──── */
+(function(){
+  var CART_VERSION = '4';
+  if (localStorage.getItem('bn_cart_v') !== CART_VERSION) {
+    localStorage.removeItem('bn_cart');
+    localStorage.setItem('bn_cart_v', CART_VERSION);
+  }
+})();
+
+/* ═══════════════════════════════════════════════════════
+   CATALOG — mismos productos que el resto de la web
+══════════════════════════════════════════════════════ */
+var CATALOG = [
+  {id:1, name:'B-15 Cisty Stop',        cat:'Suplementos', icon:'💧',
+   image:'https://www.bnspain.com/wp-content/uploads/2025/09/15-Cisty-Stop-small-600x600.png',
+   price:13.00},
+  {id:2, name:'Maca: El Secreto de los Incas', cat:'Suplementos', icon:'🌿',
+   image:'https://www.bnspain.com/wp-content/uploads/2025/09/maca.jpg',
+   price:19.95},
+  {id:3, name:'Omega 3 6 9',            cat:'Suplementos', icon:'🐟',
+   image:'https://www.bnspain.com/wp-content/uploads/2025/09/omega-369-small-600x600.png',
+   price:20.50},
+  {id:4, name:'Aceite de Argán Ecológico', cat:'Cosmética', icon:'✨',
+   image:'https://www.bnspain.com/wp-content/uploads/2025/09/aceite-argan-ecologico-blue-nat-premium-600x600.jpg',
+   price:17.90},
+  {id:5, name:'Aceite Seco Nutritivo',  cat:'Cosmética', icon:'🧴',
+   image:'https://www.bnspain.com/wp-content/uploads/2025/09/aceite-seco-small-600x600.png',
+   price:24.50},
+];
+
+var COUPONS = {
+  'BIENVENIDA10':  {pct:10, lbl:'Cupón BIENVENIDA10 −10%'},
+  'BIENVENIDO15':  {pct:15, lbl:'Cupón BIENVENIDO15 −15%'},
+  'BN15':          {pct:15, lbl:'Cupón BN15 −15%'},
+  'NATURAL20':     {pct:20, lbl:'Cupón NATURAL20 −20%'},
+};
+
+var FREE_SHIP_MIN = 39;
+var discPct = 0;
+var discLbl = '';
+var payMethod = 'card';
+
+/* ═══════════════════════════════════════════════════════
+   STORAGE HELPERS
+══════════════════════════════════════════════════════ */
+
+/* Devuelve el producto del catálogo por id (compara con == para aceptar string/number) */
+function catalogRef(id) {
+  for (var k = 0; k < CATALOG.length; k++) {
+    if (CATALOG[k].id == id) return CATALOG[k];
+  }
+  return null;
+}
+
+function getCart() {
+  var result = [];
+  try {
+    var raw = JSON.parse(localStorage.getItem('bn_cart') || '[]');
+    if (!Array.isArray(raw)) return result;
+
+    for (var i = 0; i < raw.length; i++) {
+      var item = raw[i];
+      if (!item || item.id == null) continue;          // sin id → ignorar
+
+      var ref   = catalogRef(item.id);                 // referencia del catálogo
+      var price = parseFloat(item.price);
+      if (isNaN(price) || price <= 0) {
+        price = ref ? ref.price : 0;                   // fallback al catálogo
+      }
+      if (price <= 0) continue;                        // sin precio válido → ignorar
+
+      var qty = parseInt(item.qty, 10);
+      if (isNaN(qty) || qty < 1) qty = 1;              // qty mínimo = 1
+
+      result.push({
+        id:    item.id,
+        name:  item.name  || (ref ? ref.name  : 'Producto'),
+        cat:   item.cat   || (ref ? ref.cat   : 'Producto'),
+        icon:  item.icon  || (ref ? ref.icon  : '📦'),
+        image: item.image || (ref ? ref.image : ''),
+        price: price,
+        qty:   qty
+      });
+    }
+  } catch(e) { /* no romper la página si localStorage está corrupto */ }
+  return result;
+}
+
+function saveCart(cart) {
+  try { localStorage.setItem('bn_cart', JSON.stringify(cart)); } catch(e) {}
+}
+
+/* Fuerza el vaciado directo del localStorage (sin pasar por getCart) */
+function forceEmpty() {
+  try { localStorage.removeItem('bn_cart'); } catch(e) {}
+}
+
+/* ═══════════════════════════════════════════════════════
+   CATALOG RENDER
+══════════════════════════════════════════════════════ */
+function renderCatalog() {
+  var html = '';
+  for (var i = 0; i < CATALOG.length; i++) {
+    var p = CATALOG[i];
+    html += '<div class="c-card">';
+    html += '<img class="c-img" src="' + p.image + '" alt="' + p.name + '" onerror="this.style.display=\'none\'">';
+    html += '<div class="c-name">' + p.name + '</div>';
+    html += '<div class="c-price">€' + p.price.toFixed(2) + '</div>';
+    html += '<button class="c-add" id="c-add-' + p.id + '" onclick="addProduct(' + p.id + ')">+ Añadir</button>';
+    html += '</div>';
+  }
+  document.getElementById('catalog-grid').innerHTML = html;
+}
+
+/* ═══════════════════════════════════════════════════════
+   ADD TO CART
+══════════════════════════════════════════════════════ */
+function addProduct(id) {
+  var prod = null;
+  for (var i = 0; i < CATALOG.length; i++) {
+    if (CATALOG[i].id === id) { prod = CATALOG[i]; break; }
+  }
+  if (!prod) return;
+
+  var cart = getCart();
+  var found = false;
+  for (var j = 0; j < cart.length; j++) {
+    if (cart[j].id === id) { cart[j].qty += 1; found = true; break; }
+  }
+  if (!found) {
+    cart.push({id: prod.id, name: prod.name, cat: prod.cat, icon: prod.icon,
+               image: prod.image, price: prod.price, qty: 1});
+  }
+  saveCart(cart);
+
+  // Button feedback
+  var btn = document.getElementById('c-add-' + id);
+  if (btn) {
+    btn.textContent = '✓ Añadido';
+    btn.classList.add('added');
+    setTimeout(function(){ btn.textContent = '+ Añadir'; btn.classList.remove('added'); }, 1400);
+  }
+
+  renderAll();
+}
+
+/* ═══════════════════════════════════════════════════════
+   CHANGE QUANTITY
+══════════════════════════════════════════════════════ */
+function changeQty(idx, delta) {
+  var cart = getCart();
+  if (!cart[idx]) return;
+  cart[idx].qty = Math.max(1, cart[idx].qty + delta);
+  saveCart(cart);
+  renderAll();
+}
+
+/* ═══════════════════════════════════════════════════════
+   REMOVE ITEM
+══════════════════════════════════════════════════════ */
+function removeItem(idx) {
+  var row = document.getElementById('irow-' + idx);
+  if (row) {
+    row.classList.add('out');
+    setTimeout(function() {
+      var cart = getCart();
+      cart.splice(idx, 1);
+      saveCart(cart);
+      renderAll();
+    }, 240);
+  } else {
+    var cart = getCart();
+    cart.splice(idx, 1);
+    saveCart(cart);
+    renderAll();
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   CLEAR ALL
+══════════════════════════════════════════════════════ */
+function clearAll() {
+  if (!confirm('¿Vaciar el carrito?')) return;
+  forceEmpty();   // borra directamente del localStorage sin filtrar
+  discPct = 0; discLbl = '';
+  var inp = document.getElementById('coup-inp');
+  if (inp) inp.value = '';
+  var msg = document.getElementById('coup-msg');
+  if (msg) msg.textContent = '';
+  renderAll();
+}
+
+/* ═══════════════════════════════════════════════════════
+   COUPON
+══════════════════════════════════════════════════════ */
+function applyCoupon() {
+  var code = (document.getElementById('coup-inp').value || '').trim().toUpperCase();
+  var msgEl = document.getElementById('coup-msg');
+  if (!code) { msgEl.textContent = 'Escribe un código primero.'; msgEl.className = 'coup-msg err'; return; }
+  if (COUPONS[code]) {
+    discPct = COUPONS[code].pct;
+    discLbl = COUPONS[code].lbl;
+    msgEl.textContent = '✓ ' + discLbl + ' aplicado correctamente';
+    msgEl.className = 'coup-msg ok';
+  } else {
+    discPct = 0; discLbl = '';
+    msgEl.textContent = 'Código no válido o expirado.';
+    msgEl.className = 'coup-msg err';
+  }
+  renderAll();
+}
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter' && document.activeElement && document.activeElement.id === 'coup-inp') {
+    applyCoupon();
+  }
+});
+
+/* ═══════════════════════════════════════════════════════
+   PAYMENT METHOD
+══════════════════════════════════════════════════════ */
+function selPay(el, method) {
+  var opts = document.querySelectorAll('.pay-opt');
+  for (var i = 0; i < opts.length; i++) opts[i].classList.remove('sel');
+  el.classList.add('sel');
+  payMethod = method;
+  document.getElementById('card-fields').className = 'card-fields' + (method === 'card' ? ' show' : '');
+  document.getElementById('paypal-msg').style.display = method === 'paypal' ? 'block' : 'none';
+  document.getElementById('bizum-msg').style.display  = method === 'bizum'  ? 'block' : 'none';
+}
+
+function fmtCard(inp) {
+  var v = inp.value.replace(/\D/g, '').substring(0, 16);
+  inp.value = v.replace(/(.{4})/g, '$1 ').trim();
+  var lbl = document.getElementById('card-type-lbl');
+  lbl.textContent = v[0]==='4' ? 'VISA' : v[0]==='5' ? 'MC' : v[0]==='3' ? 'AMEX' : '';
+}
+function fmtExp(inp) {
+  var v = inp.value.replace(/\D/g, '');
+  if (v.length >= 2) v = v.substring(0,2) + '/' + v.substring(2,4);
+  inp.value = v;
+}
+
+/* Clear field errors on input */
+document.addEventListener('input', function(e) {
+  if (e.target.classList && (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT')) {
+    e.target.classList.remove('err');
+  }
+});
+
+/* ═══════════════════════════════════════════════════════
+   MAIN RENDER — never destroys DOM structure
+══════════════════════════════════════════════════════ */
+function renderAll() {
+  var cart = getCart();
+  var totalQty = 0;
+  var sub = 0;
+  for (var i = 0; i < cart.length; i++) {
+    totalQty += cart[i].qty;
+    sub += cart[i].price * cart[i].qty;
+  }
+
+  /* Header count */
+  document.getElementById('hdr-count').textContent = totalQty;
+
+  /* Count label */
+  document.getElementById('cart-count-label').textContent =
+    totalQty + (totalQty === 1 ? ' artículo' : ' artículos');
+
+  /* Clear button — visible si getCart tiene items O si localStorage tiene cualquier dato */
+  var rawLen = 0;
+  try { var r = JSON.parse(localStorage.getItem('bn_cart')||'[]'); rawLen = Array.isArray(r) ? r.length : 0; } catch(e){}
+  document.getElementById('clear-btn').style.display = (cart.length || rawLen) ? 'inline' : 'none';
+
+  /* Empty / items */
+  var emptyEl  = document.getElementById('empty-state');
+  var itemsEl  = document.getElementById('items-list');
+  var couponEl = document.getElementById('coupon-row');
+  var addrEl   = document.getElementById('addr-card');
+  var payEl    = document.getElementById('pay-section');
+  var payBtn   = document.getElementById('pay-btn');
+  var shipBarEl = document.getElementById('ship-bar');
+
+  if (cart.length === 0) {
+    emptyEl.style.display  = 'block';
+    couponEl.style.display = 'none';
+    addrEl.style.display   = 'none';
+    payEl.style.display    = 'none';
+    shipBarEl.style.display = 'none';
+    itemsEl.innerHTML = '';
+    payBtn.disabled = true;
+    payBtn.querySelector('.btn-txt').textContent = 'Añade productos para continuar';
+  } else {
+    emptyEl.style.display  = 'none';
+    couponEl.style.display = 'flex';
+    addrEl.style.display   = 'block';
+    payEl.style.display    = 'block';
+    shipBarEl.style.display = 'block';
+    payBtn.disabled = false;
+    payBtn.querySelector('.btn-txt').textContent = 'Confirmar pedido · €' + calcTotal(sub).toFixed(2);
+
+    // Build item rows
+    var rows = '';
+    for (var i = 0; i < cart.length; i++) {
+      var item = cart[i];
+      var lineTotal = (item.price * item.qty).toFixed(2);
+      var imgHtml = item.image
+        ? '<img src="' + item.image + '" alt="' + (item.name||'') + '" onerror="this.style.display=\'none\'">'
+        : '<span class="fi">' + (item.icon||'📦') + '</span>';
+
+      rows += '<div class="item-row" id="irow-' + i + '">';
+      rows += '  <div class="prod-img">' + imgHtml + '</div>';
+      rows += '  <div class="prod-info">';
+      rows += '    <div class="prod-cat">'  + (item.cat||'Producto') + '</div>';
+      rows += '    <div class="prod-name">' + (item.name||'')        + '</div>';
+      rows += '    <div class="prod-unit">€' + item.price.toFixed(2) + ' / ud.</div>';
+      rows += '    <div class="qty-ctrl">';
+      rows += '      <button onclick="changeQty(' + i + ',-1)">−</button>';
+      rows += '      <span>' + item.qty + '</span>';
+      rows += '      <button onclick="changeQty(' + i + ',1)">+</button>';
+      rows += '    </div>';
+      rows += '  </div>';
+      rows += '  <div class="prod-right">';
+      rows += '    <div class="prod-total">€' + lineTotal + '</div>';
+      rows += '    <button class="del-btn" onclick="removeItem(' + i + ')" title="Eliminar">✕</button>';
+      rows += '  </div>';
+      rows += '</div>';
+    }
+    itemsEl.innerHTML = rows;
+
+    // Shipping bar
+    renderShipBar(sub);
+  }
+
+  // Summary panel (always update)
+  renderSummary(cart, sub);
+}
+
+/* sub = 0 significa carrito vacío, no calcular envío */
+function calcTotal(sub) {
+  if (sub <= 0) return 0;
+  var discSub = sub * (1 - discPct / 100);
+  var ship = discSub >= FREE_SHIP_MIN ? 0 : 3.90;
+  return discSub + ship;
+}
+
+function renderShipBar(sub) {
+  var inner = document.getElementById('ship-inner');
+  var msg   = document.getElementById('ship-msg');
+  var fill  = document.getElementById('prog-fill');
+  var rem = FREE_SHIP_MIN - sub;
+  if (rem <= 0) {
+    inner.classList.add('free');
+    msg.className = 'ship-msg ok';
+    msg.textContent = '🎉 ¡Envío gratuito aplicado en tu pedido!';
+    fill.style.width = '100%';
+  } else {
+    inner.classList.remove('free');
+    msg.className = 'ship-msg';
+    msg.textContent = 'Añade €' + rem.toFixed(2) + ' más para conseguir envío gratuito';
+    fill.style.width = Math.min(100, (sub / FREE_SHIP_MIN) * 100) + '%';
+  }
+}
+
+function renderSummary(cart, sub) {
+  // Mini product list
+  var sumHtml = '';
+  if (cart.length === 0) {
+    sumHtml = '<p style="font-size:13px;color:var(--muted);text-align:center;padding:8px 0">Añade productos para ver el resumen</p>';
+  } else {
+    for (var i = 0; i < cart.length; i++) {
+      var item = cart[i];
+      var imgHtml2 = item.image
+        ? '<img src="' + item.image + '" alt="' + (item.name||'') + '" onerror="this.style.display=\'none\'">'
+        : '<span class="fi">' + (item.icon||'📦') + '</span>';
+      sumHtml += '<div class="sum-item">';
+      sumHtml += '  <div class="sum-thumb">' + imgHtml2 + '<div class="sum-qty">' + item.qty + '</div></div>';
+      sumHtml += '  <div class="sum-name">' + (item.name||'') + '</div>';
+      sumHtml += '  <div class="sum-price">€' + (item.price * item.qty).toFixed(2) + '</div>';
+      sumHtml += '</div>';
+    }
+  }
+  document.getElementById('sum-list').innerHTML = sumHtml;
+
+  // Totals
+  var discSub = sub * (1 - discPct / 100);
+  var ship = (cart.length === 0) ? 0 : (discSub >= FREE_SHIP_MIN ? 0 : 3.90);
+  var total = discSub + ship;
+
+  document.getElementById('s-sub').textContent = '€' + sub.toFixed(2);
+
+  var discRow = document.getElementById('s-disc-row');
+  if (discPct > 0 && cart.length > 0) {
+    discRow.style.display = 'flex';
+    document.getElementById('s-disc-lbl').textContent = discLbl || ('Descuento −' + discPct + '%');
+    document.getElementById('s-disc-val').textContent = '−€' + (sub * discPct / 100).toFixed(2);
+  } else {
+    discRow.style.display = 'none';
+  }
+
+  document.getElementById('s-ship').textContent = cart.length === 0 ? '—' : (ship === 0 ? '✓ Gratis' : '€' + ship.toFixed(2));
+  document.getElementById('s-total').textContent = '€' + total.toFixed(2);
+
+  // Update pay button total
+  var btn = document.getElementById('pay-btn');
+  if (!btn.disabled) {
+    btn.querySelector('.btn-txt').textContent = 'Confirmar pedido · €' + total.toFixed(2);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   VALIDATION
+══════════════════════════════════════════════════════ */
+function getVal(id) {
+  var el = document.getElementById(id);
+  return el ? el.value.trim() : '';
+}
+function setErr(id) {
+  var el = document.getElementById(id);
+  if (el) el.classList.add('err');
+}
+function clearErrors() {
+  var els = document.querySelectorAll('.field input.err, .field select.err');
+  for (var i = 0; i < els.length; i++) els[i].classList.remove('err');
+}
+
+function validate() {
+  clearErrors();
+  var ok = true;
+
+  // Address
+  ['f-nombre','f-apell','f-tel','f-dir','f-ciudad'].forEach(function(id) {
+    if (!getVal(id)) { setErr(id); ok = false; }
+  });
+  var email = getVal('f-email');
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { setErr('f-email'); ok = false; }
+  if (getVal('f-cp').length < 5) { setErr('f-cp'); ok = false; }
+  if (!getVal('f-prov')) { setErr('f-prov'); ok = false; }
+
+  // Payment
+  if (payMethod === 'card') {
+    if (getVal('f-card').replace(/\s/g,'').length < 13) { setErr('f-card'); ok = false; }
+    if (!getVal('f-cname'))                              { setErr('f-cname'); ok = false; }
+    if (!/^\d{2}\/\d{2}$/.test(getVal('f-exp')))        { setErr('f-exp'); ok = false; }
+    if (getVal('f-cvv').length < 3)                      { setErr('f-cvv'); ok = false; }
+  }
+  if (payMethod === 'bizum') {
+    if (!getVal('f-bizum')) { setErr('f-bizum'); ok = false; }
+  }
+
+  if (!ok) {
+    var first = document.querySelector('.field input.err, .field select.err');
+    if (first) first.scrollIntoView({behavior:'smooth', block:'center'});
+  }
+  return ok;
+}
+
+/* ═══════════════════════════════════════════════════════
+   SUBMIT ORDER
+══════════════════════════════════════════════════════ */
+function submitOrder() {
+  if (!validate()) return;
+
+  var btn = document.getElementById('pay-btn');
+  btn.classList.add('loading');
+  btn.disabled = true;
+
+  setTimeout(function() {
+    var cart = getCart();
+    var sub = 0;
+    for (var i = 0; i < cart.length; i++) sub += cart[i].price * cart[i].qty;
+    var discSub = sub * (1 - discPct / 100);
+    var ship = discSub >= FREE_SHIP_MIN ? 0 : 3.90;
+    var total = discSub + ship;
+
+    // Build confirm box
+    var confHtml = '';
+    for (var i = 0; i < cart.length; i++) {
+      confHtml += '<div class="conf-row"><span>' + cart[i].name + ' × ' + cart[i].qty + '</span>';
+      confHtml += '<span>€' + (cart[i].price * cart[i].qty).toFixed(2) + '</span></div>';
+    }
+    if (discPct > 0) {
+      confHtml += '<div class="conf-row"><span>' + (discLbl||'Descuento') + '</span>';
+      confHtml += '<span>−€' + (sub * discPct / 100).toFixed(2) + '</span></div>';
+    }
+    confHtml += '<div class="conf-row"><span>Envío</span><span>' + (ship === 0 ? 'Gratis' : '€' + ship.toFixed(2)) + '</span></div>';
+    confHtml += '<div class="conf-row"><span>Total pagado</span><span>€' + total.toFixed(2) + '</span></div>';
+
+    document.getElementById('conf-email').textContent = getVal('f-email');
+    document.getElementById('conf-box').innerHTML = confHtml;
+
+    // Guardar pedido en el historial del usuario si hay sesión activa
+    try {
+      const sessionUser = JSON.parse(localStorage.getItem('bn_user') || 'null');
+      if(sessionUser && sessionUser.email){
+        const orderKey = 'bn_orders_' + sessionUser.email;
+        const orders = JSON.parse(localStorage.getItem(orderKey) || '[]');
+        const orderId = Math.floor(Math.random() * 900000) + 100000;
+        const today = new Date();
+        const dateStr = today.toLocaleDateString('es-ES', {day:'2-digit',month:'long',year:'numeric'});
+        orders.unshift({
+          id: orderId,
+          date: dateStr,
+          status: 'Preparando envío',
+          total: total,
+          items: cart.map(function(i){ return {name:i.name, qty:i.qty, price:i.price}; })
+        });
+        localStorage.setItem(orderKey, JSON.stringify(orders));
+      }
+    } catch(e) {}
+
+    // Clear cart and show confirmation
+    saveCart([]);
+    document.querySelector('.catalog-strip').style.display = 'none';
+    document.getElementById('ship-bar').style.display = 'none';
+    document.getElementById('main-page') && (document.getElementById('main-page').style.display = 'none');
+    document.querySelector('.main').style.display = 'none';
+    document.getElementById('confirm').style.display = 'block';
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  }, 1800);
+}
+
+/* ═══════════════════════════════════════════════════════
+   INIT
+══════════════════════════════════════════════════════ */
+renderCatalog();
+renderAll();
+
+// Sincronizar si se añaden productos desde otra pestaña
+window.addEventListener('storage', function(e) {
+  if (e.key === 'bn_cart') renderAll();
+});
+</script>
+<footer>
+  <div class="footer-brand">
+    <a href="bnspain-concept.html"><img src="assets/logo-raw.jpg" alt="Blue&Nat" style="height:44px;filter:invert(1);mix-blend-mode:screen;object-fit:contain"></a>
+    <p>Tienda especializada en nutrición natural, suplementos deportivos y cosmética ecológica certificada.</p>
+  </div>
+  <div><h5>Productos</h5><a href="deporte.html">Deporte & Energía</a><a href="suplementos.html">Suplementos</a><a href="cosmetica.html">Cosmética</a><a href="nutricion.html">Nutrición</a><a href="ofertas.html">Ofertas</a></div>
+  <div><h5>Empresa</h5><a href="sobre-nosotros.html">Sobre nosotros</a><a href="blog.html">Blog & Noticias</a><a href="contacto.html">Contacto</a><a href="contacto.html">Trabaja con nosotros</a></div>
+  <div><h5>Ayuda</h5><a href="envios.html">Envíos y entregas</a><a href="devoluciones.html">Devoluciones</a><a href="privacidad.html">Política de privacidad</a><a href="faq.html">Preguntas frecuentes</a></div>
+</footer>
+<div class="footer-bottom">© 2026 Blue & Nat Spain, S.L. — Todos los derechos reservados</div>
+</body>
+</html>

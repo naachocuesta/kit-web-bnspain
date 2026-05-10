@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deporte & Energía — Blue & Nat</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0B1F3A;--gold:#C9A96E;--green:#2D6A4F;--bg:#F8F6F2;--surface:#FFFFFF;--text:#1A1A1A;--muted:#7A7A7A;--border:#E8E4DC;--accent:#1E3A8A;--radius:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;color:var(--text);background:var(--bg);-webkit-font-smoothing:antialiased}
+.topbar{background:var(--navy);text-align:center;padding:9px;font-size:11.5px;color:rgba(255,255,255,.75);letter-spacing:.6px;text-transform:uppercase}
+.topbar span{color:var(--gold);font-weight:600}
+header{padding:0 52px;height:64px;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);position:sticky;top:0;z-index:200;border-bottom:1px solid var(--border)}
+.logo{font-family:'DM Serif Display',serif;font-size:22px;color:var(--navy);letter-spacing:-.3px;text-decoration:none}
+.logo em{font-style:normal;color:var(--green)}
+nav{display:flex;gap:32px}
+nav a{font-size:13px;font-weight:500;color:var(--muted);text-decoration:none;letter-spacing:.2px;transition:color .2s}
+nav a:hover,nav a.active{color:var(--navy)}
+nav a.active{color:var(--navy);font-weight:700;border-bottom:2px solid var(--navy);padding-bottom:2px}
+.nav-dd{position:relative;display:inline-flex;align-items:center}
+.nav-dd>a::after{content:'▾';font-size:10px;opacity:.5;margin-left:3px;transition:transform .2s}
+.nav-dd:hover>a::after{transform:rotate(180deg)}
+.nav-dd-menu{position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%) translateY(-4px);background:#fff;border:1px solid var(--border);border-radius:10px;box-shadow:0 8px 28px rgba(0,0,0,.1);min-width:210px;padding:6px 0;z-index:300;opacity:0;visibility:hidden;transition:opacity .2s,transform .2s,visibility .2s;pointer-events:none}
+.nav-dd:hover .nav-dd-menu{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0);pointer-events:auto}
+.nav-dd-menu a{display:block;padding:8px 18px;font-size:13px;color:var(--muted);font-weight:400;white-space:nowrap;transition:.15s;border-bottom:none}
+.nav-dd-menu a:hover{color:var(--navy);background:var(--bg)}
+.nav-dd-menu--wide{min-width:480px;columns:2}
+.nav-dd-menu--wide a{break-inside:avoid;display:block}
+.nav-dd::after,.nav-item::after{content:'';position:absolute;top:100%;left:0;right:0;height:14px}
+.header-actions{display:flex;align-items:center;gap:20px}
+.cart-pill{display:flex;align-items:center;gap:8px;background:var(--navy);color:#fff;border:none;padding:9px 20px;border-radius:24px;cursor:pointer;font-size:13px;font-weight:600;letter-spacing:.2px;transition:.2s;font-family:'Inter',sans-serif;text-decoration:none}
+.cart-pill:hover{background:#1a3a60}
+.cart-dot{background:var(--gold);color:var(--navy);font-size:10px;font-weight:700;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;line-height:1}
+/* HERO */
+.cat-hero{background:linear-gradient(135deg,rgba(6,14,28,.72) 0%,rgba(11,31,58,.65) 45%,rgba(15,52,96,.60) 100%),url('assets/deporte.png') center/cover no-repeat;padding:90px 52px 80px;position:relative;overflow:hidden;text-align:center}
+.cat-hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")}
+.cat-hero-inner{max-width:760px;margin:0 auto;position:relative;z-index:2}
+.cat-tag{display:inline-flex;align-items:center;gap:6px;background:rgba(201,169,110,.15);border:1px solid rgba(201,169,110,.35);color:var(--gold);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:5px 16px;border-radius:20px;margin-bottom:22px}
+.cat-hero h1{font-family:'DM Serif Display',serif;font-size:64px;color:#fff;line-height:1.0;margin-bottom:16px;letter-spacing:-1px}
+.cat-hero h1 em{font-style:normal;color:var(--gold)}
+.cat-hero p{font-size:17px;color:rgba(255,255,255,.65);line-height:1.7;font-weight:300;margin-bottom:40px}
+.search-hero{background:#fff;border-radius:50px;padding:6px 6px 6px 26px;display:flex;align-items:center;max-width:620px;margin:0 auto;box-shadow:0 16px 48px rgba(0,0,0,.3)}
+.search-hero input{flex:1;border:none;outline:none;font-size:16px;font-family:'Inter',sans-serif;color:var(--text);background:transparent}
+.search-hero input::placeholder{color:#aaa}
+.search-hero button{background:var(--gold);color:var(--navy);border:none;padding:13px 32px;border-radius:40px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;transition:.2s;white-space:nowrap}
+.search-hero button:hover{background:#b8944f}
+.search-tags{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:18px}
+.stag{font-size:12px;color:rgba(255,255,255,.5);background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);padding:4px 14px;border-radius:20px;cursor:pointer;transition:.2s}
+.stag:hover{background:rgba(255,255,255,.14);color:#fff}
+/* FEATURED */
+.featured{background:linear-gradient(135deg,#030b18,#0B1F3A);padding:80px 52px;position:relative;overflow:hidden}
+.featured-deco{position:absolute;right:-100px;top:-100px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(201,169,110,.08) 0%,transparent 70%);pointer-events:none}
+.featured-deco2{position:absolute;left:-60px;bottom:-60px;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(45,106,79,.12) 0%,transparent 70%);pointer-events:none}
+.featured-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;position:relative;z-index:1}
+.featured-label{display:inline-flex;align-items:center;gap:8px;background:rgba(201,169,110,.2);border:1px solid var(--gold);color:var(--gold);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:5px 14px;border-radius:4px;margin-bottom:20px}
+.featured-title{font-family:'DM Serif Display',serif;font-size:50px;color:#fff;line-height:1.0;margin-bottom:18px;letter-spacing:-.5px}
+.featured-title em{font-style:normal;color:var(--gold)}
+.featured-desc{font-size:15px;color:rgba(255,255,255,.65);line-height:1.8;margin-bottom:28px;font-weight:300}
+.featured-perks{list-style:none;margin-bottom:32px;display:flex;flex-direction:column;gap:10px}
+.featured-perks li{display:flex;align-items:center;gap:10px;font-size:14px;color:rgba(255,255,255,.75);font-weight:400}
+.featured-perks li::before{content:'✓';color:var(--gold);font-weight:700;font-size:13px;flex-shrink:0}
+.featured-bottom{display:flex;align-items:center;gap:24px;flex-wrap:wrap}
+.feat-price{font-size:40px;font-weight:800;color:#fff;letter-spacing:-1px}
+.feat-price-old{font-size:16px;color:rgba(255,255,255,.35);text-decoration:line-through;margin-left:4px;font-weight:300}
+.feat-btn{background:var(--gold);color:var(--navy);border:none;padding:15px 36px;border-radius:6px;font-size:15px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;transition:.2s;letter-spacing:.2px}
+.feat-btn:hover{background:#b8944f;transform:translateY(-1px)}
+.featured-img{text-align:center}
+.featured-img img{max-height:420px;max-width:100%;object-fit:contain;filter:drop-shadow(0 24px 64px rgba(0,0,0,.5));transition:transform .4s ease}
+.featured-img img:hover{transform:scale(1.04) translateY(-6px)}
+.feat-reviews{display:flex;align-items:center;gap:8px;margin-top:16px}
+.feat-stars{font-size:14px;color:#F59E0B;letter-spacing:2px}
+.feat-rcount{font-size:13px;color:rgba(255,255,255,.45)}
+/* PRODUCTS */
+.products-section{padding:72px 52px}
+.section-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:32px}
+.section-label{font-size:11px;font-weight:600;color:var(--gold);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px}
+.section-title{font-family:'DM Serif Display',serif;font-size:32px;color:var(--navy)}
+.sort-select{padding:8px 16px;border:1px solid var(--border);border-radius:6px;font-size:13px;font-family:'Inter',sans-serif;color:var(--muted);background:#fff;cursor:pointer;outline:none}
+.filter-pills{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:32px}
+.fpill{padding:6px 18px;border-radius:20px;border:1px solid var(--border);background:transparent;font-size:12.5px;font-weight:500;color:var(--muted);cursor:pointer;transition:.15s;white-space:nowrap;font-family:'Inter',sans-serif}
+.fpill:hover{border-color:var(--navy);color:var(--navy)}
+.fpill.active{background:var(--navy);border-color:var(--navy);color:#fff}
+.pgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.card{background:#fff;border-radius:14px;overflow:hidden;border:1px solid var(--border);transition:box-shadow .3s,transform .3s,border-color .3s;cursor:pointer}
+.card:hover{box-shadow:0 16px 48px rgba(0,0,0,.12);transform:translateY(-5px);border-color:#d0ccc0}
+.card-thumb{height:180px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.card-thumb img{width:100%;height:100%;object-fit:contain;padding:14px;background:#fff}
+.card-badge{position:absolute;top:12px;left:12px;font-size:9.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;padding:3px 9px;border-radius:4px}
+.badge-sale{background:#C0392B;color:#fff}
+.badge-new{background:var(--green);color:#fff}
+.badge-top{background:var(--navy);color:#fff}
+.card-body{padding:18px}
+.card-cat{font-size:10px;font-weight:600;color:var(--green);text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px}
+.card-name{font-size:14px;font-weight:600;color:var(--navy);line-height:1.35;margin-bottom:8px}
+.card-stars{display:flex;align-items:center;gap:4px;margin-bottom:12px}
+.stars{font-size:11px;color:#F59E0B;letter-spacing:1px}
+.review-count{font-size:11px;color:var(--muted)}
+.card-footer{display:flex;align-items:center;justify-content:space-between}
+.price-main{font-size:18px;font-weight:700;color:var(--navy)}
+.price-old{font-size:11px;color:var(--muted);text-decoration:line-through;margin-left:5px}
+.add-btn{width:36px;height:36px;background:var(--navy);color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:22px;line-height:1;display:flex;align-items:center;justify-content:center;transition:.15s;flex-shrink:0;font-family:'Inter',sans-serif}
+.add-btn:hover{background:var(--green)}
+.add-btn.added{background:var(--green);font-size:15px}
+/* EMPTY placeholder cards with gradient bg */
+.thumb-navy{background:linear-gradient(135deg,#dce6f0,#b8cde0)}
+.thumb-green{background:linear-gradient(135deg,#d8ede2,#b0d0bf)}
+.thumb-cream{background:linear-gradient(135deg,#f0ead8,#ddd0b0)}
+.thumb-blue{background:linear-gradient(135deg,#d0dcf0,#a8bce0)}
+.thumb-purple{background:linear-gradient(135deg,#e0d0f0,#c0a8e0)}
+.product-icon{font-size:52px}
+/* TRUST BAR */
+.trust-bar{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:#fff}
+.trust-item{padding:28px 24px;text-align:center;border-right:1px solid var(--border)}
+.trust-item:last-child{border-right:none}
+.trust-icon{margin-bottom:10px;display:flex;align-items:center;justify-content:center;color:var(--navy)}
+.trust-item strong{font-size:13px;color:var(--navy);display:block;font-weight:600;margin-bottom:3px}
+.trust-item span{font-size:11.5px;color:var(--muted);font-weight:300}
+footer{background:var(--navy);color:rgba(255,255,255,.55);padding:60px 52px 40px;display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:40px}
+.footer-brand .logo{color:#fff;font-size:20px;margin-bottom:14px;display:block}
+.footer-brand p{font-size:13px;line-height:1.7;color:rgba(255,255,255,.45);font-weight:300;max-width:220px}
+footer h5{font-size:11px;font-weight:700;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:16px}
+footer a{display:block;font-size:13px;color:rgba(255,255,255,.55);text-decoration:none;margin-bottom:10px;transition:.15s;font-weight:300}
+footer a:hover{color:#fff}
+.footer-bottom{background:#071326;text-align:center;padding:16px;font-size:11.5px;color:rgba(255,255,255,.25);letter-spacing:.3px}
+.toast{position:fixed;bottom:28px;right:28px;background:var(--navy);color:#fff;padding:14px 22px;border-radius:8px;font-size:13px;font-weight:500;z-index:999;transform:translateY(80px);opacity:0;transition:all .3s cubic-bezier(.34,1.56,.64,1);pointer-events:none;display:flex;align-items:center;gap:10px;border-left:3px solid var(--gold);box-shadow:0 8px 24px rgba(0,0,0,.2)}
+.toast.show{transform:translateY(0);opacity:1}
+@media(max-width:768px){
+  header{padding:0 16px;height:56px}nav{display:none}.header-actions a[style]{display:none}
+  .cat-hero{padding:60px 20px 50px}.cat-hero h1{font-size:38px}
+  .featured{padding:52px 20px}.featured-inner{grid-template-columns:1fr}.featured-img{order:-1}.featured-img img{max-height:260px}.featured-title{font-size:34px}
+  .products-section{padding:48px 20px}.pgrid{grid-template-columns:repeat(2,1fr);gap:12px}
+  .section-header{flex-direction:column;align-items:flex-start;gap:12px}
+  .trust-bar{grid-template-columns:repeat(2,1fr)}.trust-item{border-right:none;border-bottom:1px solid var(--border)}.trust-item:nth-child(odd){border-right:1px solid var(--border)}
+  footer{grid-template-columns:1fr;gap:28px;padding:48px 20px 32px}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">Envío gratuito en pedidos superiores a <span>39 €</span> · Entrega en 24–48 h · Devolución sin coste</div>
+
+<header>
+  <a href="bnspain-concept.html"><img src="assets/logo-raw.jpg" alt="Blue&Nat" style="height:44px;mix-blend-mode:multiply;object-fit:contain"></a>
+  <nav>
+    <div class="nav-dd">
+      <a href="deporte.html" class="active">Energía & Deporte</a>
+      <div class="nav-dd-menu">
+        <a href="deporte.html?cat=aminoacidos">Aminoácidos</a>
+        <a href="deporte.html?cat=proteina">Proteína</a>
+        <a href="deporte.html?cat=energia">Energía</a>
+        <a href="deporte.html?cat=recuperacion">Recuperación</a>
+        <a href="deporte.html?cat=definicion">Definición</a>
+        <a href="deporte.html?cat=hidratacion">Hidratación</a>
+      </div>
+    </div>
+    <div class="nav-dd">
+      <a href="suplementos.html">Suplementos</a>
+      <div class="nav-dd-menu">
+        <a href="suplementos.html?cat=omega">Omega & Ácidos</a>
+        <a href="suplementos.html?cat=vitaminas">Vitaminas</a>
+        <a href="suplementos.html?cat=colageno">Colágeno</a>
+        <a href="suplementos.html?cat=probioticos">Probióticos</a>
+        <a href="suplementos.html?cat=minerales">Minerales</a>
+      </div>
+    </div>
+    <div class="nav-dd">
+      <a href="cosmetica.html">Cosmética</a>
+      <div class="nav-dd-menu">
+        <a href="cosmetica.html?cat=aceite">Aceites</a>
+        <a href="cosmetica.html?cat=cara">Cara & Antienvejecimiento</a>
+        <a href="cosmetica.html?cat=cabello">Cabello</a>
+        <a href="cosmetica.html?cat=cuerpo">Cuerpo</a>
+      </div>
+    </div>
+    <div class="nav-dd">
+      <a href="nutricion.html">Nutrición</a>
+      <div class="nav-dd-menu">
+        <a href="nutricion.html?cat=adaptogenos">Adaptógenos</a>
+        <a href="nutricion.html?cat=semillas">Semillas & Cereales</a>
+        <a href="nutricion.html?cat=antioxidantes">Antioxidantes</a>
+        <a href="nutricion.html?cat=aceites">Aceites Nutricionales</a>
+      </div>
+    </div>
+    <a href="ofertas.html" style="color:var(--gold)">Ofertas</a>
+    <div class="nav-dd">
+      <a href="blog.html">Noticias</a>
+      <div class="nav-dd-menu">
+        <a href="blog.html">Artículos</a>
+        <a href="bnspain-concept.html#colaboraciones">Colaboraciones</a>
+      </div>
+    </div>
+  </nav>
+  <div class="header-actions">
+    <a href="cuenta.html" style="font-size:13px;color:var(--muted);text-decoration:none;font-weight:500">Mi cuenta</a>
+    <a href="cart.html" class="cart-pill" id="cart-btn">Carrito<div class="cart-dot" id="cart-count">0</div></a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="cat-hero">
+  <div class="cat-hero-inner">
+    <div class="cat-tag">Rendimiento & Recuperación</div>
+    <h1>Entrena más.<br><em>Rinde más.</em></h1>
+    <p>Suplementación deportiva de calidad premium para atletas y deportistas que no aceptan compromisos.</p>
+    <div class="search-hero">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-right:4px"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+      <input type="text" id="hero-search" placeholder="Busca tu suplemento deportivo…" oninput="filterProducts(this.value)">
+      <button onclick="filterProducts(document.getElementById('hero-search').value)">Buscar</button>
+    </div>
+    <div class="search-tags">
+      <span class="stag" onclick="filterProducts('creatina');document.getElementById('hero-search').value='creatina'">creatina</span>
+      <span class="stag" onclick="filterProducts('omega');document.getElementById('hero-search').value='omega'">omega 3</span>
+      <span class="stag" onclick="filterProducts('bcaa');document.getElementById('hero-search').value='bcaa'">BCAA</span>
+      <span class="stag" onclick="filterProducts('proteína');document.getElementById('hero-search').value='proteína'">proteína</span>
+      <span class="stag" onclick="filterProducts('pre');document.getElementById('hero-search').value='pre'">pre-workout</span>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTO ESTRELLA -->
+<section class="featured">
+  <div class="featured-deco"></div>
+  <div class="featured-deco2"></div>
+  <div class="featured-inner">
+    <div>
+      <div class="featured-label">Producto Estrella</div>
+      <h2 class="featured-title">Prueba nuestro<br><em>Omega 3 6 9</em><br>y nota la diferencia</h2>
+      <p class="featured-desc">La fórmula triple más completa del mercado. Un único suplemento que cubre tus necesidades de ácidos grasos esenciales, mejora tu rendimiento cardiovascular y acelera la recuperación muscular tras el entrenamiento.</p>
+      <ul class="featured-perks">
+        <li>Reduce la inflamación muscular post-entreno</li>
+        <li>Mejora la función cardiovascular y cerebral</li>
+        <li>Formulado con aceite de pescado de alta pureza</li>
+        <li>118 deportistas ya lo toman a diario</li>
+      </ul>
+      <div class="feat-reviews">
+        <span class="feat-stars">★★★★★</span>
+        <span class="feat-rcount">118 reseñas verificadas</span>
+      </div>
+      <div class="featured-bottom" style="margin-top:24px">
+        <div><span class="feat-price">€20.50</span></div>
+        <button class="feat-btn" onclick="addToCart(this,3)">Añadir al carrito</button>
+        <a href="product.html?id=3" style="color:rgba(255,255,255,.5);font-size:13px;text-decoration:none;font-weight:400;transition:.2s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,.5)'">Ver ficha completa →</a>
+      </div>
+    </div>
+    <div class="featured-img">
+      <img src="https://www.bnspain.com/wp-content/uploads/2025/09/omega-369-small-600x600.png" alt="Omega 3 6 9">
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section class="products-section" id="products">
+  <div class="section-header">
+    <div>
+      <div class="section-label">Catálogo Deporte</div>
+      <div class="section-title">Todos los productos</div>
+    </div>
+    <select class="sort-select" onchange="sortProducts(this.value)">
+      <option value="default">Ordenar por: Destacados</option>
+      <option value="price-asc">Precio: menor a mayor</option>
+      <option value="price-desc">Precio: mayor a menor</option>
+    </select>
+  </div>
+  <div class="filter-pills">
+    <button class="fpill active" onclick="filterCat(this,'all')">Todos</button>
+    <button class="fpill" onclick="filterCat(this,'aminoacidos')">Aminoácidos</button>
+    <button class="fpill" onclick="filterCat(this,'proteina')">Proteína</button>
+    <button class="fpill" onclick="filterCat(this,'energia')">Energía</button>
+    <button class="fpill" onclick="filterCat(this,'recuperacion')">Recuperación</button>
+    <button class="fpill" onclick="filterCat(this,'definicion')">Definición</button>
+    <button class="fpill" onclick="filterCat(this,'hidratacion')">Hidratación</button>
+  </div>
+  <div class="pgrid" id="products-grid">
+
+    <div class="card" data-cat="aminoacidos recuperacion" data-name="bcaa glutamina polvo deportistas aminoácidos recuperación muscular" data-price="28.50">
+      <div class="card-thumb thumb-blue" style="display:flex;align-items:center;justify-content:center">
+        <div class="product-icon">💪</div>
+        <span class="card-badge badge-top">Top ventas</span>
+      </div>
+      <div class="card-body">
+        <div class="card-cat">Aminoácidos</div>
+        <div class="card-name">BCAA + Glutamina en Polvo para Deportistas</div>
+        <div class="card-stars"><span class="stars">★★★★★</span><span class="review-count">86 reseñas</span></div>
+        <div class="card-footer">
+          <div><span class="price-main">€28.50</span></div>
+          <button class="add-btn" onclick="addToCartGeneric(this,'BCAA + Glutamina en Polvo',28.50);event.stopPropagation()">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-cat="aminoacidos" data-name="bcaa 2:1:1 vitamina b6 cápsulas aminoácidos" data-price="19.55">
+      <div class="card-thumb thumb-navy" style="display:flex;align-items:center;justify-content:center">
+        <div class="product-icon">🏋️</div>
+      </div>
+      <div class="card-body">
+        <div class="card-cat">Aminoácidos</div>
+        <div class="card-name">BCAA 2:1:1 con Vitamina B6 en Cápsulas</div>
+        <div class="card-stars"><span class="stars">★★★★★</span><span class="review-count">63 reseñas</span></div>
+        <div class="card-footer">
+          <div><span class="price-main">€19.55</span></div>
+          <button class="add-btn" onclick="addToCartGeneric(this,'BCAA 2:1:1 con Vitamina B6',19.55);event.stopPropagation()">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-cat="aminoacidos proteina" data-name="bcaa 2:1:1 polvo vegano aminoácidos proteína vegan" data-price="32.00">
+      <div class="card-thumb thumb-green" style="display:flex;align-items:center;justify-content:center">
+        <div class="product-icon">🌱</div>
+        <span class="card-badge badge-new">Vegano</span>
+      </div>
+      <div class="card-body">
+        <div class="card-cat">Aminoácidos</div>
+        <div class="card-name">BCAA 2:1:1 en Polvo Vegano 300 g</div>
+        <div class="card-stars"><span class="stars">★★★★★</span><span class="review-count">41 reseñas</span></div>
+        <div class="card-footer">
+          <div><span class="price-main">€32.00</span></div>
+          <button class="add-btn" onclick="addToCartGeneric(this,'BCAA 2:1:1 Vegano',32.00);event.stopPropagation()">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-cat="recuperacion" data-name="creatina monohidratada creapure fuerza recuperación muscular" data-price="29.50">
+      <div class="card-thumb thumb-navy" style="display:flex;align-items:center;justify-content:center">
+        <div class="product-icon">⚡</div>
+        <span class="card-badge badge-top">Top ventas</span>
+      </div>
+      <div class="card-body">
+        <div class="card-cat">Recuperación</div>
+        <div class="card-name">Creatina Monohidratada Creapure® 300g</div>
+        <div class="card-stars"><span class="stars">★★★★★</span><span class="review-count">118 reseñas</span></div>
+        <div class="card-footer">
+          <div><span class="price-main">€29.50</span></div>
+          <button class="add-btn" onclick="addToCartGeneric(this,'Creatina Monohidratada Creapure',29.50);event.stopPropagation()">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-cat="aminoacidos energia" data-name="l-arginina sport alta pureza aminoácidos energía rendimiento" data-price="32.75">
+      <div class="card-thumb thumb-purple" style="display:flex;align-items:center;justify-content:center">
+        <div class="product-icon">🔥</div>
+      </div>
+      <div class="card-body">
+        <div class="card-cat">Aminoácidos</div>
+        <div class="card-name">L-Arginina Sport Alta Pureza 300 g</div>
+        <div class="card-stars"><span class="stars">★★★★★</span><span class="review-count">37 reseñas</span></div>
+        <div class="card-footer">
+          <div><span class="price-main">€32.75</span></div>
+          <button class="add-btn" onclick="addToCartGeneric(this,'L-Arginina Sport',32.75);event.stopPropagation()">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-cat="aminoacidos recuperacion" data-name="l-glutamina kyowa quality recuperación muscular aminoácidos" data-price="28.11">
+      <div class="card-thumb thumb-blue" style="display:flex;align-items:center;justify-content:center">
+        <div class="product-icon">🧬</div>
+      </div>
+      <div class="card-body">
+        <div class="card-cat">Aminoácidos</div>
+        <div class="card-name">L-Glutamina Kyowa Quality 300g</div>
+        <div class="card-stars"><span class="stars">★★★★★</span><span class="review-count">52 reseñas</span></div>
+        <div class="card-footer">
+          <div><span class="price-main">€28.11</span></div>
+          <button class="add-btn" onclick="addToCartGeneric(this,'L-Glutamina Kyowa Quality',28.11);event.stopPropagation()">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-cat="proteina" data-name="proteína cáñamo orgánica hemp vegetal natural" data-price="34.95">
+      <div class="card-thumb thumb-green" style="display:flex;align-items:center;justify-content:center">
+        <div class="product-icon">🌿</div>
+        <span class="card-badge badge-new">Orgánica</span>
+      </div>
+      <div class="card-body">
+        <div class="card-cat">Proteína</div>
+        <div class="card-name">Proteína de Cáñamo Orgánica 600 g</div>
+        <div class="card-stars"><span class="stars">★★★★★</span><span class="review-count">29 reseñas</span></div>
+        <div class="card-footer">
+          <div><span class="price-main">€34.95</span></div>
+          <button class="add-btn" onclick="addToCartGeneric(this,'Proteína de Cáñamo Orgánica',34.95);event.stopPropagation()">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-cat="proteina" data-name="proteína guisante aislada vegana pea protein vegetal" data-price="30.90">
+      <div class="card-thumb thumb-green" style="display:flex;align-items:center;justify-content:center">
+        <div class="product-icon">🟢</div>
+        <span class="card-badge badge-new">Vegana</span>
+      </div>
+      <div class="card-body">
+        <div class="card-cat">Proteína Vegetal</div>
+        <div class="card-name">Proteína de Guisante Aislada Vegana 600 g</div>
+        <div class="card-stars"><span class="stars">★★★★☆</span><span class="review-count">44 reseñas</span></div>
+        <div class="card-footer">
+          <div><span class="price-main">€30.90</span></div>
+          <button class="add-btn" onclick="addToCartGeneric(this,'Proteína de Guisante Vegana',30.90);event.stopPropagation()">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-cat="proteina definicion" data-name="proteína suero leche whey 80% 1kg definición" data-price="37.05">
+      <div class="card-thumb thumb-cream" style="display:flex;align-items:center;justify-content:center">
+        <div class="product-icon">🥛</div>
+        <span class="card-badge badge-top">Top ventas</span>
+      </div>
+      <div class="card-body">
+        <div class="card-cat">Proteína</div>
+        <div class="card-name">Proteína Suero Leche 80% 1KG</div>
+        <div class="card-stars"><span class="stars">★★★★★</span><span class="review-count">97 reseñas</span></div>
+        <div class="card-footer">
+          <div><span class="price-main">€37.05</span></div>
+          <button class="add-btn" onclick="addToCartGeneric(this,'Proteína Suero Leche 80% 1KG',37.05);event.stopPropagation()">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-cat="proteina definicion" data-name="proteína suero leche whey 80% chocolate 2kg definición" data-price="70.75">
+      <div class="card-thumb thumb-cream" style="display:flex;align-items:center;justify-content:center">
+        <div class="product-icon">🍫</div>
+      </div>
+      <div class="card-body">
+        <div class="card-cat">Proteína</div>
+        <div class="card-name">Proteína Suero Leche 80% Choco 2KG</div>
+        <div class="card-stars"><span class="stars">★★★★★</span><span class="review-count">73 reseñas</span></div>
+        <div class="card-footer">
+          <div><span class="price-main">€70.75</span></div>
+          <button class="add-btn" onclick="addToCartGeneric(this,'Proteína Suero Leche Choco 2KG',70.75);event.stopPropagation()">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-cat="hidratacion energia" data-name="sport activity hidratación energía deportiva electrolitos" data-price="16.65">
+      <div class="card-thumb thumb-blue" style="display:flex;align-items:center;justify-content:center">
+        <div class="product-icon">💧</div>
+      </div>
+      <div class="card-body">
+        <div class="card-cat">Hidratación</div>
+        <div class="card-name">Sport Activity — Hidratación y Energía Deportiva</div>
+        <div class="card-stars"><span class="stars">★★★★★</span><span class="review-count">58 reseñas</span></div>
+        <div class="card-footer">
+          <div><span class="price-main">€16.65</span></div>
+          <button class="add-btn" onclick="addToCartGeneric(this,'Sport Activity Hidratación',16.65);event.stopPropagation()">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-cat="definicion energia" data-name="active burn sport quemador energía definición corporal" data-price="27.30">
+      <div class="card-thumb thumb-purple" style="display:flex;align-items:center;justify-content:center">
+        <div class="product-icon">🔥</div>
+      </div>
+      <div class="card-body">
+        <div class="card-cat">Definición</div>
+        <div class="card-name">Active Burn Sport — Energía Natural en Cápsulas</div>
+        <div class="card-stars"><span class="stars">★★★★★</span><span class="review-count">61 reseñas</span></div>
+        <div class="card-footer">
+          <div><span class="price-main">€27.30</span></div>
+          <button class="add-btn" onclick="addToCartGeneric(this,'Active Burn Sport',27.30);event.stopPropagation()">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-cat="proteina definicion" data-name="batido diet proteínas vitaminas definición corporal" data-price="29.35">
+      <div class="card-thumb thumb-cream" style="display:flex;align-items:center;justify-content:center">
+        <div class="product-icon">🥤</div>
+      </div>
+      <div class="card-body">
+        <div class="card-cat">Definición</div>
+        <div class="card-name">Batido Diet Proteínas y Vitaminas</div>
+        <div class="card-stars"><span class="stars">★★★★☆</span><span class="review-count">35 reseñas</span></div>
+        <div class="card-footer">
+          <div><span class="price-main">€29.35</span></div>
+          <button class="add-btn" onclick="addToCartGeneric(this,'Batido Diet Proteínas y Vitaminas',29.35);event.stopPropagation()">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-cat="definicion" data-name="cla 80% ácido linoleico conjugado definición corporal pérdida grasa" data-price="17.66">
+      <div class="card-thumb thumb-navy" style="display:flex;align-items:center;justify-content:center">
+        <div class="product-icon">💊</div>
+      </div>
+      <div class="card-body">
+        <div class="card-cat">Definición</div>
+        <div class="card-name">CLA 80% — Ácido Linoleico Conjugado 3000mg</div>
+        <div class="card-stars"><span class="stars">★★★★★</span><span class="review-count">48 reseñas</span></div>
+        <div class="card-footer">
+          <div><span class="price-main">€17.66</span></div>
+          <button class="add-btn" onclick="addToCartGeneric(this,'CLA 80%',17.66);event.stopPropagation()">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-cat="definicion energia" data-name="l-carnitina 1000mg carnipure energía definición quemador" data-price="20.80">
+      <div class="card-thumb thumb-purple" style="display:flex;align-items:center;justify-content:center">
+        <div class="product-icon">⚡</div>
+      </div>
+      <div class="card-body">
+        <div class="card-cat">Energía</div>
+        <div class="card-name">L-Carnitina 1000 mg Carnipure®</div>
+        <div class="card-stars"><span class="stars">★★★★★</span><span class="review-count">79 reseñas</span></div>
+        <div class="card-footer">
+          <div><span class="price-main">€20.80</span></div>
+          <button class="add-btn" onclick="addToCartGeneric(this,'L-Carnitina 1000mg Carnipure',20.80);event.stopPropagation()">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-cat="hidratacion energia" data-name="sport energy polvo energía rendimiento deportivo electrolitos" data-price="14.95">
+      <div class="card-thumb thumb-blue" style="display:flex;align-items:center;justify-content:center">
+        <div class="product-icon">⚡</div>
+        <span class="card-badge badge-new">Nuevo</span>
+      </div>
+      <div class="card-body">
+        <div class="card-cat">Hidratación</div>
+        <div class="card-name">Sport Energy en Polvo — Energía y Rendimiento</div>
+        <div class="card-stars"><span class="stars">★★★★★</span><span class="review-count">22 reseñas</span></div>
+        <div class="card-footer">
+          <div><span class="price-main">€14.95</span></div>
+          <button class="add-btn" onclick="addToCartGeneric(this,'Sport Energy en Polvo',14.95);event.stopPropagation()">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-cat="energia" data-name="ginseng panax sport energía natural rendimiento adaptógeno" data-price="9.70">
+      <div class="card-thumb thumb-green" style="display:flex;align-items:center;justify-content:center">
+        <div class="product-icon">🌿</div>
+      </div>
+      <div class="card-body">
+        <div class="card-cat">Energía</div>
+        <div class="card-name">Ginseng Panax Sport</div>
+        <div class="card-stars"><span class="stars">★★★★☆</span><span class="review-count">31 reseñas</span></div>
+        <div class="card-footer">
+          <div><span class="price-main">desde €9.70</span></div>
+          <button class="add-btn" onclick="addToCartGeneric(this,'Ginseng Panax Sport',9.70);event.stopPropagation()">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-cat="energia" data-name="multivitamínico sport completo vitaminas minerales deportistas" data-price="17.15">
+      <div class="card-thumb thumb-navy" style="display:flex;align-items:center;justify-content:center">
+        <div class="product-icon">💊</div>
+      </div>
+      <div class="card-body">
+        <div class="card-cat">Energía</div>
+        <div class="card-name">Multivitamínico Sport Completo</div>
+        <div class="card-stars"><span class="stars">★★★★★</span><span class="review-count">54 reseñas</span></div>
+        <div class="card-footer">
+          <div><span class="price-main">€17.15</span></div>
+          <button class="add-btn" onclick="addToCartGeneric(this,'Multivitamínico Sport Completo',17.15);event.stopPropagation()">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-cat="energia" data-name="tribulus terrestris sport testosterona energía rendimiento deportivo" data-price="23.45">
+      <div class="card-thumb thumb-green" style="display:flex;align-items:center;justify-content:center">
+        <div class="product-icon">🌱</div>
+      </div>
+      <div class="card-body">
+        <div class="card-cat">Energía</div>
+        <div class="card-name">Tribulus Terrestris Sport</div>
+        <div class="card-stars"><span class="stars">★★★★★</span><span class="review-count">66 reseñas</span></div>
+        <div class="card-footer">
+          <div><span class="price-main">€23.45</span></div>
+          <button class="add-btn" onclick="addToCartGeneric(this,'Tribulus Terrestris Sport',23.45);event.stopPropagation()">+</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div id="no-results" style="display:none;text-align:center;padding:60px 20px;color:var(--muted)">
+    <div style="margin-bottom:16px;display:flex;justify-content:center;color:#ccc"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></div>
+    <div style="font-size:16px;font-weight:600;color:var(--navy);margin-bottom:8px">Sin resultados</div>
+    <div style="font-size:14px">Prueba con otro término de búsqueda</div>
+  </div>
+</section>
+
+<!-- BLOG DEPORTE -->
+<section style="padding:72px 52px;background:#fff;border-top:1px solid var(--border)">
+  <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:40px">
+    <div>
+      <div style="font-size:11px;font-weight:600;color:var(--gold);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px">Blog & Rendimiento</div>
+      <div style="font-family:'DM Serif Display',serif;font-size:32px;color:var(--navy)">Entrena con cabeza</div>
+    </div>
+    <a href="blog.html" style="font-size:13px;color:var(--navy);font-weight:600;text-decoration:none;border-bottom:1px solid var(--navy);padding-bottom:1px;transition:.2s" onmouseover="this.style.color='var(--gold)';this.style.borderColor='var(--gold)'" onmouseout="this.style.color='var(--navy)';this.style.borderColor='var(--navy)'">Ver todos los artículos</a>
+  </div>
+  <div style="display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:24px">
+
+    <div style="background:var(--bg);border-radius:12px;overflow:hidden;border:1px solid var(--border);cursor:pointer;transition:.25s" onmouseenter="this.style.boxShadow='0 12px 36px rgba(0,0,0,.09)'" onmouseleave="this.style.boxShadow=''" onclick="location.href='blog-article.html?id=20'">
+      <div style="height:220px;overflow:hidden"><img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=700&h=440&fit=crop&q=80" alt="Gym" style="width:100%;height:100%;object-fit:cover;transition:.4s" onmouseenter="this.style.transform='scale(1.05)'" onmouseleave="this.style.transform='scale(1)'"></div>
+      <div style="padding:24px">
+        <div style="font-size:10px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px">Fuerza · 6 min lectura</div>
+        <div style="font-family:'DM Serif Display',serif;font-size:20px;color:var(--navy);margin-bottom:10px;line-height:1.3">Creatina vs BCAA: ¿Cuál necesitas según tu objetivo?</div>
+        <p style="font-size:13px;color:var(--muted);line-height:1.7;font-weight:300">Son los dos suplementos más populares del gimnasio, pero funcionan de forma muy diferente. Te explicamos cuándo tomar cada uno para maximizar resultados.</p>
+        <a href="blog-article.html?id=20" style="display:inline-block;margin-top:16px;font-size:13px;font-weight:600;color:var(--navy);text-decoration:none">Leer artículo →</a>
+      </div>
+    </div>
+
+    <div style="background:var(--bg);border-radius:12px;overflow:hidden;border:1px solid var(--border);cursor:pointer;transition:.25s" onmouseenter="this.style.boxShadow='0 12px 36px rgba(0,0,0,.09)'" onmouseleave="this.style.boxShadow=''" onclick="location.href='blog-article.html?id=21'">
+      <div style="height:160px;overflow:hidden"><img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=500&h=320&fit=crop&q=80" alt="Proteína" style="width:100%;height:100%;object-fit:cover;transition:.4s" onmouseenter="this.style.transform='scale(1.05)'" onmouseleave="this.style.transform='scale(1)'"></div>
+      <div style="padding:20px">
+        <div style="font-size:10px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px">Nutrición deportiva · 4 min</div>
+        <div style="font-family:'DM Serif Display',serif;font-size:17px;color:var(--navy);margin-bottom:8px;line-height:1.3">¿Cuánta proteína necesitas realmente al día?</div>
+        <p style="font-size:12.5px;color:var(--muted);line-height:1.6;font-weight:300;margin-bottom:12px">El mito de los 2 g/kg desmentido con evidencia científica actualizada.</p>
+        <a href="blog-article.html?id=21" style="font-size:13px;font-weight:600;color:var(--navy);text-decoration:none">Leer →</a>
+      </div>
+    </div>
+
+    <div style="background:var(--bg);border-radius:12px;overflow:hidden;border:1px solid var(--border);cursor:pointer;transition:.25s" onmouseenter="this.style.boxShadow='0 12px 36px rgba(0,0,0,.09)'" onmouseleave="this.style.boxShadow=''" onclick="location.href='blog-article.html?id=22'">
+      <div style="height:160px;overflow:hidden"><img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?w=500&h=320&fit=crop&q=80" alt="Recuperación" style="width:100%;height:100%;object-fit:cover;transition:.4s" onmouseenter="this.style.transform='scale(1.05)'" onmouseleave="this.style.transform='scale(1)'"></div>
+      <div style="padding:20px">
+        <div style="font-size:10px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px">Recuperación · 3 min</div>
+        <div style="font-family:'DM Serif Display',serif;font-size:17px;color:var(--navy);margin-bottom:8px;line-height:1.3">Los 5 errores de recuperación que frenan tu progreso</div>
+        <p style="font-size:12.5px;color:var(--muted);line-height:1.6;font-weight:300;margin-bottom:12px">Dormir poco, no hidratarse, saltarse el post-entreno... ¿cuántos cometes?</p>
+        <a href="blog-article.html?id=22" style="font-size:13px;font-weight:600;color:var(--navy);text-decoration:none">Leer →</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="trust-bar">
+  <div class="trust-item"><span class="trust-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13" rx="1"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></span><strong>Envío gratis desde 39 €</strong><span>Entrega en 24–48 horas</span></div>
+  <div class="trust-item"><span class="trust-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span><strong>Pago 100% seguro</strong><span>SSL · Tarjeta · PayPal · Bizum</span></div>
+  <div class="trust-item"><span class="trust-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.51"/></svg></span><strong>Devolución gratuita</strong><span>30 días sin preguntas</span></div>
+  <div class="trust-item"><span class="trust-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 22c1-1 2-2 3-3M21 2c-5 1-14 5-13.3 14 0 0 4.3-8 13.3-14z"/><path d="M7 19l9-9"/></svg></span><strong>Ingredientes certificados</strong><span>Naturales y verificados</span></div>
+</div>
+
+<!-- TIENDA FÍSICA -->
+<section style="padding:80px 52px;background:var(--bg);border-top:1px solid var(--border)">
+  <div style="max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center">
+    <div>
+      <div style="font-size:11px;font-weight:600;color:var(--gold);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:12px">Tienda física</div>
+      <div style="font-family:'DM Serif Display',serif;font-size:36px;color:var(--navy);margin-bottom:20px;line-height:1.1">Encuéntranos en<br>Guadalajara</div>
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px">
+        <span style="color:#F59E0B;font-size:16px;letter-spacing:2px">★★★★★</span>
+        <span style="font-size:14px;font-weight:700;color:var(--navy)">4.9</span>
+        <span style="font-size:13px;color:var(--muted)">(60 reseñas en Google)</span>
+      </div>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:6px;font-weight:400">📍 C. Nuño Beltrán de Guzmán, 1, 19001 Guadalajara</p>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:20px;font-weight:400">📞 <a href="tel:683435317" style="color:var(--navy);font-weight:600;text-decoration:none">683 43 53 17</a></p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px">
+        <span style="background:#fff;border:1px solid var(--border);border-radius:20px;padding:5px 14px;font-size:12px;font-weight:500;color:var(--navy)">🌿 Productos naturales</span>
+        <span style="background:#fff;border:1px solid var(--border);border-radius:20px;padding:5px 14px;font-size:12px;font-weight:500;color:var(--navy)">🏆 Asesoramiento experto</span>
+        <span style="background:#fff;border:1px solid var(--border);border-radius:20px;padding:5px 14px;font-size:12px;font-weight:500;color:var(--navy)">📦 Recogida en tienda</span>
+      </div>
+      <table style="font-size:13px;border-collapse:collapse;margin-bottom:28px">
+        <thead><tr><th style="text-align:left;color:var(--muted);font-weight:600;padding:4px 20px 4px 0;font-size:11px;text-transform:uppercase;letter-spacing:.5px">Día</th><th style="text-align:left;color:var(--muted);font-weight:600;padding:4px 0;font-size:11px;text-transform:uppercase;letter-spacing:.5px">Horario</th></tr></thead>
+        <tbody>
+          <tr><td style="padding:5px 20px 5px 0;color:var(--navy);font-weight:500">Lun – Vie</td><td style="padding:5px 0;color:var(--text)">9:30–14:00 · 17:00–20:00</td></tr>
+          <tr><td style="padding:5px 20px 5px 0;color:var(--navy);font-weight:500">Sábado</td><td style="padding:5px 0;color:var(--text)">10:00–14:00</td></tr>
+          <tr><td style="padding:5px 20px 5px 0;color:var(--muted);font-weight:400">Domingo</td><td style="padding:5px 0;color:var(--muted)">Cerrado</td></tr>
+        </tbody>
+      </table>
+      <a href="https://maps.google.com/?q=C.+Nuño+Beltrán+de+Guzmán,+1,+19001+Guadalajara" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;background:var(--navy);color:#fff;padding:13px 28px;border-radius:8px;font-size:14px;font-weight:600;text-decoration:none;transition:.2s" onmouseover="this.style.background='#1a3a60'" onmouseout="this.style.background='var(--navy)'">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        Ver en Google Maps
+      </a>
+    </div>
+    <div style="border-radius:12px;overflow:hidden;border:1px solid var(--border);height:380px">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3062.0!2d-3.163!3d40.633!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd6988a8e9a6e1f3%3A0x1!2sC.+Nu%C3%B1o+Beltr%C3%A1n+de+Guzm%C3%A1n%2C+1%2C+19001+Guadalajara!5e0!3m2!1ses!2ses!4v1700000000000" width="100%" height="100%" style="border:0" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-brand">
+    <a href="bnspain-concept.html"><img src="assets/logo-raw.jpg" alt="Blue&Nat" style="height:44px;filter:invert(1);mix-blend-mode:screen;object-fit:contain"></a>
+    <p>Tienda especializada en nutrición natural, suplementos deportivos y cosmética ecológica certificada.</p>
+  </div>
+  <div><h5>Productos</h5><a href="deporte.html">Deporte & Energía</a><a href="suplementos.html">Suplementos</a><a href="cosmetica.html">Cosmética</a><a href="nutricion.html">Nutrición</a><a href="ofertas.html">Ofertas</a></div>
+  <div><h5>Empresa</h5><a href="sobre-nosotros.html">Sobre nosotros</a><a href="blog.html">Blog & Noticias</a><a href="contacto.html">Contacto</a><a href="contacto.html">Trabaja con nosotros</a></div>
+  <div><h5>Ayuda</h5><a href="envios.html">Envíos y entregas</a><a href="devoluciones.html">Devoluciones</a><a href="privacidad.html">Política de privacidad</a><a href="faq.html">Preguntas frecuentes</a></div>
+</footer>
+<div class="footer-bottom">© 2026 Blue & Nat Spain, S.L. — Todos los derechos reservados</div>
+
+<div class="toast" id="toast"><span style="color:var(--gold)">✓</span><span id="toast-text">Añadido al carrito</span></div>
+
+<script>
+const PRODUCTS_INDEX={1:{id:1,name:'B-15 Cisty Stop',image:'https://www.bnspain.com/wp-content/uploads/2025/09/15-Cisty-Stop-small-600x600.png',price:13.00},2:{id:2,name:'Maca: El Secreto de los Incas',image:'https://www.bnspain.com/wp-content/uploads/2025/09/maca.jpg',price:19.95},3:{id:3,name:'Omega 3 6 9',image:'https://www.bnspain.com/wp-content/uploads/2025/09/omega-369-small-600x600.png',price:20.50},4:{id:4,name:'Aceite de Argán Ecológico',image:'https://www.bnspain.com/wp-content/uploads/2025/09/aceite-argan-ecologico-blue-nat-premium-600x600.jpg',price:17.90},5:{id:5,name:'Aceite Seco Nutritivo',image:'https://www.bnspain.com/wp-content/uploads/2025/09/aceite-seco-small-600x600.png',price:24.50}};
+
+(function(){var CART_VERSION='4';if(localStorage.getItem('bn_cart_v')!==CART_VERSION){localStorage.removeItem('bn_cart');localStorage.setItem('bn_cart_v',CART_VERSION);}})();
+function updateCartCount(){try{const r=JSON.parse(localStorage.getItem('bn_cart')||'[]');const c=Array.isArray(r)?r.filter(i=>i&&i.id!=null&&parseFloat(i.price)>0&&parseInt(i.qty)>0):[];document.getElementById('cart-count').textContent=c.reduce((a,i)=>a+parseInt(i.qty),0);}catch(e){document.getElementById('cart-count').textContent=0;}}
+
+function showToast(name){document.getElementById('toast-text').textContent=name+' añadido';const t=document.getElementById('toast');t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2400)}
+
+function addToCart(btn,id){const p=PRODUCTS_INDEX[id];const c=JSON.parse(localStorage.getItem('bn_cart')||'[]');const i=c.findIndex(x=>x.id===id);if(i>-1)c[i].qty++;else c.push({...p,qty:1});localStorage.setItem('bn_cart',JSON.stringify(c));updateCartCount();btn.classList.add('added');btn.textContent='✓';setTimeout(()=>{btn.classList.remove('added');btn.textContent='+'},1400);showToast(p.name)}
+
+function addToCartGeneric(btn,name,price){const c=JSON.parse(localStorage.getItem('bn_cart')||'[]');const i=c.findIndex(x=>x.name===name);if(i>-1)c[i].qty++;else c.push({id:'g-'+name,name,price,qty:1});localStorage.setItem('bn_cart',JSON.stringify(c));updateCartCount();btn.classList.add('added');btn.textContent='✓';setTimeout(()=>{btn.classList.remove('added');btn.textContent='+'},1400);showToast(name)}
+
+function sortProducts(val){const grid=document.getElementById('products-grid');const cards=[...grid.querySelectorAll('.card')];if(val==='price-asc')cards.sort((a,b)=>(parseFloat(a.dataset.price)||0)-(parseFloat(b.dataset.price)||0));else if(val==='price-desc')cards.sort((a,b)=>(parseFloat(b.dataset.price)||0)-(parseFloat(a.dataset.price)||0));else cards.sort((a,b)=>a.dataset.order-b.dataset.order);cards.forEach(c=>grid.appendChild(c))}
+
+function filterCat(el,cat){document.querySelectorAll('.fpill').forEach(b=>b.classList.remove('active'));el.classList.add('active');document.querySelectorAll('#products-grid .card').forEach(c=>{c.style.display=(cat==='all'||c.dataset.cat.includes(cat))?'':'none'});checkEmpty()}
+
+function filterProducts(q){const term=q.toLowerCase().trim();document.querySelectorAll('#products-grid .card').forEach(c=>{c.style.display=(!term||c.dataset.name.includes(term))?'':'none'});document.querySelectorAll('.fpill').forEach(b=>b.classList.remove('active'));if(!term)document.querySelector('.fpill').classList.add('active');checkEmpty()}
+
+function checkEmpty(){const visible=[...document.querySelectorAll('#products-grid .card')].filter(c=>c.style.display!=='none');document.getElementById('no-results').style.display=visible.length?'none':'block'}
+
+function goProduct(e,id){if(e.target.classList.contains('add-btn'))return;location.href='product.html?id='+id}
+
+updateCartCount();
+document.querySelectorAll('#products-grid .card').forEach(function(c,i){c.dataset.order=i});
+(function(){var c=new URLSearchParams(location.search).get('cat');if(c){var b=document.querySelector('.fpill[onclick*="\''+c+'\'"]');if(b)b.click();}})();
+document.querySelectorAll('#products-grid .card:not([onclick])').forEach(function(c){c.addEventListener('click',function(e){if(!e.target.classList.contains('add-btn'))location.href='product.html?id=3'})});
+
+(function(){
+  const io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        e.target.style.opacity='1';
+        e.target.style.transform='translateY(0)';
+        io.unobserve(e.target);
+      }
+    });
+  },{threshold:0.06});
+  document.querySelectorAll('#products-grid .card').forEach(function(el,i){
+    el.style.opacity='0';
+    el.style.transform='translateY(22px)';
+    el.style.transition='opacity .45s ease '+(i*55)+'ms, transform .45s ease '+(i*55)+'ms, box-shadow .3s, border-color .3s';
+    io.observe(el);
+  });
+})();
+</script>
+</body>
+</html>

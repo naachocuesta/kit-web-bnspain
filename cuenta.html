@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mi Cuenta — Blue & Nat</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0B1F3A;--gold:#C9A96E;--green:#2D6A4F;--bg:#F8F6F2;--surface:#fff;--text:#1A1A1A;--muted:#7A7A7A;--border:#E8E4DC;--radius:10px;--error:#C0392B;--success:#2D6A4F}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;color:var(--text);background:var(--bg);-webkit-font-smoothing:antialiased;min-height:100vh}
+.topbar{background:var(--navy);text-align:center;padding:9px;font-size:11.5px;color:rgba(255,255,255,.75);letter-spacing:.6px;text-transform:uppercase}
+.topbar span{color:var(--gold);font-weight:600}
+header{padding:0 52px;height:64px;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);position:sticky;top:0;z-index:200;border-bottom:1px solid var(--border)}
+nav{display:flex;gap:32px}
+nav a{font-size:13px;font-weight:500;color:var(--muted);text-decoration:none;letter-spacing:.2px;transition:color .2s}
+nav a:hover{color:var(--navy)}
+.nav-dd{position:relative;display:inline-flex;align-items:center}
+.nav-dd>a::after{content:'▾';font-size:10px;opacity:.5;margin-left:3px;transition:transform .2s}
+.nav-dd:hover>a::after{transform:rotate(180deg)}
+.nav-dd-menu{position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%) translateY(-4px);background:#fff;border:1px solid var(--border);border-radius:10px;box-shadow:0 8px 28px rgba(0,0,0,.1);min-width:210px;padding:6px 0;z-index:300;opacity:0;visibility:hidden;transition:opacity .2s,transform .2s,visibility .2s;pointer-events:none}
+.nav-dd:hover .nav-dd-menu{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0);pointer-events:auto}
+.nav-dd-menu a{display:block;padding:8px 18px;font-size:13px;color:var(--muted);font-weight:400;white-space:nowrap;transition:.15s;border-bottom:none}
+.nav-dd-menu a:hover{color:var(--navy);background:var(--bg)}
+.nav-dd-menu--wide{min-width:480px;columns:2}
+.nav-dd-menu--wide a{break-inside:avoid;display:block}
+.nav-dd::after,.nav-item::after{content:'';position:absolute;top:100%;left:0;right:0;height:14px}
+.header-actions{display:flex;align-items:center;gap:20px}
+.cart-pill{display:flex;align-items:center;gap:8px;background:var(--navy);color:#fff;border:none;padding:9px 20px;border-radius:24px;cursor:pointer;font-size:13px;font-weight:600;transition:.2s;font-family:'Inter',sans-serif;text-decoration:none}
+.cart-pill:hover{background:#1a3a60}
+.cart-dot{background:var(--gold);color:var(--navy);font-size:10px;font-weight:700;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+
+/* ── AUTH ── */
+#auth-section{display:flex;min-height:calc(100vh - 112px)}
+.auth-left{flex:1;background:linear-gradient(135deg,#0B1F3A,#1a3a60);padding:72px 60px;display:flex;flex-direction:column;justify-content:center}
+.auth-left h2{font-family:'DM Serif Display',serif;font-size:42px;color:#fff;line-height:1.1;margin-bottom:16px}
+.auth-left h2 em{font-style:normal;color:var(--gold)}
+.auth-left p{font-size:15px;color:rgba(255,255,255,.65);font-weight:300;line-height:1.7;margin-bottom:40px;max-width:380px}
+.auth-perks{list-style:none;display:flex;flex-direction:column;gap:14px}
+.auth-perks li{display:flex;align-items:center;gap:14px;font-size:14px;color:rgba(255,255,255,.8)}
+.perk-icon{width:36px;height:36px;background:rgba(201,169,110,.18);border:1px solid rgba(201,169,110,.35);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.discount-callout{margin-top:40px;background:rgba(201,169,110,.15);border:1px solid rgba(201,169,110,.4);border-radius:12px;padding:20px 24px;display:flex;align-items:center;gap:16px}
+.discount-callout .pct{font-family:'DM Serif Display',serif;font-size:48px;color:var(--gold);line-height:1;flex-shrink:0}
+.discount-callout div{font-size:13px;color:rgba(255,255,255,.75);line-height:1.6}
+.discount-callout strong{color:#fff;font-size:14px}
+
+.auth-right{width:480px;background:var(--surface);padding:60px 52px;display:flex;flex-direction:column;justify-content:center}
+.auth-tabs{display:flex;border-bottom:2px solid var(--border);margin-bottom:36px}
+.auth-tab{flex:1;padding:12px;text-align:center;font-size:14px;font-weight:600;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:.2s}
+.auth-tab.active{color:var(--navy);border-bottom-color:var(--navy)}
+.auth-form{display:none}
+.auth-form.active{display:flex;flex-direction:column;gap:16px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.field-group{display:flex;flex-direction:column;gap:6px}
+.field-group label{font-size:12px;font-weight:600;color:var(--navy);text-transform:uppercase;letter-spacing:.5px}
+.field-group input{padding:12px 16px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-family:'Inter',sans-serif;color:var(--text);outline:none;transition:.2s;background:var(--bg)}
+.field-group input:focus{border-color:var(--navy);background:#fff}
+.field-group input.error{border-color:var(--error)}
+.field-error{font-size:11.5px;color:var(--error);margin-top:2px;display:none}
+.btn-auth{background:var(--navy);color:#fff;border:none;padding:14px;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;transition:.2s;letter-spacing:.2px;margin-top:4px}
+.btn-auth:hover{background:#1a3a60}
+.btn-auth.green{background:var(--green)}
+.btn-auth.green:hover{background:#205a3a}
+.auth-divider{text-align:center;font-size:12px;color:var(--muted);position:relative;margin:4px 0}
+.auth-divider::before,.auth-divider::after{content:'';position:absolute;top:50%;width:42%;height:1px;background:var(--border)}
+.auth-divider::before{left:0}.auth-divider::after{right:0}
+.auth-note{font-size:12px;color:var(--muted);text-align:center;line-height:1.6}
+.auth-note a{color:var(--navy);font-weight:600;text-decoration:none}
+.auth-alert{padding:12px 16px;border-radius:8px;font-size:13px;font-weight:500;display:none;margin-bottom:4px}
+.auth-alert.error{background:#fdf2f0;border:1px solid #f5c6c0;color:var(--error);display:flex;align-items:center;gap:8px}
+.auth-alert.success{background:#f0f8f4;border:1px solid #b0d8c4;color:var(--green);display:flex;align-items:center;gap:8px}
+.pass-toggle{position:relative}
+.pass-toggle input{padding-right:44px;width:100%}
+.pass-toggle button{position:absolute;right:14px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--muted);font-size:14px;padding:0;line-height:1}
+
+/* ── SUCCESS MODAL ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(11,31,58,.6);z-index:999;display:none;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.modal-overlay.open{display:flex}
+.modal{background:#fff;border-radius:16px;padding:48px 40px;max-width:460px;width:90%;text-align:center;box-shadow:0 24px 80px rgba(0,0,0,.25);animation:modalIn .35s cubic-bezier(.34,1.56,.64,1)}
+@keyframes modalIn{from{opacity:0;transform:scale(.88)}to{opacity:1;transform:scale(1)}}
+.modal-icon{width:72px;height:72px;background:linear-gradient(135deg,#e8f2ec,#c6ddd0);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:32px;margin:0 auto 20px}
+.modal h3{font-family:'DM Serif Display',serif;font-size:28px;color:var(--navy);margin-bottom:10px}
+.modal p{font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:24px}
+.coupon-box{background:var(--bg);border:2px dashed var(--gold);border-radius:10px;padding:16px 24px;margin-bottom:24px}
+.coupon-code{font-size:28px;font-weight:800;color:var(--navy);letter-spacing:3px;font-family:'DM Serif Display',serif}
+.coupon-label{font-size:12px;color:var(--muted);margin-top:4px}
+.btn-copy{background:var(--gold);color:var(--navy);border:none;padding:10px 24px;border-radius:6px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;transition:.2s;margin-bottom:8px}
+.btn-copy:hover{background:#b8944f}
+.btn-go{display:block;text-align:center;background:var(--navy);color:#fff;text-decoration:none;padding:14px;border-radius:8px;font-size:14px;font-weight:600;transition:.2s}
+.btn-go:hover{background:#1a3a60}
+
+/* ── ACCOUNT DASHBOARD ── */
+#account-section{display:none;min-height:calc(100vh - 112px);background:var(--bg)}
+.account-header{background:linear-gradient(135deg,#0B1F3A,#1a3a60);padding:36px 52px;display:flex;align-items:center;gap:20px}
+.avatar-circle{width:60px;height:60px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;color:var(--navy);flex-shrink:0;font-family:'DM Serif Display',serif}
+.account-header-text h2{font-family:'DM Serif Display',serif;font-size:24px;color:#fff;margin-bottom:4px}
+.account-header-text p{font-size:13px;color:rgba(255,255,255,.6);font-weight:300}
+.account-layout{display:grid;grid-template-columns:260px 1fr;gap:0;max-width:1200px;margin:0 auto;padding:40px 52px;align-items:start}
+.account-sidebar{background:#fff;border-radius:12px;border:1px solid var(--border);overflow:hidden;position:sticky;top:80px}
+.sidebar-nav a{display:flex;align-items:center;gap:12px;padding:14px 20px;font-size:13.5px;font-weight:500;color:var(--muted);text-decoration:none;transition:.15s;border-left:3px solid transparent;cursor:pointer}
+.sidebar-nav a:hover{background:var(--bg);color:var(--navy)}
+.sidebar-nav a.active{background:var(--bg);color:var(--navy);border-left-color:var(--navy);font-weight:600}
+.sidebar-nav a.danger{color:#C0392B}
+.sidebar-nav a.danger:hover{background:#fdf2f0;border-left-color:#C0392B}
+.sidebar-divider{height:1px;background:var(--border);margin:4px 0}
+.nav-icon{font-size:16px;width:20px;text-align:center;flex-shrink:0}
+.account-main{padding-left:32px}
+.account-panel{display:none}
+.account-panel.active{display:block}
+.panel-title{font-family:'DM Serif Display',serif;font-size:26px;color:var(--navy);margin-bottom:6px}
+.panel-subtitle{font-size:13px;color:var(--muted);font-weight:300;margin-bottom:32px}
+
+/* Profile */
+.profile-card{background:#fff;border-radius:12px;border:1px solid var(--border);padding:32px;margin-bottom:20px}
+.profile-avatar-row{display:flex;align-items:center;gap:20px;margin-bottom:32px;padding-bottom:28px;border-bottom:1px solid var(--border)}
+.avatar-big{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--navy),#1a3a60);display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:700;color:#fff;flex-shrink:0;font-family:'DM Serif Display',serif}
+.avatar-big-info h3{font-size:18px;font-weight:700;color:var(--navy)}
+.avatar-big-info p{font-size:13px;color:var(--muted);font-weight:300;margin-top:3px}
+.profile-form{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.profile-form .full{grid-column:1/-1}
+.profile-form label{font-size:11.5px;font-weight:600;color:var(--navy);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;display:block}
+.profile-form input,.profile-form select{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-family:'Inter',sans-serif;color:var(--text);outline:none;transition:.2s;background:var(--bg)}
+.profile-form input:focus,.profile-form select:focus{border-color:var(--navy);background:#fff}
+.btn-save{background:var(--navy);color:#fff;border:none;padding:12px 28px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:.2s}
+.btn-save:hover{background:#1a3a60}
+.btn-save.success-state{background:var(--green)}
+
+/* Orders */
+.orders-empty{text-align:center;padding:60px 20px;background:#fff;border-radius:12px;border:1px solid var(--border)}
+.orders-empty .icon{font-size:48px;margin-bottom:16px}
+.orders-empty h3{font-size:18px;font-weight:600;color:var(--navy);margin-bottom:8px}
+.orders-empty p{font-size:14px;color:var(--muted);margin-bottom:24px}
+.btn-shop{display:inline-block;background:var(--navy);color:#fff;text-decoration:none;padding:12px 28px;border-radius:8px;font-size:14px;font-weight:600;transition:.2s}
+.btn-shop:hover{background:#1a3a60}
+
+/* Coupons */
+.coupon-card{background:#fff;border-radius:12px;border:1px solid var(--border);padding:28px;margin-bottom:16px;display:flex;align-items:center;gap:24px}
+.coupon-card-left{background:linear-gradient(135deg,var(--navy),#1a3a60);border-radius:10px;padding:20px 24px;text-align:center;min-width:130px}
+.coupon-card-left .pct{font-family:'DM Serif Display',serif;font-size:40px;color:var(--gold);line-height:1}
+.coupon-card-left small{font-size:11px;color:rgba(255,255,255,.6);text-transform:uppercase;letter-spacing:.8px}
+.coupon-card-right{flex:1}
+.coupon-card-right h4{font-size:16px;font-weight:700;color:var(--navy);margin-bottom:6px}
+.coupon-card-right p{font-size:13px;color:var(--muted);font-weight:300;line-height:1.6;margin-bottom:14px}
+.coupon-code-row{display:flex;align-items:center;gap:10px}
+.code-chip{background:var(--bg);border:2px dashed var(--gold);border-radius:6px;padding:8px 16px;font-size:16px;font-weight:800;color:var(--navy);letter-spacing:2px;font-family:'DM Serif Display',serif}
+.btn-copy-small{background:var(--gold);color:var(--navy);border:none;padding:8px 16px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;transition:.2s}
+.btn-copy-small:hover{background:#b8944f}
+.coupon-badge{display:inline-block;font-size:10px;font-weight:700;padding:3px 8px;border-radius:4px;background:#e8f2ec;color:var(--green);border:1px solid #c6ddd0;margin-left:8px;text-transform:uppercase;letter-spacing:.5px}
+.coupon-used{opacity:.5}
+
+/* Addresses */
+.addr-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
+.addr-card{background:#fff;border-radius:12px;border:1px solid var(--border);padding:24px;position:relative}
+.addr-card.add-new{border-style:dashed;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;min-height:160px;transition:.2s;color:var(--muted)}
+.addr-card.add-new:hover{border-color:var(--navy);color:var(--navy);background:var(--bg)}
+.addr-card.add-new span{font-size:32px;margin-bottom:8px}
+.addr-card.add-new p{font-size:13px;font-weight:500}
+.addr-badge{font-size:10px;font-weight:700;background:var(--navy);color:#fff;padding:2px 8px;border-radius:4px;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;display:inline-block}
+.addr-name{font-size:14px;font-weight:600;color:var(--navy);margin-bottom:6px}
+.addr-text{font-size:13px;color:var(--muted);font-weight:300;line-height:1.7}
+.addr-actions{margin-top:14px;display:flex;gap:8px}
+.btn-addr{font-size:12px;font-weight:500;padding:5px 12px;border-radius:5px;border:1px solid var(--border);background:transparent;cursor:pointer;font-family:'Inter',sans-serif;color:var(--muted);transition:.15s}
+.btn-addr:hover{border-color:var(--navy);color:var(--navy)}
+.btn-addr.del:hover{border-color:var(--error);color:var(--error)}
+
+/* Favorites */
+.fav-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.fav-empty{text-align:center;padding:60px 20px;background:#fff;border-radius:12px;border:1px solid var(--border)}
+.fav-empty .icon{font-size:48px;margin-bottom:16px}
+
+/* Settings */
+.settings-section{background:#fff;border-radius:12px;border:1px solid var(--border);padding:28px;margin-bottom:16px}
+.settings-section h3{font-size:15px;font-weight:700;color:var(--navy);margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid var(--border)}
+.toggle-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border)}
+.toggle-row:last-child{border-bottom:none}
+.toggle-info strong{font-size:14px;font-weight:600;color:var(--navy);display:block;margin-bottom:2px}
+.toggle-info span{font-size:12.5px;color:var(--muted);font-weight:300}
+.toggle{position:relative;width:44px;height:24px;flex-shrink:0}
+.toggle input{opacity:0;width:0;height:0}
+.toggle-slider{position:absolute;inset:0;background:#ddd;border-radius:24px;cursor:pointer;transition:.3s}
+.toggle-slider::before{content:'';position:absolute;height:18px;width:18px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.3s}
+.toggle input:checked+.toggle-slider{background:var(--navy)}
+.toggle input:checked+.toggle-slider::before{transform:translateX(20px)}
+.password-form{display:grid;gap:14px;max-width:400px}
+.danger-zone{border-color:#f5c6c0}
+.danger-zone h3{color:var(--error)}
+.btn-danger{background:transparent;color:var(--error);border:1.5px solid var(--error);padding:10px 20px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:.2s}
+.btn-danger:hover{background:var(--error);color:#fff}
+
+footer{background:var(--navy);color:rgba(255,255,255,.55);padding:60px 52px 40px;display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:40px}
+.footer-brand p{font-size:13px;line-height:1.7;color:rgba(255,255,255,.45);font-weight:300;max-width:220px;margin-top:14px}
+footer h5{font-size:11px;font-weight:700;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:16px}
+footer a{display:block;font-size:13px;color:rgba(255,255,255,.55);text-decoration:none;margin-bottom:10px;transition:.15s;font-weight:300}
+footer a:hover{color:#fff}
+.footer-bottom{background:#071326;text-align:center;padding:16px;font-size:11.5px;color:rgba(255,255,255,.25);letter-spacing:.3px}
+
+.toast{position:fixed;bottom:28px;right:28px;background:var(--navy);color:#fff;padding:14px 22px;border-radius:8px;font-size:13px;font-weight:500;z-index:9999;transform:translateY(80px);opacity:0;transition:all .3s cubic-bezier(.34,1.56,.64,1);pointer-events:none;display:flex;align-items:center;gap:10px;border-left:3px solid var(--gold);box-shadow:0 8px 24px rgba(0,0,0,.2)}
+.toast.show{transform:translateY(0);opacity:1}
+
+@media(max-width:768px){
+  header{padding:0 16px;height:56px}nav{display:none}.header-actions a[style]{display:none}
+  #auth-section{flex-direction:column}
+  .auth-left{padding:40px 24px}
+  .auth-left h2{font-size:30px}.discount-callout{flex-direction:column;text-align:center}
+  .auth-right{width:100%;padding:36px 24px}
+  .account-layout{grid-template-columns:1fr;padding:20px 16px}
+  .account-main{padding-left:0;margin-top:20px}
+  .account-header{padding:24px 20px}
+  .profile-form{grid-template-columns:1fr}
+  .addr-grid{grid-template-columns:1fr}
+  .fav-grid{grid-template-columns:1fr 1fr}
+  .account-sidebar{position:static}
+  footer{grid-template-columns:1fr;gap:28px;padding:48px 20px 32px}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">Envío gratuito en pedidos superiores a <span>39 €</span> · Entrega en 24–48 h · Devolución sin coste</div>
+
+<header>
+  <a href="bnspain-concept.html"><img src="assets/logo-raw.jpg" alt="Blue&Nat" style="height:44px;mix-blend-mode:multiply;object-fit:contain"></a>
+  <nav>
+    <div class="nav-dd">
+      <a href="deporte.html">Energía & Deporte</a>
+      <div class="nav-dd-menu">
+        <a href="deporte.html?cat=aminoacidos">Aminoácidos</a>
+        <a href="deporte.html?cat=proteina">Proteína</a>
+        <a href="deporte.html?cat=energia">Energía</a>
+        <a href="deporte.html?cat=recuperacion">Recuperación</a>
+        <a href="deporte.html?cat=definicion">Definición</a>
+        <a href="deporte.html?cat=hidratacion">Hidratación</a>
+      </div>
+    </div>
+    <div class="nav-dd">
+      <a href="suplementos.html">Suplementos</a>
+      <div class="nav-dd-menu">
+        <a href="suplementos.html?cat=omega">Omega & Ácidos</a>
+        <a href="suplementos.html?cat=vitaminas">Vitaminas</a>
+        <a href="suplementos.html?cat=colageno">Colágeno</a>
+        <a href="suplementos.html?cat=probioticos">Probióticos</a>
+        <a href="suplementos.html?cat=minerales">Minerales</a>
+      </div>
+    </div>
+    <div class="nav-dd">
+      <a href="cosmetica.html">Cosmética</a>
+      <div class="nav-dd-menu">
+        <a href="cosmetica.html?cat=aceite">Aceites</a>
+        <a href="cosmetica.html?cat=cara">Cara & Antienvejecimiento</a>
+        <a href="cosmetica.html?cat=cabello">Cabello</a>
+        <a href="cosmetica.html?cat=cuerpo">Cuerpo</a>
+      </div>
+    </div>
+    <div class="nav-dd">
+      <a href="nutricion.html">Nutrición</a>
+      <div class="nav-dd-menu">
+        <a href="nutricion.html?cat=adaptogenos">Adaptógenos</a>
+        <a href="nutricion.html?cat=semillas">Semillas & Cereales</a>
+        <a href="nutricion.html?cat=antioxidantes">Antioxidantes</a>
+        <a href="nutricion.html?cat=aceites">Aceites Nutricionales</a>
+      </div>
+    </div>
+    <a href="ofertas.html" style="color:var(--gold)">Ofertas</a>
+    <div class="nav-dd">
+      <a href="blog.html">Noticias</a>
+      <div class="nav-dd-menu">
+        <a href="blog.html">Artículos</a>
+        <a href="bnspain-concept.html#colaboraciones">Colaboraciones</a>
+      </div>
+    </div>
+  </nav>
+  <div class="header-actions">
+    <a href="cuenta.html" style="font-size:13px;color:var(--navy);text-decoration:none;font-weight:600" id="nav-cuenta">Mi cuenta</a>
+    <a href="cart.html" class="cart-pill" id="cart-btn">Carrito<div class="cart-dot" id="cart-count">0</div></a>
+  </div>
+</header>
+
+<!-- ═══════════════ AUTH (no logueado) ═══════════════ -->
+<div id="auth-section">
+
+  <!-- Izquierda: beneficios -->
+  <div class="auth-left">
+    <h2>Tu cuenta,<br>tus <em>ventajas.</em></h2>
+    <p>Únete a más de 12.000 clientes que ya disfrutan de sus pedidos, descuentos exclusivos y acceso prioritario a novedades.</p>
+    <ul class="auth-perks">
+      <li><div class="perk-icon">📦</div><div><strong>Historial de pedidos</strong><br><span style="font-size:13px;opacity:.7">Consulta y repite cualquier compra anterior</span></div></li>
+      <li><div class="perk-icon">📍</div><div><strong>Direcciones guardadas</strong><br><span style="font-size:13px;opacity:.7">Checkout más rápido en cada compra</span></div></li>
+      <li><div class="perk-icon">🎁</div><div><strong>Cupones y ofertas exclusivas</strong><br><span style="font-size:13px;opacity:.7">Descuentos que solo tienen los miembros</span></div></li>
+      <li><div class="perk-icon">❤️</div><div><strong>Lista de favoritos</strong><br><span style="font-size:13px;opacity:.7">Guarda lo que te gusta y cómpralo cuando quieras</span></div></li>
+    </ul>
+    <div class="discount-callout">
+      <div class="pct">−15%</div>
+      <div><strong>Descuento de bienvenida</strong><br>Regístrate ahora y recibe un cupón del 15% para tu primer pedido. Sin condiciones.</div>
+    </div>
+  </div>
+
+  <!-- Derecha: formularios -->
+  <div class="auth-right">
+    <div class="auth-tabs">
+      <div class="auth-tab active" onclick="switchTab('login')">Iniciar sesión</div>
+      <div class="auth-tab" onclick="switchTab('register')">Crear cuenta</div>
+    </div>
+
+    <!-- LOGIN -->
+    <div class="auth-alert" id="login-alert"></div>
+    <form class="auth-form active" id="form-login" onsubmit="doLogin(event)">
+      <div class="field-group">
+        <label>Correo electrónico</label>
+        <input type="email" id="login-email" placeholder="tu@email.com" required>
+      </div>
+      <div class="field-group">
+        <label>Contraseña</label>
+        <div class="pass-toggle">
+          <input type="password" id="login-pass" placeholder="••••••••" required>
+          <button type="button" onclick="togglePass('login-pass',this)">👁</button>
+        </div>
+      </div>
+      <button type="submit" class="btn-auth">Iniciar sesión</button>
+      <div class="auth-divider">o</div>
+      <div class="auth-note">¿No tienes cuenta? <a onclick="switchTab('register')" style="cursor:pointer">Regístrate gratis</a> y consigue un <strong>15% de descuento</strong></div>
+    </form>
+
+    <!-- REGISTER -->
+    <div class="auth-alert" id="register-alert"></div>
+    <form class="auth-form" id="form-register" onsubmit="doRegister(event)">
+      <div class="form-row">
+        <div class="field-group">
+          <label>Nombre</label>
+          <input type="text" id="reg-name" placeholder="Tu nombre" required>
+        </div>
+        <div class="field-group">
+          <label>Apellidos</label>
+          <input type="text" id="reg-surname" placeholder="Tus apellidos" required>
+        </div>
+      </div>
+      <div class="field-group">
+        <label>Correo electrónico</label>
+        <input type="email" id="reg-email" placeholder="tu@email.com" required>
+      </div>
+      <div class="field-group">
+        <label>Contraseña</label>
+        <div class="pass-toggle">
+          <input type="password" id="reg-pass" placeholder="Mínimo 6 caracteres" required minlength="6">
+          <button type="button" onclick="togglePass('reg-pass',this)">👁</button>
+        </div>
+      </div>
+      <div class="field-group">
+        <label>Confirmar contraseña</label>
+        <input type="password" id="reg-pass2" placeholder="Repite la contraseña" required>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:10px;font-size:12.5px;color:var(--muted);line-height:1.5">
+        <input type="checkbox" id="reg-terms" required style="margin-top:2px;flex-shrink:0;accent-color:var(--navy)">
+        <label for="reg-terms">Acepto los <a href="privacidad.html" target="_blank" style="color:var(--navy);font-weight:600">términos y condiciones</a> y la <a href="privacidad.html" target="_blank" style="color:var(--navy);font-weight:600">política de privacidad</a></label>
+      </div>
+      <button type="submit" class="btn-auth green">Crear cuenta y obtener −15%</button>
+      <div class="auth-note">¿Ya tienes cuenta? <a onclick="switchTab('login')" style="cursor:pointer">Inicia sesión</a></div>
+    </form>
+  </div>
+</div>
+
+<!-- ═══════════════ WELCOME MODAL ═══════════════ -->
+<div class="modal-overlay" id="welcome-modal">
+  <div class="modal">
+    <div class="modal-icon">🎉</div>
+    <h3>¡Bienvenido/a a Blue & Nat!</h3>
+    <p>Tu cuenta ha sido creada. Aquí tienes tu cupón de bienvenida con un <strong>15% de descuento</strong> en tu primer pedido:</p>
+    <div class="coupon-box">
+      <div class="coupon-code">BIENVENIDO15</div>
+      <div class="coupon-label">Válido en tu primer pedido · Sin mínimo de compra</div>
+    </div>
+    <button class="btn-copy" onclick="copyCoupon('BIENVENIDO15',this)" style="width:100%;margin-bottom:12px">Copiar código</button>
+    <a href="javascript:;" class="btn-go" onclick="closeModal()">Ir a mi cuenta →</a>
+  </div>
+</div>
+
+<!-- ═══════════════ CUENTA (logueado) ═══════════════ -->
+<div id="account-section">
+  <div class="account-header">
+    <div class="avatar-circle" id="dash-avatar">U</div>
+    <div class="account-header-text">
+      <h2 id="dash-name">Nombre Usuario</h2>
+      <p id="dash-email">email@ejemplo.com</p>
+    </div>
+  </div>
+
+  <div class="account-layout">
+    <!-- Sidebar -->
+    <aside class="account-sidebar">
+      <div class="sidebar-nav">
+        <a class="active" onclick="showPanel('perfil',this)"><span class="nav-icon">👤</span>Mi perfil</a>
+        <a onclick="showPanel('pedidos',this)"><span class="nav-icon">📦</span>Mis pedidos</a>
+        <a onclick="showPanel('direcciones',this)"><span class="nav-icon">📍</span>Direcciones</a>
+        <a onclick="showPanel('favoritos',this)"><span class="nav-icon">❤️</span>Favoritos</a>
+        <a onclick="showPanel('cupones',this)"><span class="nav-icon">🎁</span>Mis cupones</a>
+        <div class="sidebar-divider"></div>
+        <a onclick="showPanel('configuracion',this)"><span class="nav-icon">⚙️</span>Configuración</a>
+        <a class="danger" onclick="doLogout()"><span class="nav-icon">↩</span>Cerrar sesión</a>
+      </div>
+    </aside>
+
+    <!-- Main panels -->
+    <main class="account-main">
+
+      <!-- PERFIL -->
+      <div class="account-panel active" id="panel-perfil">
+        <div class="panel-title">Mi perfil</div>
+        <div class="panel-subtitle">Gestiona tu información personal</div>
+        <div class="profile-card">
+          <div class="profile-avatar-row">
+            <div class="avatar-big" id="profile-avatar-big">U</div>
+            <div class="avatar-big-info">
+              <h3 id="profile-fullname">Nombre Usuario</h3>
+              <p id="profile-member-since">Miembro desde abril 2025</p>
+            </div>
+          </div>
+          <div class="profile-form" id="profile-form">
+            <div>
+              <label>Nombre</label>
+              <input type="text" id="pf-name" placeholder="Tu nombre">
+            </div>
+            <div>
+              <label>Apellidos</label>
+              <input type="text" id="pf-surname" placeholder="Tus apellidos">
+            </div>
+            <div>
+              <label>Correo electrónico</label>
+              <input type="email" id="pf-email" placeholder="tu@email.com">
+            </div>
+            <div>
+              <label>Teléfono</label>
+              <input type="tel" id="pf-phone" placeholder="6XX XXX XXX">
+            </div>
+            <div>
+              <label>Fecha de nacimiento</label>
+              <input type="date" id="pf-birth">
+            </div>
+            <div>
+              <label>Género</label>
+              <select id="pf-gender">
+                <option value="">Prefiero no indicar</option>
+                <option value="m">Hombre</option>
+                <option value="f">Mujer</option>
+                <option value="o">Otro</option>
+              </select>
+            </div>
+          </div>
+          <div style="margin-top:24px;padding-top:20px;border-top:1px solid var(--border)">
+            <button class="btn-save" id="btn-save-profile" onclick="saveProfile()">Guardar cambios</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- PEDIDOS -->
+      <div class="account-panel" id="panel-pedidos">
+        <div class="panel-title">Mis pedidos</div>
+        <div class="panel-subtitle">Historial de todas tus compras</div>
+        <div id="orders-container"></div>
+      </div>
+
+      <!-- DIRECCIONES -->
+      <div class="account-panel" id="panel-direcciones">
+        <div class="panel-title">Mis direcciones</div>
+        <div class="panel-subtitle">Gestiona tus direcciones de envío</div>
+        <div class="addr-grid">
+          <div class="addr-card">
+            <span class="addr-badge">Principal</span>
+            <div class="addr-name" id="addr-main-name">—</div>
+            <div class="addr-text" id="addr-main-text">Añade tu dirección principal para un checkout más rápido.</div>
+            <div class="addr-actions">
+              <button class="btn-addr" onclick="showAddressForm()">Editar</button>
+            </div>
+          </div>
+          <div class="addr-card add-new" onclick="showAddressForm()">
+            <span>+</span>
+            <p>Añadir nueva dirección</p>
+          </div>
+        </div>
+        <!-- Formulario dirección (oculto) -->
+        <div id="addr-form-wrap" style="display:none;background:#fff;border-radius:12px;border:1px solid var(--border);padding:28px;margin-top:8px">
+          <h4 style="font-size:15px;font-weight:700;color:var(--navy);margin-bottom:20px">Nueva dirección</h4>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+            <div><label style="font-size:11.5px;font-weight:600;color:var(--navy);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;display:block">Nombre completo</label><input id="af-name" type="text" style="width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-family:'Inter',sans-serif;outline:none;background:var(--bg)" placeholder="Nombre y apellidos"></div>
+            <div><label style="font-size:11.5px;font-weight:600;color:var(--navy);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;display:block">Teléfono</label><input id="af-phone" type="tel" style="width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-family:'Inter',sans-serif;outline:none;background:var(--bg)" placeholder="6XX XXX XXX"></div>
+            <div style="grid-column:1/-1"><label style="font-size:11.5px;font-weight:600;color:var(--navy);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;display:block">Dirección</label><input id="af-addr" type="text" style="width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-family:'Inter',sans-serif;outline:none;background:var(--bg)" placeholder="Calle, número, piso..."></div>
+            <div><label style="font-size:11.5px;font-weight:600;color:var(--navy);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;display:block">Ciudad</label><input id="af-city" type="text" style="width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-family:'Inter',sans-serif;outline:none;background:var(--bg)" placeholder="Ciudad"></div>
+            <div><label style="font-size:11.5px;font-weight:600;color:var(--navy);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;display:block">Código postal</label><input id="af-cp" type="text" style="width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-family:'Inter',sans-serif;outline:none;background:var(--bg)" placeholder="00000"></div>
+          </div>
+          <div style="margin-top:20px;display:flex;gap:10px">
+            <button class="btn-save" onclick="saveAddress()">Guardar dirección</button>
+            <button style="background:transparent;border:1.5px solid var(--border);color:var(--muted);padding:10px 20px;border-radius:8px;font-size:14px;cursor:pointer;font-family:'Inter',sans-serif" onclick="document.getElementById('addr-form-wrap').style.display='none'">Cancelar</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- FAVORITOS -->
+      <div class="account-panel" id="panel-favoritos">
+        <div class="panel-title">Mis favoritos</div>
+        <div class="panel-subtitle">Productos que has guardado</div>
+        <div class="fav-empty">
+          <div class="icon">❤️</div>
+          <h3>Aún no tienes favoritos</h3>
+          <p style="font-size:14px;color:var(--muted);margin-bottom:20px;font-weight:300">Guarda los productos que más te gusten para encontrarlos fácilmente</p>
+          <a href="bnspain-concept.html" class="btn-shop">Explorar productos</a>
+        </div>
+      </div>
+
+      <!-- CUPONES -->
+      <div class="account-panel" id="panel-cupones">
+        <div class="panel-title">Mis cupones</div>
+        <div class="panel-subtitle">Descuentos disponibles en tu cuenta</div>
+        <div class="coupon-card" id="welcome-coupon-card">
+          <div class="coupon-card-left">
+            <div class="pct">−15%</div>
+            <small>descuento</small>
+          </div>
+          <div class="coupon-card-right">
+            <h4>Cupón de bienvenida <span class="coupon-badge" id="coupon-status-badge">Activo</span></h4>
+            <p>15% de descuento en tu primer pedido en Blue & Nat. Sin mínimo de compra. Válido durante 30 días desde tu registro.</p>
+            <div class="coupon-code-row">
+              <div class="code-chip">BIENVENIDO15</div>
+              <button class="btn-copy-small" onclick="copyCoupon('BIENVENIDO15',this)">Copiar código</button>
+            </div>
+          </div>
+        </div>
+        <div style="background:#fff;border-radius:12px;border:1px solid var(--border);padding:40px;text-align:center;margin-top:8px">
+          <div style="font-size:32px;margin-bottom:12px">🎁</div>
+          <div style="font-size:15px;font-weight:600;color:var(--navy);margin-bottom:6px">¿Tienes un código de descuento?</div>
+          <div style="font-size:13px;color:var(--muted);margin-bottom:20px;font-weight:300">Introduce tu código y se añadirá automáticamente a tu cuenta</div>
+          <div style="display:flex;gap:10px;max-width:360px;margin:0 auto">
+            <input type="text" id="coupon-input" placeholder="Introduce tu código" style="flex:1;padding:11px 16px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-family:'Inter',sans-serif;outline:none;text-transform:uppercase">
+            <button onclick="addCoupon()" style="background:var(--navy);color:#fff;border:none;padding:11px 20px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;white-space:nowrap">Añadir</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- CONFIGURACIÓN -->
+      <div class="account-panel" id="panel-configuracion">
+        <div class="panel-title">Configuración</div>
+        <div class="panel-subtitle">Gestiona tus preferencias y seguridad</div>
+
+        <!-- Cambiar contraseña -->
+        <div class="settings-section">
+          <h3>🔒 Cambiar contraseña</h3>
+          <div class="password-form">
+            <div><label style="font-size:11.5px;font-weight:600;color:var(--navy);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;display:block">Contraseña actual</label>
+            <input type="password" id="cfg-pass-old" placeholder="••••••••" style="width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-family:'Inter',sans-serif;outline:none;background:var(--bg)"></div>
+            <div><label style="font-size:11.5px;font-weight:600;color:var(--navy);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;display:block">Nueva contraseña</label>
+            <input type="password" id="cfg-pass-new" placeholder="Mínimo 6 caracteres" style="width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-family:'Inter',sans-serif;outline:none;background:var(--bg)"></div>
+            <div><label style="font-size:11.5px;font-weight:600;color:var(--navy);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;display:block">Confirmar nueva contraseña</label>
+            <input type="password" id="cfg-pass-confirm" placeholder="Repite la contraseña" style="width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-family:'Inter',sans-serif;outline:none;background:var(--bg)"></div>
+            <button class="btn-save" onclick="changePassword()">Actualizar contraseña</button>
+          </div>
+        </div>
+
+        <!-- Notificaciones -->
+        <div class="settings-section">
+          <h3>🔔 Notificaciones</h3>
+          <div class="toggle-row">
+            <div class="toggle-info"><strong>Ofertas y promociones</strong><span>Recibe descuentos exclusivos por email</span></div>
+            <label class="toggle"><input type="checkbox" id="notif-offers" checked><span class="toggle-slider"></span></label>
+          </div>
+          <div class="toggle-row">
+            <div class="toggle-info"><strong>Novedades de producto</strong><span>Entérate de los nuevos lanzamientos</span></div>
+            <label class="toggle"><input type="checkbox" id="notif-new" checked><span class="toggle-slider"></span></label>
+          </div>
+          <div class="toggle-row">
+            <div class="toggle-info"><strong>Seguimiento de pedidos</strong><span>Actualizaciones del estado de tus envíos</span></div>
+            <label class="toggle"><input type="checkbox" id="notif-orders" checked><span class="toggle-slider"></span></label>
+          </div>
+          <div class="toggle-row">
+            <div class="toggle-info"><strong>Newsletter semanal</strong><span>Consejos de nutrición y bienestar</span></div>
+            <label class="toggle"><input type="checkbox" id="notif-news"><span class="toggle-slider"></span></label>
+          </div>
+          <div style="margin-top:16px">
+            <button class="btn-save" onclick="saveNotifications()">Guardar preferencias</button>
+          </div>
+        </div>
+
+        <!-- Zona de peligro -->
+        <div class="settings-section danger-zone">
+          <h3>⚠️ Zona peligrosa</h3>
+          <p style="font-size:13px;color:var(--muted);font-weight:300;margin-bottom:16px;line-height:1.6">Al eliminar tu cuenta se borrarán permanentemente todos tus datos, historial de pedidos y cupones. Esta acción no se puede deshacer.</p>
+          <button class="btn-danger" onclick="confirmDeleteAccount()">Eliminar mi cuenta</button>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-brand">
+    <a href="bnspain-concept.html"><img src="assets/logo-raw.jpg" alt="Blue&Nat" style="height:44px;filter:invert(1);mix-blend-mode:screen;object-fit:contain"></a>
+    <p>Tienda especializada en nutrición natural, suplementos deportivos y cosmética ecológica certificada.</p>
+  </div>
+  <div><h5>Productos</h5><a href="deporte.html">Deporte & Energía</a><a href="suplementos.html">Suplementos</a><a href="cosmetica.html">Cosmética</a><a href="nutricion.html">Nutrición</a><a href="ofertas.html">Ofertas</a></div>
+  <div><h5>Empresa</h5><a href="sobre-nosotros.html">Sobre nosotros</a><a href="blog.html">Blog & Noticias</a><a href="contacto.html">Contacto</a><a href="contacto.html">Trabaja con nosotros</a></div>
+  <div><h5>Ayuda</h5><a href="envios.html">Envíos y entregas</a><a href="devoluciones.html">Devoluciones</a><a href="privacidad.html">Política de privacidad</a><a href="faq.html">Preguntas frecuentes</a></div>
+</footer>
+<div class="footer-bottom">© 2026 Blue & Nat Spain, S.L. — Todos los derechos reservados</div>
+
+<div class="toast" id="toast"><span style="color:var(--gold)">✓</span><span id="toast-msg">Copiado</span></div>
+
+<script>
+/* ─── CRYPTO: SHA-256 en lugar de btoa para contraseñas ─── */
+async function hashPass(str) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+/* ─── ESTADO ─── */
+let currentUser = null;
+
+function loadState(){
+  const u = localStorage.getItem('bn_user');
+  if(u){ currentUser = JSON.parse(u); showDashboard(); }
+  else { showAuth(); }
+  updateCartCount();
+}
+
+function updateCartCount(){
+  const c = JSON.parse(localStorage.getItem('bn_cart')||'[]');
+  document.getElementById('cart-count').textContent = c.reduce((a,i)=>a+i.qty,0);
+}
+
+function showAuth(){
+  document.getElementById('auth-section').style.display = 'flex';
+  document.getElementById('account-section').style.display = 'none';
+}
+
+function showDashboard(){
+  document.getElementById('auth-section').style.display = 'none';
+  document.getElementById('account-section').style.display = 'block';
+  renderDashboard();
+}
+
+function renderDashboard(){
+  const u = currentUser;
+  const initials = (u.name[0]+(u.surname?u.surname[0]:'')).toUpperCase();
+  document.getElementById('dash-avatar').textContent = initials;
+  document.getElementById('dash-name').textContent = u.name + ' ' + (u.surname||'');
+  document.getElementById('dash-email').textContent = u.email;
+  document.getElementById('profile-avatar-big').textContent = initials;
+  document.getElementById('profile-fullname').textContent = u.name + ' ' + (u.surname||'');
+  document.getElementById('profile-member-since').textContent = 'Miembro desde ' + (u.joined||'2025');
+  document.getElementById('pf-name').value = u.name||'';
+  document.getElementById('pf-surname').value = u.surname||'';
+  document.getElementById('pf-email').value = u.email||'';
+  document.getElementById('pf-phone').value = u.phone||'';
+  document.getElementById('pf-birth').value = u.birth||'';
+  if(u.gender) document.getElementById('pf-gender').value = u.gender;
+  renderOrders();
+  renderAddress();
+}
+
+/* ─── TABS AUTH ─── */
+function switchTab(tab){
+  document.querySelectorAll('.auth-tab').forEach((t,i)=>t.classList.toggle('active', (tab==='login'&&i===0)||(tab==='register'&&i===1)));
+  document.getElementById('form-login').classList.toggle('active', tab==='login');
+  document.getElementById('form-register').classList.toggle('active', tab==='register');
+  document.getElementById('login-alert').style.display='none';
+  document.getElementById('register-alert').style.display='none';
+}
+
+function showAlert(id, type, msg){
+  const el = document.getElementById(id);
+  el.className = 'auth-alert '+ type;
+  el.innerHTML = (type==='error'?'⚠️ ':'✓ ')+msg;
+  el.style.display='flex';
+}
+
+/* ─── LOGIN ─── */
+async function doLogin(e){
+  e.preventDefault();
+  const email = document.getElementById('login-email').value.trim();
+  const pass  = document.getElementById('login-pass').value;
+  const hashed = await hashPass(pass);
+  const users = JSON.parse(localStorage.getItem('bn_users')||'[]');
+  const user  = users.find(u=>u.email===email && u.pass===hashed);
+  if(!user){ showAlert('login-alert','error','Email o contraseña incorrectos'); return; }
+  currentUser = user;
+  localStorage.setItem('bn_user', JSON.stringify(user));
+  showDashboard();
+}
+
+/* ─── REGISTER ─── */
+async function doRegister(e){
+  e.preventDefault();
+  const name    = document.getElementById('reg-name').value.trim();
+  const surname = document.getElementById('reg-surname').value.trim();
+  const email   = document.getElementById('reg-email').value.trim();
+  const pass    = document.getElementById('reg-pass').value;
+  const pass2   = document.getElementById('reg-pass2').value;
+  if(pass !== pass2){ showAlert('register-alert','error','Las contraseñas no coinciden'); return; }
+  const users = JSON.parse(localStorage.getItem('bn_users')||'[]');
+  if(users.find(u=>u.email===email)){ showAlert('register-alert','error','Este email ya está registrado'); return; }
+  const now = new Date();
+  const months = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+  const hashed = await hashPass(pass);
+  const newUser = { name, surname, email, pass: hashed, joined: months[now.getMonth()]+' '+now.getFullYear(), coupon:'BIENVENIDO15', couponUsed:false };
+  users.push(newUser);
+  localStorage.setItem('bn_users', JSON.stringify(users));
+  currentUser = newUser;
+  localStorage.setItem('bn_user', JSON.stringify(newUser));
+  document.getElementById('welcome-modal').classList.add('open');
+}
+
+function closeModal(){
+  document.getElementById('welcome-modal').classList.remove('open');
+  showDashboard();
+}
+
+/* ─── LOGOUT ─── */
+function doLogout(){
+  localStorage.removeItem('bn_user');
+  currentUser = null;
+  showAuth();
+  switchTab('login');
+}
+
+/* ─── PROFILE ─── */
+function saveProfile(){
+  const oldEmail = currentUser.email; // guardar email original antes de modificar
+  currentUser.name    = document.getElementById('pf-name').value.trim();
+  currentUser.surname = document.getElementById('pf-surname').value.trim();
+  currentUser.email   = document.getElementById('pf-email').value.trim();
+  currentUser.phone   = document.getElementById('pf-phone').value.trim();
+  currentUser.birth   = document.getElementById('pf-birth').value;
+  currentUser.gender  = document.getElementById('pf-gender').value;
+  // buscar por email original para no perder el registro si cambia el email
+  const users = JSON.parse(localStorage.getItem('bn_users')||'[]');
+  const idx = users.findIndex(u=>u.email===oldEmail);
+  if(idx>-1) users[idx] = currentUser; else users.push(currentUser);
+  localStorage.setItem('bn_users', JSON.stringify(users));
+  localStorage.setItem('bn_user', JSON.stringify(currentUser));
+  renderDashboard();
+  const btn = document.getElementById('btn-save-profile');
+  btn.textContent='✓ Guardado'; btn.classList.add('success-state');
+  setTimeout(()=>{ btn.textContent='Guardar cambios'; btn.classList.remove('success-state'); }, 2000);
+  toast('Perfil actualizado correctamente');
+}
+
+/* ─── ORDERS ─── */
+function renderOrders(){
+  const orders = JSON.parse(localStorage.getItem('bn_orders_'+currentUser.email)||'[]');
+  const el = document.getElementById('orders-container');
+  if(!orders.length){
+    el.innerHTML = `<div class="orders-empty"><div class="icon">📦</div><h3>Aún no tienes pedidos</h3><p style="font-size:14px;color:var(--muted);font-weight:300">Cuando realices tu primera compra aparecerá aquí</p><a href="bnspain-concept.html" class="btn-shop">Empezar a comprar</a></div>`;
+    return;
+  }
+  el.innerHTML = orders.map(o=>`
+    <div style="background:#fff;border-radius:12px;border:1px solid var(--border);padding:24px;margin-bottom:12px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+        <div>
+          <div style="font-size:13px;font-weight:700;color:var(--navy)">Pedido #${o.id}</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:2px">${o.date}</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px">
+          <span style="font-size:12px;font-weight:600;padding:4px 12px;border-radius:20px;background:#e8f2ec;color:var(--green)">${o.status}</span>
+          <span style="font-size:16px;font-weight:700;color:var(--navy)">€${o.total.toFixed(2)}</span>
+        </div>
+      </div>
+      <div style="font-size:13px;color:var(--muted);font-weight:300">${o.items.map(i=>i.name).join(', ')}</div>
+    </div>`).join('');
+}
+
+/* ─── ADDRESS ─── */
+function renderAddress(){
+  const addr = currentUser.address;
+  if(addr){
+    document.getElementById('addr-main-name').textContent = addr.name;
+    document.getElementById('addr-main-text').innerHTML = addr.line1+'<br>'+addr.city+', '+addr.cp+'<br>'+addr.phone;
+  }
+}
+
+function showAddressForm(){ document.getElementById('addr-form-wrap').style.display='block'; }
+
+function saveAddress(){
+  const addr = {
+    name: document.getElementById('af-name').value,
+    line1: document.getElementById('af-addr').value,
+    city:  document.getElementById('af-city').value,
+    cp:    document.getElementById('af-cp').value,
+    phone: document.getElementById('af-phone').value
+  };
+  if(!addr.line1){ toast('Por favor rellena la dirección'); return; }
+  currentUser.address = addr;
+  const users = JSON.parse(localStorage.getItem('bn_users')||'[]');
+  const idx = users.findIndex(u=>u.email===currentUser.email);
+  if(idx>-1) users[idx] = currentUser;
+  localStorage.setItem('bn_users', JSON.stringify(users));
+  localStorage.setItem('bn_user', JSON.stringify(currentUser));
+  renderAddress();
+  document.getElementById('addr-form-wrap').style.display='none';
+  toast('Dirección guardada correctamente');
+}
+
+/* ─── COUPONS ─── */
+function addCoupon(){
+  const code = document.getElementById('coupon-input').value.trim().toUpperCase();
+  if(!code) return;
+  toast(code==='BIENVENIDO15' ? 'Ese cupón ya está en tu cuenta 🎁' : 'Código no válido o expirado');
+  document.getElementById('coupon-input').value = '';
+}
+
+/* ─── CONFIG ─── */
+async function changePassword(){
+  const oldP = document.getElementById('cfg-pass-old').value;
+  const newP = document.getElementById('cfg-pass-new').value;
+  const con  = document.getElementById('cfg-pass-confirm').value;
+  if(!oldP||!newP){ toast('Rellena todos los campos'); return; }
+  if(currentUser.pass !== await hashPass(oldP)){ toast('La contraseña actual no es correcta'); return; }
+  if(newP !== con){ toast('Las contraseñas nuevas no coinciden'); return; }
+  if(newP.length < 6){ toast('La contraseña debe tener al menos 6 caracteres'); return; }
+  currentUser.pass = await hashPass(newP);
+  const users = JSON.parse(localStorage.getItem('bn_users')||'[]');
+  const idx = users.findIndex(u=>u.email===currentUser.email);
+  if(idx>-1) users[idx] = currentUser;
+  localStorage.setItem('bn_users', JSON.stringify(users));
+  localStorage.setItem('bn_user', JSON.stringify(currentUser));
+  ['cfg-pass-old','cfg-pass-new','cfg-pass-confirm'].forEach(id=>document.getElementById(id).value='');
+  toast('Contraseña actualizada correctamente');
+}
+
+function saveNotifications(){ toast('Preferencias de notificación guardadas'); }
+
+function confirmDeleteAccount(){
+  if(confirm('¿Seguro que quieres eliminar tu cuenta? Esta acción no se puede deshacer.')){
+    const users = JSON.parse(localStorage.getItem('bn_users')||'[]');
+    const filtered = users.filter(u=>u.email!==currentUser.email);
+    localStorage.setItem('bn_users', JSON.stringify(filtered));
+    localStorage.removeItem('bn_user');
+    currentUser = null;
+    showAuth();
+    toast('Cuenta eliminada');
+  }
+}
+
+/* ─── UI HELPERS ─── */
+function showPanel(name, el){
+  document.querySelectorAll('.account-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.sidebar-nav a').forEach(a=>a.classList.remove('active'));
+  document.getElementById('panel-'+name).classList.add('active');
+  if(el) el.classList.add('active');
+}
+
+function togglePass(id, btn){
+  const inp = document.getElementById(id);
+  inp.type = inp.type==='password' ? 'text' : 'password';
+  btn.textContent = inp.type==='password' ? '👁' : '🙈';
+}
+
+function copyCoupon(code, btn){
+  navigator.clipboard.writeText(code).catch(()=>{});
+  const orig = btn.textContent;
+  btn.textContent = '✓ Copiado';
+  setTimeout(()=>btn.textContent=orig, 2000);
+  toast('Código copiado al portapapeles');
+}
+
+function toast(msg){
+  document.getElementById('toast-msg').textContent = msg;
+  const t = document.getElementById('toast');
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 2600);
+}
+
+loadState();
+</script>
+</body>
+</html>

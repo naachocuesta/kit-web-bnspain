@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ofertas — Blue & Nat</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0B1F3A;--gold:#C9A96E;--green:#2D6A4F;--red:#C0392B;--bg:#F8F6F2;--surface:#FFFFFF;--text:#1A1A1A;--muted:#7A7A7A;--border:#E8E4DC;--radius:10px}
+*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;color:var(--text);background:var(--bg);-webkit-font-smoothing:antialiased}
+.topbar{background:#8B1A1A;text-align:center;padding:9px;font-size:11.5px;color:rgba(255,255,255,.85);letter-spacing:.6px;text-transform:uppercase}
+.topbar span{color:#FFD59E;font-weight:700}
+header{padding:0 52px;height:64px;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);position:sticky;top:0;z-index:200;border-bottom:1px solid var(--border)}
+.logo{font-family:'DM Serif Display',serif;font-size:22px;color:var(--navy);letter-spacing:-.3px;text-decoration:none}
+.logo em{font-style:normal;color:var(--green)}
+nav{display:flex;gap:32px}
+nav a{font-size:13px;font-weight:500;color:var(--muted);text-decoration:none;letter-spacing:.2px;transition:color .2s}
+nav a:hover{color:var(--navy)}nav a.active{color:var(--red);font-weight:700;border-bottom:2px solid var(--red);padding-bottom:2px}
+.nav-dd{position:relative;display:inline-flex;align-items:center}
+.nav-dd>a::after{content:'▾';font-size:10px;opacity:.5;margin-left:3px;transition:transform .2s}
+.nav-dd:hover>a::after{transform:rotate(180deg)}
+.nav-dd-menu{position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%) translateY(-4px);background:#fff;border:1px solid var(--border);border-radius:10px;box-shadow:0 8px 28px rgba(0,0,0,.1);min-width:210px;padding:6px 0;z-index:300;opacity:0;visibility:hidden;transition:opacity .2s,transform .2s,visibility .2s;pointer-events:none}
+.nav-dd:hover .nav-dd-menu{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0);pointer-events:auto}
+.nav-dd-menu a{display:block;padding:8px 18px;font-size:13px;color:var(--muted);font-weight:400;white-space:nowrap;transition:.15s;border-bottom:none}
+.nav-dd-menu a:hover{color:var(--navy);background:var(--bg)}
+.nav-dd-menu--wide{min-width:480px;columns:2}
+.nav-dd-menu--wide a{break-inside:avoid;display:block}
+.nav-dd::after,.nav-item::after{content:'';position:absolute;top:100%;left:0;right:0;height:14px}
+.header-actions{display:flex;align-items:center;gap:20px}
+.cart-pill{display:flex;align-items:center;gap:8px;background:var(--navy);color:#fff;border:none;padding:9px 20px;border-radius:24px;cursor:pointer;font-size:13px;font-weight:600;transition:.2s;font-family:'Inter',sans-serif;text-decoration:none}
+.cart-pill:hover{background:#1a3a60}.cart-dot{background:var(--gold);color:var(--navy);font-size:10px;font-weight:700;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+/* HERO — rojo/navy urgencia */
+.cat-hero{background:linear-gradient(135deg,#0B0808 0%,#2a0808 35%,#8B1A1A 80%,#B52222 100%);padding:90px 52px 80px;position:relative;overflow:hidden;text-align:center}
+.cat-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 60%,rgba(201,169,110,.1) 0%,transparent 60%)}
+.cat-hero-inner{max-width:760px;margin:0 auto;position:relative;z-index:2}
+/* Contador regresivo */
+.countdown{display:flex;gap:16px;justify-content:center;margin-bottom:32px}
+.count-unit{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:8px;padding:12px 20px;text-align:center;min-width:72px}
+.count-num{font-size:32px;font-weight:800;color:#fff;display:block;font-variant-numeric:tabular-nums;letter-spacing:-1px;line-height:1}
+.count-label{font-size:9px;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:1.5px;margin-top:4px;display:block}
+.count-sep{font-size:28px;font-weight:700;color:rgba(255,255,255,.3);display:flex;align-items:center;padding-bottom:16px}
+.cat-tag{display:inline-flex;align-items:center;gap:6px;background:rgba(255,60,60,.25);border:1px solid rgba(255,100,100,.4);color:#FF9999;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:5px 16px;border-radius:20px;margin-bottom:22px}
+.cat-hero h1{font-family:'DM Serif Display',serif;font-size:64px;color:#fff;line-height:1.0;margin-bottom:16px;letter-spacing:-1px}
+.cat-hero h1 em{font-style:normal;color:var(--gold)}
+.cat-hero p{font-size:17px;color:rgba(255,255,255,.65);line-height:1.7;font-weight:300;margin-bottom:32px}
+.search-hero{background:#fff;border-radius:50px;padding:6px 6px 6px 26px;display:flex;align-items:center;max-width:620px;margin:0 auto;box-shadow:0 16px 48px rgba(0,0,0,.4)}
+.search-hero input{flex:1;border:none;outline:none;font-size:16px;font-family:'Inter',sans-serif;color:var(--text);background:transparent}
+.search-hero input::placeholder{color:#aaa}
+.search-hero button{background:var(--red);color:#fff;border:none;padding:13px 32px;border-radius:40px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;transition:.2s}
+.search-hero button:hover{background:#a02020}
+.search-tags{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:18px}
+.stag{font-size:12px;color:rgba(255,255,255,.5);background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);padding:4px 14px;border-radius:20px;cursor:pointer;transition:.2s}
+.stag:hover{background:rgba(255,255,255,.14);color:#fff}
+/* FEATURED */
+.featured{background:linear-gradient(135deg,#0B1F3A,#142d50);padding:80px 52px;position:relative;overflow:hidden;border-top:3px solid var(--red)}
+.featured-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;position:relative;z-index:1}
+.featured-label{display:inline-flex;align-items:center;gap:8px;background:rgba(192,57,43,.2);border:1px solid var(--red);color:#FF8080;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:5px 14px;border-radius:4px;margin-bottom:20px}
+.featured-title{font-family:'DM Serif Display',serif;font-size:50px;color:#fff;line-height:1.0;margin-bottom:18px;letter-spacing:-.5px}
+.featured-title em{font-style:normal;color:var(--gold)}
+.featured-desc{font-size:15px;color:rgba(255,255,255,.65);line-height:1.8;margin-bottom:28px;font-weight:300}
+.featured-perks{list-style:none;margin-bottom:32px;display:flex;flex-direction:column;gap:10px}
+.featured-perks li{display:flex;align-items:center;gap:10px;font-size:14px;color:rgba(255,255,255,.75)}
+.featured-perks li::before{content:'✓';color:var(--gold);font-weight:700;font-size:13px;flex-shrink:0}
+.featured-bottom{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.feat-price{font-size:40px;font-weight:800;color:#fff;letter-spacing:-1px}
+.feat-price-old{font-size:18px;color:rgba(255,255,255,.35);text-decoration:line-through;margin-left:6px;font-weight:300}
+.sale-badge-big{background:var(--red);color:#fff;font-size:14px;font-weight:700;padding:6px 14px;border-radius:6px;letter-spacing:.5px}
+.feat-btn{background:var(--gold);color:var(--navy);border:none;padding:15px 36px;border-radius:6px;font-size:15px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;transition:.2s}
+.feat-btn:hover{background:#b8944f;transform:translateY(-1px)}
+.featured-img{text-align:center;position:relative}
+.featured-img img{max-height:420px;max-width:100%;object-fit:contain;filter:drop-shadow(0 24px 64px rgba(0,0,0,.5));transition:transform .4s}
+.featured-img img:hover{transform:scale(1.04) translateY(-6px)}
+.featured-img .badge-float{position:absolute;top:20px;right:10px;background:var(--red);color:#fff;font-size:18px;font-weight:900;width:70px;height:70px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(192,57,43,.5);animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+.feat-reviews{display:flex;align-items:center;gap:8px;margin-top:16px}
+.feat-stars{font-size:14px;color:#F59E0B;letter-spacing:2px}
+.feat-rcount{font-size:13px;color:rgba(255,255,255,.45)}
+/* PRODUCTS */
+.products-section{padding:72px 52px}
+.section-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:32px}
+.section-label{font-size:11px;font-weight:600;color:var(--red);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px}
+.section-title{font-family:'DM Serif Display',serif;font-size:32px;color:var(--navy)}
+.sort-select{padding:8px 16px;border:1px solid var(--border);border-radius:6px;font-size:13px;font-family:'Inter',sans-serif;color:var(--muted);background:#fff;cursor:pointer;outline:none}
+.filter-pills{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:32px}
+.fpill{padding:6px 18px;border-radius:20px;border:1px solid var(--border);background:transparent;font-size:12.5px;font-weight:500;color:var(--muted);cursor:pointer;transition:.15s;white-space:nowrap;font-family:'Inter',sans-serif}
+.fpill:hover{border-color:var(--navy);color:var(--navy)}.fpill.active{background:var(--navy);border-color:var(--navy);color:#fff}
+.pgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.card{background:#fff;border-radius:14px;overflow:hidden;border:1px solid var(--border);transition:box-shadow .3s,transform .25s,border-color .3s;cursor:pointer;position:relative}
+.card:hover{box-shadow:0 16px 48px rgba(0,0,0,.12);transform:translateY(-4px);border-color:#d0ccc0}
+.discount-ribbon{position:absolute;top:0;right:0;background:var(--red);color:#fff;font-size:11px;font-weight:700;padding:5px 12px;border-radius:0 12px 0 8px;z-index:2}
+.card-thumb{height:180px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.card-thumb img{width:100%;height:100%;object-fit:contain;padding:14px;background:#fff}
+.card-badge{position:absolute;top:12px;left:12px;font-size:9.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;padding:3px 9px;border-radius:4px}
+.badge-sale{background:var(--red);color:#fff}.badge-new{background:var(--green);color:#fff}.badge-top{background:var(--navy);color:#fff}
+.card-body{padding:18px}
+.card-cat{font-size:10px;font-weight:600;color:var(--green);text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px}
+.card-name{font-size:14px;font-weight:600;color:var(--navy);line-height:1.35;margin-bottom:8px}
+.card-stars{display:flex;align-items:center;gap:4px;margin-bottom:12px}
+.stars{font-size:11px;color:#F59E0B;letter-spacing:1px}.review-count{font-size:11px;color:var(--muted)}
+.card-footer{display:flex;align-items:center;justify-content:space-between}
+.price-main{font-size:18px;font-weight:700;color:var(--red)}.price-old{font-size:11px;color:var(--muted);text-decoration:line-through;margin-left:5px}
+.add-btn{width:36px;height:36px;background:var(--navy);color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:22px;line-height:1;display:flex;align-items:center;justify-content:center;transition:.15s;flex-shrink:0;font-family:'Inter',sans-serif}
+.add-btn:hover{background:var(--red)}.add-btn.added{background:var(--green);font-size:15px}
+.thumb-navy{background:linear-gradient(135deg,#dce6f0,#b8cde0)}.thumb-green{background:linear-gradient(135deg,#d8ede2,#b0d0bf)}.thumb-cream{background:linear-gradient(135deg,#f0ead8,#ddd0b0)}.thumb-rose{background:linear-gradient(135deg,#f5e8ed,#e8c8d2)}.thumb-orange{background:linear-gradient(135deg,#f5e8d0,#e8c890)}
+.product-icon{font-size:52px}
+.trust-bar{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:#fff}
+.trust-item{padding:28px 24px;text-align:center;border-right:1px solid var(--border)}.trust-item:last-child{border-right:none}
+.trust-icon{width:32px;height:32px;margin:0 auto 10px;display:flex;align-items:center;justify-content:center;color:var(--navy)}.trust-item strong{font-size:13px;color:var(--navy);display:block;font-weight:600;margin-bottom:3px}.trust-item span{font-size:11.5px;color:var(--muted);font-weight:300}
+footer{background:var(--navy);color:rgba(255,255,255,.55);padding:60px 52px 40px;display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:40px}
+.footer-brand .logo{color:#fff;font-size:20px;margin-bottom:14px;display:block}.footer-brand p{font-size:13px;line-height:1.7;color:rgba(255,255,255,.45);font-weight:300;max-width:220px}
+footer h5{font-size:11px;font-weight:700;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:16px}
+footer a{display:block;font-size:13px;color:rgba(255,255,255,.55);text-decoration:none;margin-bottom:10px;transition:.15s;font-weight:300}footer a:hover{color:#fff}
+.footer-bottom{background:#071326;text-align:center;padding:16px;font-size:11.5px;color:rgba(255,255,255,.25);letter-spacing:.3px}
+.toast{position:fixed;bottom:28px;right:28px;background:var(--navy);color:#fff;padding:14px 22px;border-radius:8px;font-size:13px;font-weight:500;z-index:999;transform:translateY(80px);opacity:0;transition:all .3s cubic-bezier(.34,1.56,.64,1);pointer-events:none;display:flex;align-items:center;gap:10px;border-left:3px solid var(--gold);box-shadow:0 8px 24px rgba(0,0,0,.2)}
+.toast.show{transform:translateY(0);opacity:1}
+@media(max-width:768px){
+  header{padding:0 16px;height:56px}nav{display:none}
+  .cat-hero{padding:60px 20px 50px}.cat-hero h1{font-size:38px}
+  .countdown{gap:8px}.count-unit{padding:10px 12px;min-width:56px}.count-num{font-size:24px}
+  .featured{padding:52px 20px}.featured-inner{grid-template-columns:1fr}.featured-img{order:-1}.featured-img img{max-height:260px}.featured-title{font-size:34px}
+  .products-section{padding:48px 20px}.pgrid{grid-template-columns:repeat(2,1fr);gap:12px}
+  .section-header{flex-direction:column;align-items:flex-start;gap:12px}
+  .trust-bar{grid-template-columns:repeat(2,1fr)}.trust-item{border-right:none;border-bottom:1px solid var(--border)}.trust-item:nth-child(odd){border-right:1px solid var(--border)}
+  footer{grid-template-columns:1fr;gap:28px;padding:48px 20px 32px}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">🔥 OFERTA FLASH — Hasta <span>−40%</span> en productos seleccionados · Solo por tiempo limitado</div>
+
+<header>
+  <a href="bnspain-concept.html"><img src="assets/logo-raw.jpg" alt="Blue&Nat" style="height:44px;mix-blend-mode:multiply;object-fit:contain"></a>
+  <nav>
+    <div class="nav-dd">
+      <a href="deporte.html">Energía & Deporte</a>
+      <div class="nav-dd-menu">
+        <a href="deporte.html?cat=aminoacidos">Aminoácidos</a>
+        <a href="deporte.html?cat=proteina">Proteína</a>
+        <a href="deporte.html?cat=energia">Energía</a>
+        <a href="deporte.html?cat=recuperacion">Recuperación</a>
+        <a href="deporte.html?cat=definicion">Definición</a>
+        <a href="deporte.html?cat=hidratacion">Hidratación</a>
+      </div>
+    </div>
+    <div class="nav-dd">
+      <a href="suplementos.html">Suplementos</a>
+      <div class="nav-dd-menu">
+        <a href="suplementos.html?cat=omega">Omega & Ácidos</a>
+        <a href="suplementos.html?cat=vitaminas">Vitaminas</a>
+        <a href="suplementos.html?cat=colageno">Colágeno</a>
+        <a href="suplementos.html?cat=probioticos">Probióticos</a>
+        <a href="suplementos.html?cat=minerales">Minerales</a>
+      </div>
+    </div>
+    <div class="nav-dd">
+      <a href="cosmetica.html">Cosmética</a>
+      <div class="nav-dd-menu">
+        <a href="cosmetica.html?cat=aceite">Aceites</a>
+        <a href="cosmetica.html?cat=cara">Cara & Antienvejecimiento</a>
+        <a href="cosmetica.html?cat=cabello">Cabello</a>
+        <a href="cosmetica.html?cat=cuerpo">Cuerpo</a>
+      </div>
+    </div>
+    <div class="nav-dd">
+      <a href="nutricion.html">Nutrición</a>
+      <div class="nav-dd-menu">
+        <a href="nutricion.html?cat=adaptogenos">Adaptógenos</a>
+        <a href="nutricion.html?cat=semillas">Semillas & Cereales</a>
+        <a href="nutricion.html?cat=antioxidantes">Antioxidantes</a>
+        <a href="nutricion.html?cat=aceites">Aceites Nutricionales</a>
+      </div>
+    </div>
+    <a href="ofertas.html" class="active" style="color:var(--red)">Ofertas</a>
+    <div class="nav-dd">
+      <a href="blog.html">Noticias</a>
+      <div class="nav-dd-menu">
+        <a href="blog.html">Artículos</a>
+        <a href="bnspain-concept.html#colaboraciones">Colaboraciones</a>
+      </div>
+    </div>
+  </nav>
+  <div class="header-actions">
+    <a href="cuenta.html" style="font-size:13px;color:var(--muted);text-decoration:none;font-weight:500">Mi cuenta</a>
+    <a href="cart.html" class="cart-pill" id="cart-btn">Carrito<div class="cart-dot" id="cart-count">0</div></a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="cat-hero">
+  <div class="cat-hero-inner">
+    <!-- Contador regresivo -->
+    <div class="countdown" id="countdown">
+      <div class="count-unit"><span class="count-num" id="c-h">00</span><span class="count-label">horas</span></div>
+      <div class="count-sep">:</div>
+      <div class="count-unit"><span class="count-num" id="c-m">00</span><span class="count-label">minutos</span></div>
+      <div class="count-sep">:</div>
+      <div class="count-unit"><span class="count-num" id="c-s">00</span><span class="count-label">segundos</span></div>
+    </div>
+    <div class="cat-tag">🔥 Ofertas Flash · Tiempo limitado</div>
+    <h1>Hasta <em>−40%</em><br>en tu carrito.</h1>
+    <p>Descuentos reales en los productos que más te gustan. Sin trampa, sin letra pequeña. Solo por tiempo limitado.</p>
+    <div class="search-hero">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-right:4px"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+      <input type="text" id="hero-search" placeholder="Busca entre las ofertas…" oninput="filterProducts(this.value)">
+      <button onclick="filterProducts(document.getElementById('hero-search').value)">Buscar</button>
+    </div>
+    <div class="search-tags">
+      <span class="stag" onclick="filterProducts('argán');document.getElementById('hero-search').value='argán'">aceite argán −34%</span>
+      <span class="stag" onclick="filterProducts('probióticos');document.getElementById('hero-search').value='probióticos'">probióticos −20%</span>
+      <span class="stag" onclick="filterProducts('glutamina');document.getElementById('hero-search').value='glutamina'">glutamina −15%</span>
+      <span class="stag" onclick="filterProducts('mascarilla');document.getElementById('hero-search').value='mascarilla'">mascarilla −25%</span>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTO ESTRELLA EN OFERTA -->
+<section class="featured">
+  <div class="featured-inner">
+    <div>
+      <div class="featured-label">🔥 Mejor Oferta del Día</div>
+      <h2 class="featured-title">Solo hoy:<br><em>Aceite de Argán</em><br>al −34%</h2>
+      <p class="featured-desc">El producto más premiado de nuestra tienda, con 73 reseñas de 5 estrellas, a su precio más bajo del año. Aceite de argán 100% puro, prensado en frío, certificado ecológico. El secreto de la piel perfecta, ahora sin excusas.</p>
+      <ul class="featured-perks">
+        <li>De €26.90 a solo €17.90 — ahorra €9</li>
+        <li>Hidratación profunda desde la primera aplicación</li>
+        <li>Cara, cabello y uñas — un solo producto</li>
+        <li>Stock limitado a este precio</li>
+      </ul>
+      <div class="feat-reviews">
+        <span class="feat-stars">★★★★★</span>
+        <span class="feat-rcount">73 reseñas · valoración media 4.9</span>
+      </div>
+      <div class="featured-bottom" style="margin-top:24px">
+        <div>
+          <span class="feat-price">€17.90</span>
+          <span class="feat-price-old">€26.90</span>
+        </div>
+        <span class="sale-badge-big">−34%</span>
+        <button class="feat-btn" onclick="addToCart(this,4,17.90)">Añadir al carrito</button>
+      </div>
+    </div>
+    <div class="featured-img">
+      <div class="badge-float">−34%</div>
+      <img src="https://www.bnspain.com/wp-content/uploads/2025/09/aceite-argan-ecologico-blue-nat-premium-600x600.jpg" alt="Aceite de Argán Ecológico">
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section class="products-section" id="products">
+  <div class="section-header">
+    <div>
+      <div class="section-label">Todas las ofertas activas</div>
+      <div class="section-title">Productos en descuento</div>
+    </div>
+    <select class="sort-select">
+      <option>Ordenar por: Mayor descuento</option>
+      <option>Precio: menor a mayor</option>
+      <option>Precio: mayor a menor</option>
+    </select>
+  </div>
+  <div class="filter-pills">
+    <button class="fpill active" onclick="filterCat(this,'all')">Todos</button>
+    <button class="fpill" onclick="filterCat(this,'cosmetica')">Cosmética</button>
+    <button class="fpill" onclick="filterCat(this,'suplementos')">Suplementos</button>
+    <button class="fpill" onclick="filterCat(this,'deporte')">Deporte</button>
+    <button class="fpill" onclick="filterCat(this,'nutricion')">Nutrición</button>
+  </div>
+  <div class="pgrid" id="products-grid">
+
+    <div class="card" data-cat="cosmetica" data-name="aceite argán ecológico puro cosmética" data-price="17.90" onclick="goProduct(event,4)">
+      <div class="discount-ribbon">−34%</div>
+      <div class="card-thumb">
+        <img src="https://www.bnspain.com/wp-content/uploads/2025/09/aceite-argan-ecologico-blue-nat-premium-600x600.jpg" alt="Aceite de Argán">
+      </div>
+      <div class="card-body">
+        <div class="card-cat">Cosmética</div>
+        <div class="card-name">Aceite de Argán Ecológico Puro</div>
+        <div class="card-stars"><span class="stars">★★★★★</span><span class="review-count">73 reseñas</span></div>
+        <div class="card-footer">
+          <div><span class="price-main">€17.90</span><span class="price-old">€26.90</span></div>
+          <button class="add-btn" onclick="addToCart(this,4,17.90);event.stopPropagation()">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-cat="suplementos" data-name="probióticos flora intestinal digestión suplementos" data-price="18.50">
+      <div class="discount-ribbon">−20%</div>
+      <div class="card-thumb thumb-green" style="display:flex;align-items:center;justify-content:center">
+        <div style="width:62px;height:62px;border-radius:50%;background:rgba(255,255,255,.45);display:flex;align-items:center;justify-content:center"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#1a3a4a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="8" opacity=".4"/><line x1="12" y1="2" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="22"/><line x1="2" y1="12" x2="4" y2="12"/><line x1="20" y1="12" x2="22" y2="12"/></svg></div>
+      </div>
+      <div class="card-body">
+        <div class="card-cat">Suplementos</div>
+        <div class="card-name">Probióticos Flora Intestinal — 10 Cepas</div>
+        <div class="card-stars"><span class="stars">★★★★☆</span><span class="review-count">38 reseñas</span></div>
+        <div class="card-footer">
+          <div><span class="price-main">€18.50</span><span class="price-old">€23.10</span></div>
+          <button class="add-btn" onclick="addToCartGeneric(this,'Probióticos 10 Cepas',18.50);event.stopPropagation()">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-cat="cosmetica" data-name="mascarilla capilar argán cabello cosmética" data-price="19.90">
+      <div class="discount-ribbon">−25%</div>
+      <div class="card-thumb thumb-rose" style="display:flex;align-items:center;justify-content:center">
+        <div style="width:62px;height:62px;border-radius:50%;background:rgba(255,255,255,.45);display:flex;align-items:center;justify-content:center"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#1a3a4a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+      </div>
+      <div class="card-body">
+        <div class="card-cat">Cosmética</div>
+        <div class="card-name">Mascarilla Capilar de Argán</div>
+        <div class="card-stars"><span class="stars">★★★★★</span><span class="review-count">29 reseñas</span></div>
+        <div class="card-footer">
+          <div><span class="price-main">€19.90</span><span class="price-old">€26.50</span></div>
+          <button class="add-btn" onclick="addToCartGeneric(this,'Mascarilla Capilar Argán',19.90);event.stopPropagation()">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-cat="deporte" data-name="glutamina recuperación muscular deporte" data-price="16.50">
+      <div class="discount-ribbon">−15%</div>
+      <div class="card-thumb thumb-navy" style="display:flex;align-items:center;justify-content:center">
+        <div style="width:62px;height:62px;border-radius:50%;background:rgba(255,255,255,.45);display:flex;align-items:center;justify-content:center"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#1a3a4a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></div>
+      </div>
+      <div class="card-body">
+        <div class="card-cat">Deporte</div>
+        <div class="card-name">Glutamina — Recuperación Máxima</div>
+        <div class="card-stars"><span class="stars">★★★★★</span><span class="review-count">45 reseñas</span></div>
+        <div class="card-footer">
+          <div><span class="price-main">€16.50</span><span class="price-old">€19.40</span></div>
+          <button class="add-btn" onclick="addToCartGeneric(this,'Glutamina',16.50);event.stopPropagation()">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-cat="nutricion" data-name="semillas lino molidas fibra nutricion" data-price="7.50">
+      <div class="discount-ribbon">−10%</div>
+      <div class="card-thumb thumb-cream" style="display:flex;align-items:center;justify-content:center">
+        <div style="width:62px;height:62px;border-radius:50%;background:rgba(255,255,255,.45);display:flex;align-items:center;justify-content:center"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#1a3a4a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22V12"/><path d="M12 12C12 7 8 4 4 4c0 4 2.5 7.5 8 8"/><path d="M12 12c0-5 4-8 8-8c0 4-2.5 7.5-8 8"/></svg></div>
+      </div>
+      <div class="card-body">
+        <div class="card-cat">Nutrición</div>
+        <div class="card-name">Semillas de Lino Molidas — Fibra Natural</div>
+        <div class="card-stars"><span class="stars">★★★★☆</span><span class="review-count">27 reseñas</span></div>
+        <div class="card-footer">
+          <div><span class="price-main">€7.50</span><span class="price-old">€8.30</span></div>
+          <button class="add-btn" onclick="addToCartGeneric(this,'Semillas de Lino',7.50);event.stopPropagation()">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-cat="suplementos" data-name="b-15 cisty stop cistitis salud suplementos oferta" data-price="11.70" onclick="goProduct(event,1)">
+      <div class="discount-ribbon">−10%</div>
+      <div class="card-thumb">
+        <img src="https://www.bnspain.com/wp-content/uploads/2025/09/15-Cisty-Stop-small-600x600.png" alt="B-15 Cisty Stop">
+      </div>
+      <div class="card-body">
+        <div class="card-cat">Suplementos</div>
+        <div class="card-name">B-15 Cisty Stop</div>
+        <div class="card-stars"><span class="stars">★★★★★</span><span class="review-count">91 reseñas</span></div>
+        <div class="card-footer">
+          <div><span class="price-main">€11.70</span><span class="price-old">€13.00</span></div>
+          <button class="add-btn" onclick="addToCart(this,1,11.70);event.stopPropagation()">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-cat="cosmetica" data-name="aceite seco nutritivo reparador piel cosmetica" data-price="19.90" onclick="goProduct(event,5)">
+      <div class="discount-ribbon">−19%</div>
+      <div class="card-thumb">
+        <img src="https://www.bnspain.com/wp-content/uploads/2025/09/aceite-seco-small-600x600.png" alt="Aceite Seco">
+      </div>
+      <div class="card-body">
+        <div class="card-cat">Cosmética</div>
+        <div class="card-name">Aceite Seco Nutritivo Reparador</div>
+        <div class="card-stars"><span class="stars">★★★★☆</span><span class="review-count">54 reseñas</span></div>
+        <div class="card-footer">
+          <div><span class="price-main">€19.90</span><span class="price-old">€24.50</span></div>
+          <button class="add-btn" onclick="addToCart(this,5,19.90);event.stopPropagation()">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-cat="deporte nutricion" data-name="maca energía incas adaptógeno deporte nutricion" data-price="16.95" onclick="goProduct(event,2)">
+      <div class="discount-ribbon">−15%</div>
+      <div class="card-thumb">
+        <img src="https://www.bnspain.com/wp-content/uploads/2025/09/maca.jpg" alt="Maca">
+      </div>
+      <div class="card-body">
+        <div class="card-cat">Nutrición / Deporte</div>
+        <div class="card-name">Maca: El Secreto de los Incas</div>
+        <div class="card-stars"><span class="stars">★★★★★</span><span class="review-count">67 reseñas</span></div>
+        <div class="card-footer">
+          <div><span class="price-main">€16.95</span><span class="price-old">€19.95</span></div>
+          <button class="add-btn" onclick="addToCart(this,2,16.95);event.stopPropagation()">+</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div id="no-results" style="display:none;text-align:center;padding:60px 20px;color:var(--muted)">
+    <div style="margin-bottom:16px;display:flex;justify-content:center"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#7A7A7A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+    <div style="font-size:16px;font-weight:600;color:var(--navy);margin-bottom:8px">Sin resultados</div>
+    <div style="font-size:14px">Prueba con otro término de búsqueda</div>
+  </div>
+</section>
+
+<!-- BLOG OFERTAS -->
+<section style="padding:72px 52px;background:#fff;border-top:1px solid var(--border)">
+  <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:40px">
+    <div>
+      <div style="font-size:11px;font-weight:600;color:var(--red);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px">Blog & Guías de compra</div>
+      <div style="font-family:'DM Serif Display',serif;font-size:32px;color:var(--navy)">Gasta menos, compra mejor</div>
+    </div>
+    <a href="blog.html" style="font-size:13px;color:var(--navy);font-weight:600;text-decoration:none;border-bottom:1px solid var(--navy);padding-bottom:1px;transition:.2s" onmouseover="this.style.color='var(--gold)';this.style.borderColor='var(--gold)'" onmouseout="this.style.color='var(--navy)';this.style.borderColor='var(--navy)'">Ver todos los artículos</a>
+  </div>
+  <div style="display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:24px">
+
+    <div style="background:var(--bg);border-radius:12px;overflow:hidden;border:1px solid var(--border);cursor:pointer;transition:.25s" onmouseenter="this.style.boxShadow='0 12px 36px rgba(0,0,0,.09)'" onmouseleave="this.style.boxShadow=''" onclick="location.href='blog-article.html'">
+      <div style="height:220px;overflow:hidden"><img src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=700&h=440&fit=crop&q=80" alt="Guía de compra" style="width:100%;height:100%;object-fit:cover;transition:.4s" onmouseenter="this.style.transform='scale(1.05)'" onmouseleave="this.style.transform='scale(1)'"></div>
+      <div style="padding:24px">
+        <div style="font-size:10px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px">Guía de compra · 7 min lectura</div>
+        <div style="font-family:'DM Serif Display',serif;font-size:20px;color:var(--navy);margin-bottom:10px;line-height:1.3">Cómo comprar suplementos sin caer en trampas de precio</div>
+        <p style="font-size:13px;color:var(--muted);line-height:1.7;font-weight:300">El precio más bajo no siempre es la mejor opción. Te enseñamos a comparar concentraciones, calidad de ingredientes y certificaciones para no tirar el dinero.</p>
+        <a href="blog-article.html" style="display:inline-block;margin-top:16px;font-size:13px;font-weight:600;color:var(--navy);text-decoration:none">Leer artículo →</a>
+      </div>
+    </div>
+
+    <div style="background:var(--bg);border-radius:12px;overflow:hidden;border:1px solid var(--border);cursor:pointer;transition:.25s" onmouseenter="this.style.boxShadow='0 12px 36px rgba(0,0,0,.09)'" onmouseleave="this.style.boxShadow=''" onclick="location.href='blog-article.html'">
+      <div style="height:160px;overflow:hidden"><img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=500&h=320&fit=crop&q=80" alt="Pack suplementos" style="width:100%;height:100%;object-fit:cover;transition:.4s" onmouseenter="this.style.transform='scale(1.05)'" onmouseleave="this.style.transform='scale(1)'"></div>
+      <div style="padding:20px">
+        <div style="font-size:10px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px">Combos inteligentes · 4 min</div>
+        <div style="font-family:'DM Serif Display',serif;font-size:17px;color:var(--navy);margin-bottom:8px;line-height:1.3">Los 4 combos de suplementos que más ahorran y mejor funcionan</div>
+        <p style="font-size:12.5px;color:var(--muted);line-height:1.6;font-weight:300;margin-bottom:12px">Omega 3 + Vitamina D, Colágeno + Vitamina C... sinergias que multiplican los resultados.</p>
+        <a href="blog-article.html" style="font-size:13px;font-weight:600;color:var(--navy);text-decoration:none">Leer →</a>
+      </div>
+    </div>
+
+    <div style="background:var(--bg);border-radius:12px;overflow:hidden;border:1px solid var(--border);cursor:pointer;transition:.25s" onmouseenter="this.style.boxShadow='0 12px 36px rgba(0,0,0,.09)'" onmouseleave="this.style.boxShadow=''" onclick="location.href='blog-article.html'">
+      <div style="height:160px;overflow:hidden"><img src="https://images.unsplash.com/photo-1556228720-195a672e8a03?w=500&h=320&fit=crop&q=80" alt="Cosmética natural económica" style="width:100%;height:100%;object-fit:cover;transition:.4s" onmouseenter="this.style.transform='scale(1.05)'" onmouseleave="this.style.transform='scale(1)'"></div>
+      <div style="padding:20px">
+        <div style="font-size:10px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px">Cosmética · 3 min</div>
+        <div style="font-family:'DM Serif Display',serif;font-size:17px;color:var(--navy);margin-bottom:8px;line-height:1.3">Cosmética natural de calidad sin gastar una fortuna</div>
+        <p style="font-size:12.5px;color:var(--muted);line-height:1.6;font-weight:300;margin-bottom:12px">Un aceite versátil puede reemplazar a 5 productos de marca. Así construyes tu neceser natural al mínimo coste.</p>
+        <a href="blog-article.html" style="font-size:13px;font-weight:600;color:var(--navy);text-decoration:none">Leer →</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="trust-bar">
+  <div class="trust-item"><span class="trust-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13" rx="1"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></span><strong>Envío gratis desde 39 €</strong><span>Entrega en 24–48 horas</span></div>
+  <div class="trust-item"><span class="trust-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><strong>Precios reales</strong><span>Sin trucos ni precios inflados</span></div>
+  <div class="trust-item"><span class="trust-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.51"/></svg></span><strong>Devolución gratuita</strong><span>30 días sin preguntas</span></div>
+  <div class="trust-item"><span class="trust-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span><strong>Pago 100% seguro</strong><span>SSL · Tarjeta · PayPal · Bizum</span></div>
+</div>
+
+<!-- ENCUÉNTRANOS -->
+<section style="padding:72px 52px;background:#fff;border-top:1px solid var(--border)" id="tienda">
+  <div style="max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start">
+    <div>
+      <div style="font-size:11px;font-weight:600;color:var(--gold);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px">Tienda física</div>
+      <div style="font-family:'DM Serif Display',serif;font-size:32px;color:var(--navy);margin-bottom:24px">Encuéntranos en Guadalajara</div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:24px;padding:14px 18px;background:var(--bg);border-radius:10px;border:1px solid var(--border);width:fit-content">
+        <span style="font-size:22px;font-weight:700;color:var(--navy)">4.9</span>
+        <span style="font-size:18px;color:#F59E0B;letter-spacing:2px">★★★★★</span>
+        <span style="font-size:13px;color:var(--muted);font-weight:400">60 reseñas en Google</span>
+      </div>
+      <div style="display:flex;gap:14px;align-items:flex-start;margin-bottom:18px">
+        <span style="font-size:18px;flex-shrink:0;margin-top:2px">📍</span>
+        <div>
+          <div style="font-size:14px;font-weight:600;color:var(--navy);margin-bottom:3px">Dirección</div>
+          <div style="font-size:14px;color:var(--muted);font-weight:300;line-height:1.6">C. Nuño Beltrán de Guzmán, 1<br>19001 Guadalajara</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:14px;align-items:flex-start;margin-bottom:18px">
+        <span style="font-size:18px;flex-shrink:0;margin-top:2px">📞</span>
+        <div>
+          <div style="font-size:14px;font-weight:600;color:var(--navy);margin-bottom:3px">Teléfono</div>
+          <a href="tel:683435317" style="font-size:14px;color:var(--muted);font-weight:300;text-decoration:none;transition:.15s" onmouseover="this.style.color='var(--navy)'" onmouseout="this.style.color='var(--muted)'">683 43 53 17</a>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px">
+        <span style="font-size:12px;font-weight:500;color:var(--green);background:#e8f2ec;border:1px solid #c6ddd0;padding:4px 12px;border-radius:20px">✓ Compra en tienda</span>
+        <span style="font-size:12px;font-weight:500;color:var(--green);background:#e8f2ec;border:1px solid #c6ddd0;padding:4px 12px;border-radius:20px">✓ Recogida en tienda</span>
+        <span style="font-size:12px;font-weight:500;color:var(--green);background:#e8f2ec;border:1px solid #c6ddd0;padding:4px 12px;border-radius:20px">✓ A domicilio</span>
+      </div>
+      <a href="https://www.google.com/maps/place/Blue+%26+Nat/@40.629666,-3.166281,17z/data=!3m1!4b1!4m16!1m9!4m8!1m0!1m6!1m2!1s0xd43ab48c92473ed:0x7d7e4e4033644b47!2sBlue+%26+Nat,+C.+Nu%C3%B1o+Beltr%C3%A1n+de+Guzm%C3%A1n,+1,+19001+Guadalajara!2m2!1d-3.1637061!2d40.629662!3m5!1s0xd43ab48c92473ed:0x7d7e4e4033644b47!8m2!3d40.629662!4d-3.1637061!16s%2Fg%2F11nfw3m4_w?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D" target="_blank" style="display:inline-flex;align-items:center;gap:8px;background:var(--navy);color:#fff;padding:13px 26px;border-radius:6px;text-decoration:none;font-size:14px;font-weight:600;transition:.2s" onmouseover="this.style.background='#1a3a60'" onmouseout="this.style.background='var(--navy)'">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        Ver en Google Maps
+      </a>
+    </div>
+    <div>
+      <div style="font-size:13px;font-weight:600;color:var(--navy);margin-bottom:16px;text-transform:uppercase;letter-spacing:.5px">Horario de apertura</div>
+      <div style="background:var(--bg);border-radius:12px;border:1px solid var(--border);overflow:hidden">
+        <div style="display:grid;grid-template-columns:1fr 1fr;padding:14px 20px;border-bottom:1px solid var(--border)">
+          <span style="font-size:13px;font-weight:600;color:var(--navy)">Lunes – Viernes</span>
+          <div>
+            <div style="font-size:13px;color:var(--muted);font-weight:400">9:30 – 14:00</div>
+            <div style="font-size:13px;color:var(--muted);font-weight:400">17:00 – 20:00</div>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;padding:14px 20px;border-bottom:1px solid var(--border)">
+          <span style="font-size:13px;font-weight:600;color:var(--navy)">Sábado</span>
+          <span style="font-size:13px;color:var(--muted);font-weight:400">10:00 – 14:00</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;padding:14px 20px">
+          <span style="font-size:13px;font-weight:600;color:var(--navy)">Domingo</span>
+          <span style="font-size:13px;color:#C0392B;font-weight:500">Cerrado</span>
+        </div>
+      </div>
+      <p style="font-size:11.5px;color:var(--muted);margin-top:12px;font-weight:300;line-height:1.6">* El horario puede variar en festivos. Consulta disponibilidad por teléfono.</p>
+      <div style="margin-top:24px;border-radius:12px;overflow:hidden;border:1px solid var(--border);height:200px">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3021.5!2d-3.1637061!3d40.629662!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd43ab48c92473ed%3A0x7d7e4e4033644b47!2sBlue%20%26%20Nat!5e0!3m2!1ses!2ses!4v1714000000000" width="100%" height="200" style="border:0;display:block" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-brand">
+    <a href="bnspain-concept.html"><img src="assets/logo-raw.jpg" alt="Blue&Nat" style="height:44px;filter:invert(1);mix-blend-mode:screen;object-fit:contain"></a>
+    <p>Tienda especializada en nutrición natural, suplementos deportivos y cosmética ecológica certificada.</p>
+  </div>
+  <div><h5>Productos</h5><a href="deporte.html">Deporte & Energía</a><a href="suplementos.html">Suplementos</a><a href="cosmetica.html">Cosmética</a><a href="nutricion.html">Nutrición</a><a href="ofertas.html">Ofertas</a></div>
+  <div><h5>Empresa</h5><a href="sobre-nosotros.html">Sobre nosotros</a><a href="blog.html">Blog & Noticias</a><a href="contacto.html">Contacto</a><a href="contacto.html">Trabaja con nosotros</a></div>
+  <div><h5>Ayuda</h5><a href="envios.html">Envíos y entregas</a><a href="devoluciones.html">Devoluciones</a><a href="privacidad.html">Política de privacidad</a><a href="faq.html">Preguntas frecuentes</a></div>
+</footer>
+<div class="footer-bottom">© 2026 Blue & Nat Spain, S.L. — Todos los derechos reservados</div>
+
+<div class="toast" id="toast"><span style="color:var(--gold)">✓</span><span id="toast-text">Añadido al carrito</span></div>
+
+<script>
+const PRODUCTS_INDEX={1:{id:1,name:'B-15 Cisty Stop',image:'https://www.bnspain.com/wp-content/uploads/2025/09/15-Cisty-Stop-small-600x600.png',price:13.00},2:{id:2,name:'Maca: El Secreto de los Incas',image:'https://www.bnspain.com/wp-content/uploads/2025/09/maca.jpg',price:19.95},3:{id:3,name:'Omega 3 6 9',image:'https://www.bnspain.com/wp-content/uploads/2025/09/omega-369-small-600x600.png',price:20.50},4:{id:4,name:'Aceite de Argán Ecológico',image:'https://www.bnspain.com/wp-content/uploads/2025/09/aceite-argan-ecologico-blue-nat-premium-600x600.jpg',price:17.90},5:{id:5,name:'Aceite Seco Nutritivo',image:'https://www.bnspain.com/wp-content/uploads/2025/09/aceite-seco-small-600x600.png',price:24.50}};
+(function(){var CART_VERSION='4';if(localStorage.getItem('bn_cart_v')!==CART_VERSION){localStorage.removeItem('bn_cart');localStorage.setItem('bn_cart_v',CART_VERSION);}})();
+function updateCartCount(){try{const r=JSON.parse(localStorage.getItem('bn_cart')||'[]');const c=Array.isArray(r)?r.filter(i=>i&&i.id!=null&&parseFloat(i.price)>0&&parseInt(i.qty)>0):[];document.getElementById('cart-count').textContent=c.reduce((a,i)=>a+parseInt(i.qty),0);}catch(e){document.getElementById('cart-count').textContent=0;}}
+function showToast(name){document.getElementById('toast-text').textContent=name+' añadido';const t=document.getElementById('toast');t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2400)}
+function addToCart(btn,id,salePrice){const p=PRODUCTS_INDEX[id];const price=salePrice||p.price;const c=JSON.parse(localStorage.getItem('bn_cart')||'[]');const i=c.findIndex(x=>x.id===id);if(i>-1)c[i].qty++;else c.push({id:p.id,name:p.name,image:p.image,price:price,qty:1,cat:''});localStorage.setItem('bn_cart',JSON.stringify(c));updateCartCount();btn.classList.add('added');btn.textContent='✓';setTimeout(()=>{btn.classList.remove('added');btn.textContent='+'},1400);showToast(p.name)}
+function addToCartGeneric(btn,name,price){const c=JSON.parse(localStorage.getItem('bn_cart')||'[]');const i=c.findIndex(x=>x.name===name);if(i>-1)c[i].qty++;else c.push({id:'g-'+name,name,price,qty:1});localStorage.setItem('bn_cart',JSON.stringify(c));updateCartCount();btn.classList.add('added');btn.textContent='✓';setTimeout(()=>{btn.classList.remove('added');btn.textContent='+'},1400);showToast(name)}
+function filterCat(el,cat){document.querySelectorAll('.fpill').forEach(b=>b.classList.remove('active'));el.classList.add('active');document.querySelectorAll('#products-grid .card').forEach(c=>{c.style.display=(cat==='all'||c.dataset.cat.includes(cat))?'':'none'});checkEmpty()}
+function filterProducts(q){const term=q.toLowerCase().trim();document.querySelectorAll('#products-grid .card').forEach(c=>{c.style.display=(!term||c.dataset.name.includes(term))?'':'none'});document.querySelectorAll('.fpill').forEach(b=>b.classList.remove('active'));if(!term)document.querySelector('.fpill').classList.add('active');checkEmpty()}
+function checkEmpty(){const v=[...document.querySelectorAll('#products-grid .card')].filter(c=>c.style.display!=='none');document.getElementById('no-results').style.display=v.length?'none':'block'}
+function goProduct(e,id){if(e.target.classList.contains('add-btn'))return;location.href='product.html?id='+id}
+updateCartCount();
+
+// Contador regresivo — expira en 24h desde carga
+(function(){
+  const stored=localStorage.getItem('bn_countdown_end');
+  const end=stored?parseInt(stored):Date.now()+24*60*60*1000;
+  if(!stored)localStorage.setItem('bn_countdown_end',end);
+  function tick(){
+    const diff=Math.max(0,end-Date.now());
+    const h=Math.floor(diff/3600000);
+    const m=Math.floor((diff%3600000)/60000);
+    const s=Math.floor((diff%60000)/1000);
+    document.getElementById('c-h').textContent=String(h).padStart(2,'0');
+    document.getElementById('c-m').textContent=String(m).padStart(2,'0');
+    document.getElementById('c-s').textContent=String(s).padStart(2,'0');
+    if(diff>0)requestAnimationFrame(()=>setTimeout(tick,1000));
+  }
+  tick();
+})();
+
+(function(){
+  const io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        e.target.style.opacity='1';
+        e.target.style.transform='translateY(0)';
+        io.unobserve(e.target);
+      }
+    });
+  },{threshold:0.06});
+  document.querySelectorAll('#products-grid .card').forEach(function(el,i){
+    el.style.opacity='0';
+    el.style.transform='translateY(22px)';
+    el.style.transition='opacity .45s ease '+(i*55)+'ms, transform .45s ease '+(i*55)+'ms, box-shadow .3s, border-color .3s';
+    io.observe(el);
+  });
+})();
+</script>
+</body>
+</html>

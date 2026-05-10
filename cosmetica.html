@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cosmética Natural — Blue & Nat</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0B1F3A;--gold:#C9A96E;--green:#2D6A4F;--rose:#7D3C4A;--bg:#FBF8F5;--surface:#FFFFFF;--text:#1A1A1A;--muted:#7A7A7A;--border:#EDE7DF;--radius:10px}
+*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;color:var(--text);background:var(--bg);-webkit-font-smoothing:antialiased}
+.topbar{background:var(--navy);text-align:center;padding:9px;font-size:11.5px;color:rgba(255,255,255,.75);letter-spacing:.6px;text-transform:uppercase}
+.topbar span{color:var(--gold);font-weight:600}
+header{padding:0 52px;height:64px;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);position:sticky;top:0;z-index:200;border-bottom:1px solid var(--border)}
+.logo{font-family:'DM Serif Display',serif;font-size:22px;color:var(--navy);letter-spacing:-.3px;text-decoration:none}
+.logo em{font-style:normal;color:var(--green)}
+nav{display:flex;gap:32px}
+nav a{font-size:13px;font-weight:500;color:var(--muted);text-decoration:none;letter-spacing:.2px;transition:color .2s}
+nav a:hover{color:var(--navy)}nav a.active{color:var(--navy);font-weight:700;border-bottom:2px solid var(--navy);padding-bottom:2px}
+.nav-dd{position:relative;display:inline-flex;align-items:center}
+.nav-dd>a::after{content:'▾';font-size:10px;opacity:.5;margin-left:3px;transition:transform .2s}
+.nav-dd:hover>a::after{transform:rotate(180deg)}
+.nav-dd-menu{position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%) translateY(-4px);background:#fff;border:1px solid var(--border);border-radius:10px;box-shadow:0 8px 28px rgba(0,0,0,.1);min-width:210px;padding:6px 0;z-index:300;opacity:0;visibility:hidden;transition:opacity .2s,transform .2s,visibility .2s;pointer-events:none}
+.nav-dd:hover .nav-dd-menu{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0);pointer-events:auto}
+.nav-dd-menu a{display:block;padding:8px 18px;font-size:13px;color:var(--muted);font-weight:400;white-space:nowrap;transition:.15s;border-bottom:none}
+.nav-dd-menu a:hover{color:var(--navy);background:var(--bg)}
+.nav-dd-menu--wide{min-width:480px;columns:2}
+.nav-dd-menu--wide a{break-inside:avoid;display:block}
+.nav-dd::after,.nav-item::after{content:'';position:absolute;top:100%;left:0;right:0;height:14px}
+.header-actions{display:flex;align-items:center;gap:20px}
+.cart-pill{display:flex;align-items:center;gap:8px;background:var(--navy);color:#fff;border:none;padding:9px 20px;border-radius:24px;cursor:pointer;font-size:13px;font-weight:600;transition:.2s;font-family:'Inter',sans-serif;text-decoration:none}
+.cart-pill:hover{background:#1a3a60}.cart-dot{background:var(--gold);color:var(--navy);font-size:10px;font-weight:700;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+/* HERO — tierra/rosa cálido */
+.cat-hero{background:linear-gradient(135deg,rgba(42,16,24,.72) 0%,rgba(90,32,48,.65) 40%,rgba(139,69,88,.60) 100%),url('assets/cosmetica.png') center/cover no-repeat;padding:90px 52px 80px;position:relative;overflow:hidden;text-align:center}
+.cat-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 60%,rgba(201,169,110,.1) 0%,transparent 55%)}
+.cat-hero-inner{max-width:760px;margin:0 auto;position:relative;z-index:2}
+.cat-tag{display:inline-flex;align-items:center;gap:6px;background:rgba(201,169,110,.15);border:1px solid rgba(201,169,110,.35);color:var(--gold);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:5px 16px;border-radius:20px;margin-bottom:22px}
+.cat-hero h1{font-family:'DM Serif Display',serif;font-size:64px;color:#fff;line-height:1.0;margin-bottom:16px;letter-spacing:-1px}
+.cat-hero h1 em{font-style:normal;color:var(--gold)}
+.cat-hero p{font-size:17px;color:rgba(255,255,255,.65);line-height:1.7;font-weight:300;margin-bottom:40px}
+.search-hero{background:#fff;border-radius:50px;padding:6px 6px 6px 26px;display:flex;align-items:center;max-width:620px;margin:0 auto;box-shadow:0 16px 48px rgba(0,0,0,.3)}
+.search-hero input{flex:1;border:none;outline:none;font-size:16px;font-family:'Inter',sans-serif;color:var(--text);background:transparent}
+.search-hero input::placeholder{color:#aaa}
+.search-hero button{background:#8B4558;color:#fff;border:none;padding:13px 32px;border-radius:40px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;transition:.2s}
+.search-hero button:hover{background:#6a3040}
+.search-tags{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:18px}
+.stag{font-size:12px;color:rgba(255,255,255,.5);background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);padding:4px 14px;border-radius:20px;cursor:pointer;transition:.2s}
+.stag:hover{background:rgba(255,255,255,.14);color:#fff}
+/* FEATURED */
+.featured{background:linear-gradient(135deg,#15080a,#3D1020,#5a2030);padding:80px 52px;position:relative;overflow:hidden}
+.featured-deco{position:absolute;right:-80px;top:-80px;width:480px;height:480px;border-radius:50%;background:radial-gradient(circle,rgba(139,69,88,.2) 0%,transparent 70%);pointer-events:none}
+.featured-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;position:relative;z-index:1}
+.featured-label{display:inline-flex;align-items:center;gap:8px;background:rgba(201,169,110,.2);border:1px solid var(--gold);color:var(--gold);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:5px 14px;border-radius:4px;margin-bottom:20px}
+.featured-title{font-family:'DM Serif Display',serif;font-size:50px;color:#fff;line-height:1.0;margin-bottom:18px;letter-spacing:-.5px}
+.featured-title em{font-style:normal;color:var(--gold)}
+.featured-desc{font-size:15px;color:rgba(255,255,255,.65);line-height:1.8;margin-bottom:28px;font-weight:300}
+.featured-perks{list-style:none;margin-bottom:32px;display:flex;flex-direction:column;gap:10px}
+.featured-perks li{display:flex;align-items:center;gap:10px;font-size:14px;color:rgba(255,255,255,.75)}
+.featured-perks li::before{content:'✓';color:var(--gold);font-weight:700;font-size:13px;flex-shrink:0}
+.featured-bottom{display:flex;align-items:center;gap:24px;flex-wrap:wrap}
+.feat-price{font-size:40px;font-weight:800;color:#fff;letter-spacing:-1px}
+.feat-price-old{font-size:16px;color:rgba(255,255,255,.35);text-decoration:line-through;margin-left:6px;font-weight:300}
+.sale-badge{background:#C0392B;color:#fff;font-size:11px;font-weight:700;padding:4px 10px;border-radius:4px;letter-spacing:.5px}
+.feat-btn{background:var(--gold);color:var(--navy);border:none;padding:15px 36px;border-radius:6px;font-size:15px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;transition:.2s}
+.feat-btn:hover{background:#b8944f;transform:translateY(-1px)}
+.featured-img{text-align:center}
+.featured-img img{max-height:420px;max-width:100%;object-fit:contain;filter:drop-shadow(0 24px 64px rgba(0,0,0,.5));transition:transform .4s}
+.featured-img img:hover{transform:scale(1.04) translateY(-6px)}
+.feat-reviews{display:flex;align-items:center;gap:8px;margin-top:16px}
+.feat-stars{font-size:14px;color:#F59E0B;letter-spacing:2px}
+.feat-rcount{font-size:13px;color:rgba(255,255,255,.45)}
+/* PRODUCTS */
+.products-section{padding:72px 52px}
+.section-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:32px}
+.section-label{font-size:11px;font-weight:600;color:var(--gold);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px}
+.section-title{font-family:'DM Serif Display',serif;font-size:32px;color:var(--navy)}
+.sort-select{padding:8px 16px;border:1px solid var(--border);border-radius:6px;font-size:13px;font-family:'Inter',sans-serif;color:var(--muted);background:#fff;cursor:pointer;outline:none}
+.filter-pills{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:32px}
+.fpill{padding:6px 18px;border-radius:20px;border:1px solid var(--border);background:transparent;font-size:12.5px;font-weight:500;color:var(--muted);cursor:pointer;transition:.15s;white-space:nowrap;font-family:'Inter',sans-serif}
+.fpill:hover{border-color:var(--navy);color:var(--navy)}.fpill.active{background:var(--navy);border-color:var(--navy);color:#fff}
+.pgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.card{background:#fff;border-radius:12px;overflow:hidden;border:1px solid var(--border);transition:box-shadow .25s,transform .25s;cursor:pointer}
+.card:hover{box-shadow:0 12px 40px rgba(0,0,0,.1);transform:translateY(-4px)}
+.card-thumb{height:180px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.card-thumb img{width:100%;height:100%;object-fit:contain;padding:14px;background:#fff}
+.card-badge{position:absolute;top:12px;left:12px;font-size:9.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;padding:3px 9px;border-radius:4px}
+.badge-sale{background:#C0392B;color:#fff}.badge-new{background:var(--green);color:#fff}.badge-top{background:var(--navy);color:#fff}
+.card-body{padding:18px}
+.card-cat{font-size:10px;font-weight:600;color:#8B4558;text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px}
+.card-name{font-size:14px;font-weight:600;color:var(--navy);line-height:1.35;margin-bottom:8px}
+.card-stars{display:flex;align-items:center;gap:4px;margin-bottom:12px}
+.stars{font-size:11px;color:#F59E0B;letter-spacing:1px}.review-count{font-size:11px;color:var(--muted)}
+.card-footer{display:flex;align-items:center;justify-content:space-between}
+.price-main{font-size:18px;font-weight:700;color:var(--navy)}.price-old{font-size:11px;color:var(--muted);text-decoration:line-through;margin-left:5px}
+.add-btn{width:36px;height:36px;background:var(--navy);color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:22px;line-height:1;display:flex;align-items:center;justify-content:center;transition:.15s;flex-shrink:0;font-family:'Inter',sans-serif}
+.add-btn:hover{background:#8B4558}.add-btn.added{background:var(--green);font-size:15px}
+.thumb-rose{background:linear-gradient(135deg,#f5e8ed,#e8c8d2)}.thumb-warm{background:linear-gradient(135deg,#f5ede0,#e8d0b0)}.thumb-cream{background:linear-gradient(135deg,#f5f0e8,#eddcc8)}.thumb-sage{background:linear-gradient(135deg,#e8f0ec,#c8d8cc)}.thumb-lavender{background:linear-gradient(135deg,#ece8f5,#d0c8e8)}
+.product-icon{font-size:52px}
+.trust-bar{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:#fff}
+.trust-item{padding:28px 24px;text-align:center;border-right:1px solid var(--border)}.trust-item:last-child{border-right:none}
+.trust-icon{margin-bottom:10px;display:flex;align-items:center;justify-content:center;color:var(--navy)}.trust-item strong{font-size:13px;color:var(--navy);display:block;font-weight:600;margin-bottom:3px}.trust-item span{font-size:11.5px;color:var(--muted);font-weight:300}
+.card{background:#fff;border-radius:14px;overflow:hidden;border:1px solid var(--border);transition:box-shadow .3s,transform .3s,border-color .3s;cursor:pointer}
+.card:hover{box-shadow:0 16px 48px rgba(0,0,0,.12);transform:translateY(-5px);border-color:#d8d0c8}
+footer{background:var(--navy);color:rgba(255,255,255,.55);padding:60px 52px 40px;display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:40px}
+.footer-brand .logo{color:#fff;font-size:20px;margin-bottom:14px;display:block}.footer-brand p{font-size:13px;line-height:1.7;color:rgba(255,255,255,.45);font-weight:300;max-width:220px}
+footer h5{font-size:11px;font-weight:700;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:16px}
+footer a{display:block;font-size:13px;color:rgba(255,255,255,.55);text-decoration:none;margin-bottom:10px;transition:.15s;font-weight:300}footer a:hover{color:#fff}
+.footer-bottom{background:#071326;text-align:center;padding:16px;font-size:11.5px;color:rgba(255,255,255,.25);letter-spacing:.3px}
+.toast{position:fixed;bottom:28px;right:28px;background:var(--navy);color:#fff;padding:14px 22px;border-radius:8px;font-size:13px;font-weight:500;z-index:999;transform:translateY(80px);opacity:0;transition:all .3s cubic-bezier(.34,1.56,.64,1);pointer-events:none;display:flex;align-items:center;gap:10px;border-left:3px solid var(--gold);box-shadow:0 8px 24px rgba(0,0,0,.2)}
+.toast.show{transform:translateY(0);opacity:1}
+@media(max-width:768px){
+  header{padding:0 16px;height:56px}nav{display:none}
+  .cat-hero{padding:60px 20px 50px}.cat-hero h1{font-size:38px}
+  .featured{padding:52px 20px}.featured-inner{grid-template-columns:1fr}.featured-img{order:-1}.featured-img img{max-height:260px}.featured-title{font-size:34px}
+  .products-section{padding:48px 20px}.pgrid{grid-template-columns:repeat(2,1fr);gap:12px}
+  .section-header{flex-direction:column;align-items:flex-start;gap:12px}
+  .trust-bar{grid-template-columns:repeat(2,1fr)}.trust-item{border-right:none;border-bottom:1px solid var(--border)}.trust-item:nth-child(odd){border-right:1px solid var(--border)}
+  footer{grid-template-columns:1fr;gap:28px;padding:48px 20px 32px}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">Envío gratuito en pedidos superiores a <span>39 €</span> · Entrega en 24–48 h · Devolución sin coste</div>
+
+<header>
+  <a href="bnspain-concept.html"><img src="assets/logo-raw.jpg" alt="Blue&Nat" style="height:44px;mix-blend-mode:multiply;object-fit:contain"></a>
+  <nav>
+    <div class="nav-dd">
+      <a href="deporte.html">Energía & Deporte</a>
+      <div class="nav-dd-menu">
+        <a href="deporte.html?cat=aminoacidos">Aminoácidos</a>
+        <a href="deporte.html?cat=proteina">Proteína</a>
+        <a href="deporte.html?cat=energia">Energía</a>
+        <a href="deporte.html?cat=recuperacion">Recuperación</a>
+        <a href="deporte.html?cat=definicion">Definición</a>
+        <a href="deporte.html?cat=hidratacion">Hidratación</a>
+      </div>
+    </div>
+    <div class="nav-dd">
+      <a href="suplementos.html">Suplementos</a>
+      <div class="nav-dd-menu">
+        <a href="suplementos.html?cat=omega">Omega & Ácidos</a>
+        <a href="suplementos.html?cat=vitaminas">Vitaminas</a>
+        <a href="suplementos.html?cat=colageno">Colágeno</a>
+        <a href="suplementos.html?cat=probioticos">Probióticos</a>
+        <a href="suplementos.html?cat=minerales">Minerales</a>
+      </div>
+    </div>
+    <div class="nav-dd">
+      <a href="cosmetica.html" class="active">Cosmética</a>
+      <div class="nav-dd-menu">
+        <a href="cosmetica.html?cat=aceite">Aceites</a>
+        <a href="cosmetica.html?cat=cara">Cara & Antienvejecimiento</a>
+        <a href="cosmetica.html?cat=cabello">Cabello</a>
+        <a href="cosmetica.html?cat=cuerpo">Cuerpo</a>
+      </div>
+    </div>
+    <div class="nav-dd">
+      <a href="nutricion.html">Nutrición</a>
+      <div class="nav-dd-menu">
+        <a href="nutricion.html?cat=adaptogenos">Adaptógenos</a>
+        <a href="nutricion.html?cat=semillas">Semillas & Cereales</a>
+        <a href="nutricion.html?cat=antioxidantes">Antioxidantes</a>
+        <a href="nutricion.html?cat=aceites">Aceites Nutricionales</a>
+      </div>
+    </div>
+    <a href="ofertas.html" style="color:var(--gold)">Ofertas</a>
+    <div class="nav-dd">
+      <a href="blog.html">Noticias</a>
+      <div class="nav-dd-menu">
+        <a href="blog.html">Artículos</a>
+        <a href="bnspain-concept.html#colaboraciones">Colaboraciones</a>
+      </div>
+    </div>
+  </nav>
+  <div class="header-actions">
+    <a href="cuenta.html" style="font-size:13px;color:var(--muted);text-decoration:none;font-weight:500">Mi cuenta</a>
+    <a href="cart.html" class="cart-pill" id="cart-btn">Carrito<div class="cart-dot" id="cart-count">0</div></a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="cat-hero">
+  <div class="cat-hero-inner">
+    <div class="cat-tag">Sin parabenos · Sin sulfatos · Ecológico</div>
+    <h1>Belleza que<br><em>cuida de verdad.</em></h1>
+    <p>Cosmética natural certificada, formulada con los mejores aceites y extractos de origen ecológico. Tu piel lo nota desde la primera aplicación.</p>
+    <div class="search-hero">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-right:4px"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+      <input type="text" id="hero-search" placeholder="Busca tu producto de cosmética…" oninput="filterProducts(this.value)">
+      <button onclick="filterProducts(document.getElementById('hero-search').value)">Buscar</button>
+    </div>
+    <div class="search-tags">
+      <span class="stag" onclick="filterProducts('argán');document.getElementById('hero-search').value='argán'">aceite de argán</span>
+      <span class="stag" onclick="filterProducts('hidratante');document.getElementById('hero-search').value='hidratante'">hidratante</span>
+      <span class="stag" onclick="filterProducts('sérum');document.getElementById('hero-search').value='sérum'">sérum</span>
+      <span class="stag" onclick="filterProducts('coco');document.getElementById('hero-search').value='coco'">aceite de coco</span>
+      <span class="stag" onclick="filterProducts('mascarilla');document.getElementById('hero-search').value='mascarilla'">mascarilla</span>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTO ESTRELLA -->
+<section class="featured">
+  <div class="featured-deco"></div>
+  <div class="featured-inner">
+    <div>
+      <div class="featured-label">Producto Estrella</div>
+      <h2 class="featured-title">El secreto de<br>la piel perfecta:<br><em>Aceite de Argán</em></h2>
+      <p class="featured-desc">El aceite de argán ecológico más puro del mercado. Sin mezclas, sin aditivos, sin compromisos. Prensado en frío para conservar el 100% de sus propiedades nutritivas. Lo que antes costaba el doble, ahora con −34%.</p>
+      <ul class="featured-perks">
+        <li>Hidratación profunda en 24 horas — lo notas al instante</li>
+        <li>Reduce arrugas finas y cicatrices con uso continuado</li>
+        <li>Perfecto para cara, cabello y uñas</li>
+        <li>Certificado ecológico · 100% prensado en frío</li>
+      </ul>
+      <div class="feat-reviews">
+        <span class="feat-stars">★★★★★</span>
+        <span class="feat-rcount">73 reseñas verificadas</span>
+      </div>
+      <div class="featured-bottom" style="margin-top:24px">
+        <div>
+          <span class="feat-price">€17.90</span>
+          <span class="feat-price-old">€26.90</span>
+          <span class="sale-badge" style="margin-left:10px">−34%</span>
+        </div>
+        <button class="feat-btn" onclick="addToCart(this,4)">Añadir al carrito</button>
+        <a href="product.html?id=4" style="color:rgba(255,255,255,.5);font-size:13px;text-decoration:none" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,.5)'">Ver ficha completa →</a>
+      </div>
+    </div>
+    <div class="featured-img">
+      <img src="https://www.bnspain.com/wp-content/uploads/2025/09/aceite-argan-ecologico-blue-nat-premium-600x600.jpg" alt="Aceite de Argán Ecológico">
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section class="products-section" id="products">
+  <div class="section-header">
+    <div>
+      <div class="section-label">Catálogo Cosmética</div>
+      <div class="section-title">Toda la cosmética natural</div>
+    </div>
+    <select class="sort-select" onchange="sortProducts(this.value)">
+      <option value="default">Ordenar por: Destacados</option>
+      <option value="price-asc">Precio: menor a mayor</option>
+      <option value="price-desc">Precio: mayor a menor</option>
+    </select>
+  </div>
+  <div class="filter-pills">
+    <button class="fpill active" onclick="filterCat(this,'all')">Todos</button>
+    <button class="fpill" onclick="filterCat(this,'aceite')">Aceites</button>
+    <button class="fpill" onclick="filterCat(this,'cara')">Cara & Antienvejecimiento</button>
+    <button class="fpill" onclick="filterCat(this,'cabello')">Cabello</button>
+    <button class="fpill" onclick="filterCat(this,'cuerpo')">Cuerpo</button>
+  </div>
+  <div class="pgrid" id="products-grid">
+
+    <div class="card" data-cat="aceite cara cabello" data-name="aceite argán ecológico puro" data-price="17.90" onclick="goProduct(event,4)">
+      <div class="card-thumb">
+        <img src="https://www.bnspain.com/wp-content/uploads/2025/09/aceite-argan-ecologico-blue-nat-premium-600x600.jpg" alt="Aceite de Argán">
+        <span class="card-badge badge-sale">−34%</span>
+      </div>
+      <div class="card-body">
+        <div class="card-cat">Aceites Premium</div>
+        <div class="card-name">Aceite de Argán Ecológico Puro</div>
+        <div class="card-stars"><span class="stars">★★★★★</span><span class="review-count">73 reseñas</span></div>
+        <div class="card-footer">
+          <div><span class="price-main">€17.90</span><span class="price-old">€26.90</span></div>
+          <button class="add-btn" onclick="addToCart(this,4);event.stopPropagation()">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-cat="aceite cuerpo cara" data-name="aceite seco nutritivo reparador piel" data-price="24.50" onclick="goProduct(event,5)">
+      <div class="card-thumb">
+        <img src="https://www.bnspain.com/wp-content/uploads/2025/09/aceite-seco-small-600x600.png" alt="Aceite Seco">
+      </div>
+      <div class="card-body">
+        <div class="card-cat">Aceites Premium</div>
+        <div class="card-name">Aceite Seco Nutritivo Reparador</div>
+        <div class="card-stars"><span class="stars">★★★★☆</span><span class="review-count">54 reseñas</span></div>
+        <div class="card-footer">
+          <div><span class="price-main">€24.50</span></div>
+          <button class="add-btn" onclick="addToCart(this,5);event.stopPropagation()">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-cat="cara" data-name="sérum vitamina c antioxidante luminosidad" data-price="29.90">
+      <div class="card-thumb thumb-cream" style="display:flex;align-items:center;justify-content:center">
+        <div style="width:62px;height:62px;border-radius:50%;background:rgba(255,255,255,.45);display:flex;align-items:center;justify-content:center"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#c4a040" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+        <span class="card-badge badge-new">Nuevo</span>
+      </div>
+      <div class="card-body">
+        <div class="card-cat">Cara</div>
+        <div class="card-name">Sérum Vitamina C — Luminosidad</div>
+        <div class="card-stars"><span class="stars">★★★★★</span><span class="review-count">41 reseñas</span></div>
+        <div class="card-footer">
+          <div><span class="price-main">€29.90</span></div>
+          <button class="add-btn" onclick="addToCartGeneric(this,'Sérum Vitamina C',29.90);event.stopPropagation()">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-cat="aceite cabello" data-name="aceite coco virgen extra cabello piel" data-price="14.90">
+      <div class="card-thumb thumb-warm" style="display:flex;align-items:center;justify-content:center">
+        <div style="width:62px;height:62px;border-radius:50%;background:rgba(255,255,255,.45);display:flex;align-items:center;justify-content:center"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#9a7848" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg></div>
+      </div>
+      <div class="card-body">
+        <div class="card-cat">Aceites Premium</div>
+        <div class="card-name">Aceite de Coco Virgen Extra</div>
+        <div class="card-stars"><span class="stars">★★★★★</span><span class="review-count">88 reseñas</span></div>
+        <div class="card-footer">
+          <div><span class="price-main">€14.90</span></div>
+          <button class="add-btn" onclick="addToCartGeneric(this,'Aceite de Coco Virgen',14.90);event.stopPropagation()">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-cat="cara" data-name="crema hidratante facial natural ecológica" data-price="22.50">
+      <div class="card-thumb thumb-rose" style="display:flex;align-items:center;justify-content:center">
+        <div style="width:62px;height:62px;border-radius:50%;background:rgba(255,255,255,.45);display:flex;align-items:center;justify-content:center"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#8a5068" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="5" r="2"/><circle cx="19" cy="8.5" r="2"/><circle cx="19" cy="15.5" r="2"/><circle cx="12" cy="19" r="2"/><circle cx="5" cy="15.5" r="2"/><circle cx="5" cy="8.5" r="2"/></svg></div>
+      </div>
+      <div class="card-body">
+        <div class="card-cat">Cara</div>
+        <div class="card-name">Crema Hidratante Facial Natural</div>
+        <div class="card-stars"><span class="stars">★★★★☆</span><span class="review-count">36 reseñas</span></div>
+        <div class="card-footer">
+          <div><span class="price-main">€22.50</span></div>
+          <button class="add-btn" onclick="addToCartGeneric(this,'Crema Hidratante Facial',22.50);event.stopPropagation()">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-cat="cabello" data-name="mascarilla capilar argán nutrición cabello seco" data-price="19.90">
+      <div class="card-thumb thumb-lavender" style="display:flex;align-items:center;justify-content:center">
+        <div style="width:62px;height:62px;border-radius:50%;background:rgba(255,255,255,.45);display:flex;align-items:center;justify-content:center"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#7a6aaa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+        <span class="card-badge badge-sale">−25%</span>
+      </div>
+      <div class="card-body">
+        <div class="card-cat">Cabello</div>
+        <div class="card-name">Mascarilla Capilar de Argán</div>
+        <div class="card-stars"><span class="stars">★★★★★</span><span class="review-count">29 reseñas</span></div>
+        <div class="card-footer">
+          <div><span class="price-main">€19.90</span><span class="price-old">€26.50</span></div>
+          <button class="add-btn" onclick="addToCartGeneric(this,'Mascarilla Capilar Argán',19.90);event.stopPropagation()">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-cat="cuerpo" data-name="exfoliante corporal azúcar natural piel suave" data-price="16.90">
+      <div class="card-thumb thumb-warm" style="display:flex;align-items:center;justify-content:center">
+        <div style="width:62px;height:62px;border-radius:50%;background:rgba(255,255,255,.45);display:flex;align-items:center;justify-content:center"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#9a7848" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12a4 4 0 0 0 4 4 4 4 0 0 0 4-4"/><path d="M12 6v2M12 16v2M6 12h2M16 12h2"/></svg></div>
+      </div>
+      <div class="card-body">
+        <div class="card-cat">Cuerpo</div>
+        <div class="card-name">Exfoliante Corporal de Azúcar Natural</div>
+        <div class="card-stars"><span class="stars">★★★★☆</span><span class="review-count">31 reseñas</span></div>
+        <div class="card-footer">
+          <div><span class="price-main">€16.90</span></div>
+          <button class="add-btn" onclick="addToCartGeneric(this,'Exfoliante Corporal',16.90);event.stopPropagation()">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-cat="cara" data-name="contorno ojos retinol anti arrugas" data-price="27.50">
+      <div class="card-thumb thumb-sage" style="display:flex;align-items:center;justify-content:center">
+        <div style="width:62px;height:62px;border-radius:50%;background:rgba(255,255,255,.45);display:flex;align-items:center;justify-content:center"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#5a7a6a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div>
+        <span class="card-badge badge-new">Nuevo</span>
+      </div>
+      <div class="card-body">
+        <div class="card-cat">Cara</div>
+        <div class="card-name">Contorno de Ojos — Anti-Arrugas</div>
+        <div class="card-stars"><span class="stars">★★★★★</span><span class="review-count">18 reseñas</span></div>
+        <div class="card-footer">
+          <div><span class="price-main">€27.50</span></div>
+          <button class="add-btn" onclick="addToCartGeneric(this,'Contorno de Ojos',27.50);event.stopPropagation()">+</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div id="no-results" style="display:none;text-align:center;padding:60px 20px;color:var(--muted)">
+    <div style="margin-bottom:16px;display:flex;justify-content:center;color:#ccc"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></div>
+    <div style="font-size:16px;font-weight:600;color:var(--navy);margin-bottom:8px">Sin resultados</div>
+    <div style="font-size:14px">Prueba con otro término de búsqueda</div>
+  </div>
+</section>
+
+<!-- BLOG COSMÉTICA -->
+<section style="padding:72px 52px;background:var(--bg);border-top:1px solid var(--border)">
+  <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:40px">
+    <div>
+      <div style="font-size:11px;font-weight:600;color:var(--gold);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px">Blog & Belleza</div>
+      <div style="font-family:'DM Serif Display',serif;font-size:32px;color:var(--navy)">Tu piel merece saberlo</div>
+    </div>
+    <a href="blog.html" style="font-size:13px;color:var(--navy);font-weight:600;text-decoration:none;border-bottom:1px solid var(--navy);padding-bottom:1px;transition:.2s" onmouseover="this.style.color='var(--gold)';this.style.borderColor='var(--gold)'" onmouseout="this.style.color='var(--navy)';this.style.borderColor='var(--navy)'">Ver todos los artículos</a>
+  </div>
+  <div style="display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:24px">
+
+    <div style="background:#fff;border-radius:12px;overflow:hidden;border:1px solid var(--border);cursor:pointer;transition:.25s" onmouseenter="this.style.boxShadow='0 12px 36px rgba(0,0,0,.09)'" onmouseleave="this.style.boxShadow=''" onclick="location.href='blog-article.html?id=40'">
+      <div style="height:220px;overflow:hidden"><img src="https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=700&h=440&fit=crop&q=80" alt="Skincare natural" style="width:100%;height:100%;object-fit:cover;transition:.4s" onmouseenter="this.style.transform='scale(1.05)'" onmouseleave="this.style.transform='scale(1)'"></div>
+      <div style="padding:24px">
+        <div style="font-size:10px;font-weight:700;color:#8B4558;text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px">Aceites · 6 min lectura</div>
+        <div style="font-family:'DM Serif Display',serif;font-size:20px;color:var(--navy);margin-bottom:10px;line-height:1.3">5 usos del aceite de argán que probablemente no conocías</div>
+        <p style="font-size:13px;color:var(--muted);line-height:1.7;font-weight:300">Más allá de hidratante facial: cómo usarlo en cutículas, puntas del cabello, cicatrices y como base de maquillaje. El versátil que no puede faltar en tu neceser.</p>
+        <a href="blog-article.html?id=40" style="display:inline-block;margin-top:16px;font-size:13px;font-weight:600;color:var(--navy);text-decoration:none">Leer artículo →</a>
+      </div>
+    </div>
+
+    <div style="background:#fff;border-radius:12px;overflow:hidden;border:1px solid var(--border);cursor:pointer;transition:.25s" onmouseenter="this.style.boxShadow='0 12px 36px rgba(0,0,0,.09)'" onmouseleave="this.style.boxShadow=''" onclick="location.href='blog-article.html?id=41'">
+      <div style="height:160px;overflow:hidden"><img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=500&h=320&fit=crop&q=80" alt="Rutina noche" style="width:100%;height:100%;object-fit:cover;transition:.4s" onmouseenter="this.style.transform='scale(1.05)'" onmouseleave="this.style.transform='scale(1)'"></div>
+      <div style="padding:20px">
+        <div style="font-size:10px;font-weight:700;color:#8B4558;text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px">Rutinas · 5 min</div>
+        <div style="font-family:'DM Serif Display',serif;font-size:17px;color:var(--navy);margin-bottom:8px;line-height:1.3">Rutina de noche minimalista con aceites naturales</div>
+        <p style="font-size:12.5px;color:var(--muted);line-height:1.6;font-weight:300;margin-bottom:12px">3 pasos, 2 productos y una piel transformada en 30 días. Sin química, sin complicaciones.</p>
+        <a href="blog-article.html?id=41" style="font-size:13px;font-weight:600;color:var(--navy);text-decoration:none">Leer →</a>
+      </div>
+    </div>
+
+    <div style="background:#fff;border-radius:12px;overflow:hidden;border:1px solid var(--border);cursor:pointer;transition:.25s" onmouseenter="this.style.boxShadow='0 12px 36px rgba(0,0,0,.09)'" onmouseleave="this.style.boxShadow=''" onclick="location.href='blog-article.html?id=42'">
+      <div style="height:160px;overflow:hidden"><img src="https://images.unsplash.com/photo-1559181567-c3190bfa4d7e?w=500&h=320&fit=crop&q=80" alt="Cosmética natural" style="width:100%;height:100%;object-fit:cover;transition:.4s" onmouseenter="this.style.transform='scale(1.05)'" onmouseleave="this.style.transform='scale(1)'"></div>
+      <div style="padding:20px">
+        <div style="font-size:10px;font-weight:700;color:#8B4558;text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px">Ingredientes · 4 min</div>
+        <div style="font-family:'DM Serif Display',serif;font-size:17px;color:var(--navy);margin-bottom:8px;line-height:1.3">Parabenos, sulfatos y siliconas: qué evitar y por qué</div>
+        <p style="font-size:12.5px;color:var(--muted);line-height:1.6;font-weight:300;margin-bottom:12px">Guía para leer etiquetas de cosmética y saber qué le estás poniendo realmente en la piel.</p>
+        <a href="blog-article.html?id=42" style="font-size:13px;font-weight:600;color:var(--navy);text-decoration:none">Leer →</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="trust-bar">
+  <div class="trust-item"><span class="trust-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13" rx="1"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></span><strong>Envío gratis desde 39 €</strong><span>Entrega en 24–48 horas</span></div>
+  <div class="trust-item"><span class="trust-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 22c1-1 2-2 3-3M21 2c-5 1-14 5-13.3 14 0 0 4.3-8 13.3-14z"/><path d="M7 19l9-9"/></svg></span><strong>100% ecológico</strong><span>Sin parabenos ni sulfatos</span></div>
+  <div class="trust-item"><span class="trust-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.51"/></svg></span><strong>Devolución gratuita</strong><span>30 días sin preguntas</span></div>
+  <div class="trust-item"><span class="trust-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span><strong>Pago 100% seguro</strong><span>SSL · Tarjeta · PayPal · Bizum</span></div>
+</div>
+
+<!-- ENCUÉNTRANOS -->
+<section style="padding:72px 52px;background:#fff;border-top:1px solid var(--border)" id="tienda">
+  <div style="max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start">
+    <div>
+      <div style="font-size:11px;font-weight:600;color:var(--gold);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px">Tienda física</div>
+      <div style="font-family:'DM Serif Display',serif;font-size:32px;color:var(--navy);margin-bottom:24px">Encuéntranos en Guadalajara</div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:24px;padding:14px 18px;background:var(--bg);border-radius:10px;border:1px solid var(--border);width:fit-content">
+        <span style="font-size:22px;font-weight:700;color:var(--navy)">4.9</span>
+        <span style="font-size:18px;color:#F59E0B;letter-spacing:2px">★★★★★</span>
+        <span style="font-size:13px;color:var(--muted);font-weight:400">60 reseñas en Google</span>
+      </div>
+      <div style="display:flex;gap:14px;align-items:flex-start;margin-bottom:18px">
+        <span style="font-size:18px;flex-shrink:0;margin-top:2px">📍</span>
+        <div>
+          <div style="font-size:14px;font-weight:600;color:var(--navy);margin-bottom:3px">Dirección</div>
+          <div style="font-size:14px;color:var(--muted);font-weight:300;line-height:1.6">C. Nuño Beltrán de Guzmán, 1<br>19001 Guadalajara</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:14px;align-items:flex-start;margin-bottom:18px">
+        <span style="font-size:18px;flex-shrink:0;margin-top:2px">📞</span>
+        <div>
+          <div style="font-size:14px;font-weight:600;color:var(--navy);margin-bottom:3px">Teléfono</div>
+          <a href="tel:683435317" style="font-size:14px;color:var(--muted);font-weight:300;text-decoration:none;transition:.15s" onmouseover="this.style.color='var(--navy)'" onmouseout="this.style.color='var(--muted)'">683 43 53 17</a>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px">
+        <span style="font-size:12px;font-weight:500;color:var(--green);background:#e8f2ec;border:1px solid #c6ddd0;padding:4px 12px;border-radius:20px">✓ Compra en tienda</span>
+        <span style="font-size:12px;font-weight:500;color:var(--green);background:#e8f2ec;border:1px solid #c6ddd0;padding:4px 12px;border-radius:20px">✓ Recogida en tienda</span>
+        <span style="font-size:12px;font-weight:500;color:var(--green);background:#e8f2ec;border:1px solid #c6ddd0;padding:4px 12px;border-radius:20px">✓ A domicilio</span>
+      </div>
+      <a href="https://www.google.com/maps/place/Blue+%26+Nat/@40.629666,-3.166281,17z/data=!3m1!4b1!4m16!1m9!4m8!1m0!1m6!1m2!1s0xd43ab48c92473ed:0x7d7e4e4033644b47!2sBlue+%26+Nat,+C.+Nu%C3%B1o+Beltr%C3%A1n+de+Guzm%C3%A1n,+1,+19001+Guadalajara!2m2!1d-3.1637061!2d40.629662!3m5!1s0xd43ab48c92473ed:0x7d7e4e4033644b47!8m2!3d40.629662!4d-3.1637061!16s%2Fg%2F11nfw3m4_w?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D" target="_blank" style="display:inline-flex;align-items:center;gap:8px;background:var(--navy);color:#fff;padding:13px 26px;border-radius:6px;text-decoration:none;font-size:14px;font-weight:600;transition:.2s" onmouseover="this.style.background='#1a3a60'" onmouseout="this.style.background='var(--navy)'">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        Ver en Google Maps
+      </a>
+    </div>
+    <div>
+      <div style="font-size:13px;font-weight:600;color:var(--navy);margin-bottom:16px;text-transform:uppercase;letter-spacing:.5px">Horario de apertura</div>
+      <div style="background:var(--bg);border-radius:12px;border:1px solid var(--border);overflow:hidden">
+        <div style="display:grid;grid-template-columns:1fr 1fr;padding:14px 20px;border-bottom:1px solid var(--border)">
+          <span style="font-size:13px;font-weight:600;color:var(--navy)">Lunes – Viernes</span>
+          <div>
+            <div style="font-size:13px;color:var(--muted);font-weight:400">9:30 – 14:00</div>
+            <div style="font-size:13px;color:var(--muted);font-weight:400">17:00 – 20:00</div>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;padding:14px 20px;border-bottom:1px solid var(--border)">
+          <span style="font-size:13px;font-weight:600;color:var(--navy)">Sábado</span>
+          <span style="font-size:13px;color:var(--muted);font-weight:400">10:00 – 14:00</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;padding:14px 20px">
+          <span style="font-size:13px;font-weight:600;color:var(--navy)">Domingo</span>
+          <span style="font-size:13px;color:#C0392B;font-weight:500">Cerrado</span>
+        </div>
+      </div>
+      <p style="font-size:11.5px;color:var(--muted);margin-top:12px;font-weight:300;line-height:1.6">* El horario puede variar en festivos. Consulta disponibilidad por teléfono.</p>
+      <div style="margin-top:24px;border-radius:12px;overflow:hidden;border:1px solid var(--border);height:200px">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3021.5!2d-3.1637061!3d40.629662!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd43ab48c92473ed%3A0x7d7e4e4033644b47!2sBlue%20%26%20Nat!5e0!3m2!1ses!2ses!4v1714000000000" width="100%" height="200" style="border:0;display:block" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-brand">
+    <a href="bnspain-concept.html"><img src="assets/logo-raw.jpg" alt="Blue&Nat" style="height:44px;filter:invert(1);mix-blend-mode:screen;object-fit:contain"></a>
+    <p>Tienda especializada en nutrición natural, suplementos deportivos y cosmética ecológica certificada.</p>
+  </div>
+  <div><h5>Productos</h5><a href="deporte.html">Deporte & Energía</a><a href="suplementos.html">Suplementos</a><a href="cosmetica.html">Cosmética</a><a href="nutricion.html">Nutrición</a><a href="ofertas.html">Ofertas</a></div>
+  <div><h5>Empresa</h5><a href="sobre-nosotros.html">Sobre nosotros</a><a href="blog.html">Blog & Noticias</a><a href="contacto.html">Contacto</a><a href="contacto.html">Trabaja con nosotros</a></div>
+  <div><h5>Ayuda</h5><a href="envios.html">Envíos y entregas</a><a href="devoluciones.html">Devoluciones</a><a href="privacidad.html">Política de privacidad</a><a href="faq.html">Preguntas frecuentes</a></div>
+</footer>
+<div class="footer-bottom">© 2026 Blue & Nat Spain, S.L. — Todos los derechos reservados</div>
+
+<div class="toast" id="toast"><span style="color:var(--gold)">✓</span><span id="toast-text">Añadido al carrito</span></div>
+
+<script>
+const PRODUCTS_INDEX={1:{id:1,name:'B-15 Cisty Stop',image:'https://www.bnspain.com/wp-content/uploads/2025/09/15-Cisty-Stop-small-600x600.png',price:13.00},2:{id:2,name:'Maca: El Secreto de los Incas',image:'https://www.bnspain.com/wp-content/uploads/2025/09/maca.jpg',price:19.95},3:{id:3,name:'Omega 3 6 9',image:'https://www.bnspain.com/wp-content/uploads/2025/09/omega-369-small-600x600.png',price:20.50},4:{id:4,name:'Aceite de Argán Ecológico',image:'https://www.bnspain.com/wp-content/uploads/2025/09/aceite-argan-ecologico-blue-nat-premium-600x600.jpg',price:17.90},5:{id:5,name:'Aceite Seco Nutritivo',image:'https://www.bnspain.com/wp-content/uploads/2025/09/aceite-seco-small-600x600.png',price:24.50}};
+(function(){var CART_VERSION='4';if(localStorage.getItem('bn_cart_v')!==CART_VERSION){localStorage.removeItem('bn_cart');localStorage.setItem('bn_cart_v',CART_VERSION);}})();
+function updateCartCount(){try{const r=JSON.parse(localStorage.getItem('bn_cart')||'[]');const c=Array.isArray(r)?r.filter(i=>i&&i.id!=null&&parseFloat(i.price)>0&&parseInt(i.qty)>0):[];document.getElementById('cart-count').textContent=c.reduce((a,i)=>a+parseInt(i.qty),0);}catch(e){document.getElementById('cart-count').textContent=0;}}
+function showToast(name){document.getElementById('toast-text').textContent=name+' añadido';const t=document.getElementById('toast');t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2400)}
+function addToCart(btn,id){const p=PRODUCTS_INDEX[id];const c=JSON.parse(localStorage.getItem('bn_cart')||'[]');const i=c.findIndex(x=>x.id===id);if(i>-1)c[i].qty++;else c.push({...p,qty:1});localStorage.setItem('bn_cart',JSON.stringify(c));updateCartCount();btn.classList.add('added');btn.textContent='✓';setTimeout(()=>{btn.classList.remove('added');btn.textContent='+'},1400);showToast(p.name)}
+function addToCartGeneric(btn,name,price){const c=JSON.parse(localStorage.getItem('bn_cart')||'[]');const i=c.findIndex(x=>x.name===name);if(i>-1)c[i].qty++;else c.push({id:'g-'+name,name,price,qty:1});localStorage.setItem('bn_cart',JSON.stringify(c));updateCartCount();btn.classList.add('added');btn.textContent='✓';setTimeout(()=>{btn.classList.remove('added');btn.textContent='+'},1400);showToast(name)}
+function sortProducts(val){const grid=document.getElementById('products-grid');const cards=[...grid.querySelectorAll('.card')];if(val==='price-asc')cards.sort((a,b)=>(parseFloat(a.dataset.price)||0)-(parseFloat(b.dataset.price)||0));else if(val==='price-desc')cards.sort((a,b)=>(parseFloat(b.dataset.price)||0)-(parseFloat(a.dataset.price)||0));else cards.sort((a,b)=>a.dataset.order-b.dataset.order);cards.forEach(c=>grid.appendChild(c))}
+function filterCat(el,cat){document.querySelectorAll('.fpill').forEach(b=>b.classList.remove('active'));el.classList.add('active');document.querySelectorAll('#products-grid .card').forEach(c=>{c.style.display=(cat==='all'||c.dataset.cat.includes(cat))?'':'none'});checkEmpty()}
+function filterProducts(q){const term=q.toLowerCase().trim();document.querySelectorAll('#products-grid .card').forEach(c=>{c.style.display=(!term||c.dataset.name.includes(term))?'':'none'});document.querySelectorAll('.fpill').forEach(b=>b.classList.remove('active'));if(!term)document.querySelector('.fpill').classList.add('active');checkEmpty()}
+function checkEmpty(){const v=[...document.querySelectorAll('#products-grid .card')].filter(c=>c.style.display!=='none');document.getElementById('no-results').style.display=v.length?'none':'block'}
+function goProduct(e,id){if(e.target.classList.contains('add-btn'))return;location.href='product.html?id='+id}
+updateCartCount();
+document.querySelectorAll('#products-grid .card').forEach(function(c,i){c.dataset.order=i});
+document.querySelectorAll('#products-grid .card:not([onclick])').forEach(function(c){c.addEventListener('click',function(e){if(!e.target.classList.contains('add-btn'))location.href='product.html?id=4'})});
+(function(){var c=new URLSearchParams(location.search).get('cat');if(c){var b=document.querySelector('.fpill[onclick*="\'"+c+"\'"]');if(b)b.click();}})();
+
+(function(){
+  const io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        e.target.style.opacity='1';
+        e.target.style.transform='translateY(0)';
+        io.unobserve(e.target);
+      }
+    });
+  },{threshold:0.06});
+  document.querySelectorAll('#products-grid .card').forEach(function(el,i){
+    el.style.opacity='0';
+    el.style.transform='translateY(22px)';
+    el.style.transition='opacity .45s ease '+(i*55)+'ms, transform .45s ease '+(i*55)+'ms, box-shadow .3s, border-color .3s';
+    io.observe(el);
+  });
+})();
+</script>
+</body>
+</html>
